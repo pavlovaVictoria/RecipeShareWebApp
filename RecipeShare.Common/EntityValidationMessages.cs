@@ -22,5 +22,8 @@
 
         //Application User Messages
         public const string ErrorMessageUserBio = "The max length is 20";
+        public const string ErrorMessageUserName = "The length of the UserName must be between 3 and 20";
+        public const string ErrorMessagePassword = "Password must be 8-20 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character.";
+        public const string ErrorMessageConfirmedPassword = "Password does noe match";
     }
 }
