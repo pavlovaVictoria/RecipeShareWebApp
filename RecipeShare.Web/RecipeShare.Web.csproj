@@ -21,8 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RecipeShare.Common\RecipeShare.Common.csproj" />
     <ProjectReference Include="..\RecipeShare.Data.Model\RecipeShare.Data.Models.csproj" />
     <ProjectReference Include="..\RecipeShare.Data\RecipeShare.Data.csproj" />
+    <ProjectReference Include="..\RecipeShare.Services.Data\RecipeShare.Services.Data.csproj" />
     <ProjectReference Include="..\RecipeShare.Web.ViewModels\RecipeShare.Web.ViewModels.csproj" />
   </ItemGroup>
 

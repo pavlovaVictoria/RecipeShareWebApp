@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RecipeShare.Data;
 using RecipeShare.Data.Models;
+using RecipeShare.Services.Data;
+using RecipeShare.Services.Data.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services
+    .AddScoped<IAccountService, AccountService>();
 
 var app = builder.Build();
 
