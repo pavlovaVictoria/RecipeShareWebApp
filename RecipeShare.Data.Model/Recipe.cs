@@ -26,6 +26,11 @@ namespace RecipeShare.Data.Models
         public string RecipeTitle { get; set; } = null!;
 
         [Required]
+        [Comment("The Normalized Title of the Recipe")]
+        [StringLength(RecipeTitleMaxLen, MinimumLength = RecipeTitleMinLen, ErrorMessage = ErrorMessageRecipeTitle)]
+        public string NormalizedRecipeTitle { get; set; } = null!;
+
+        [Required]
         [Comment("The Id of the User")]
         public Guid UserId { get; set; }
 
