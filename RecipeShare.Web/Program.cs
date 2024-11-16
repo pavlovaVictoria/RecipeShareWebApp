@@ -24,7 +24,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = true;
     options.User.RequireUniqueEmail = true;
-    options.SignIn.RequireConfirmedAccount = true;
+    options.SignIn.RequireConfirmedAccount = false;
 })
   .AddEntityFrameworkStores<RecipeShareDbContext>()
   .AddDefaultTokenProviders();

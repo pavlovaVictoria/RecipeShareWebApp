@@ -18,10 +18,15 @@ namespace RecipeShare.Services.Data
 			userManager = _userManager;
         }
 
-        public async Task<SignInResult> LoginAsync(LoginViewModel model)
+        public async Task<bool> LoginAsync(LoginViewModel model)
 		{
-			SignInResult result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-			return result;
+			ApplicationUser? user = await userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return false;
+            }
+            SignInResult result = await signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
+			return true;
 		}
 
 		public async Task LogoutAsync()

@@ -29,13 +29,14 @@ namespace RecipeShare.Web.Controllers
 			{
 				return View(loginViewModel);
 			}
-            Microsoft.AspNetCore.Identity.SignInResult result = await accountService.LoginAsync(loginViewModel);
-            if (result.Succeeded)
+            bool result = await accountService.LoginAsync(loginViewModel);
+            if (result)
             {
                 return RedirectToAction("Index", "Home");
             }
             else
             {
+				ModelState.AddModelError("", "Email or password is incorrect!");
                 return View(loginViewModel);
             }
         }
@@ -67,11 +68,10 @@ namespace RecipeShare.Web.Controllers
 			}
 		}
 
-		[HttpPost]
 		public async Task<IActionResult> Logout()
 		{
 			await accountService.LogoutAsync();
-			return RedirectToAction("Index");
+			return RedirectToAction("Index", "Home");
 		}
 	}
 }
