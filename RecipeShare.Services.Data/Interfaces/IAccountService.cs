@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using RecipeShare.Web.ViewModels.ApplicationUserViewModels;
 
 namespace RecipeShare.Services.Data.Interfaces
 {
 	public interface IAccountService
 	{
-		IActionResult Register();
-		Task<IActionResult> Register(RegisterViewModel model);
+		Task<IdentityResult> RegisterAsync(RegisterViewModel model);
+		Task<SignInResult> LoginAsync(LoginViewModel model);
 
-		IActionResult Login();
-		Task<IActionResult> Login(LoginViewModel model);
-
-		Task<IActionResult> Logout(Guid userId);
+		Task LogoutAsync();
 	}
 }

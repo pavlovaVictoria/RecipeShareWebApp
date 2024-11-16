@@ -1,34 +1,48 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using RecipeShare.Data.Models;
 using RecipeShare.Services.Data.Interfaces;
 using RecipeShare.Web.ViewModels.ApplicationUserViewModels;
+using System.Transactions;
 
 namespace RecipeShare.Services.Data
 {
 	public class AccountService : IAccountService
 	{
-		public IActionResult Login()
+		private readonly SignInManager<ApplicationUser> signInManager;
+		private readonly UserManager<ApplicationUser> userManager;
+
+        public AccountService(SignInManager<ApplicationUser> _signInManager, UserManager<ApplicationUser> _userManager)
+        {
+            signInManager = _signInManager;
+			userManager = _userManager;
+        }
+
+        public async Task<SignInResult> LoginAsync(LoginViewModel model)
 		{
-			throw new NotImplementedException();
+			SignInResult result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+			return result;
 		}
 
-		public async Task<IActionResult> Login(LoginViewModel model)
+		public async Task LogoutAsync()
 		{
-			throw new NotImplementedException();
+			await signInManager.SignOutAsync();
 		}
 
-		public async Task<IActionResult> Logout(Guid userId)
+		public async Task<IdentityResult> RegisterAsync(RegisterViewModel model)
 		{
-			throw new NotImplementedException();
-		}
+			ApplicationUser user = new ApplicationUser
+			{
+				IsMale = model.IsMale,
+				Email = model.Email,
+				UserName = model.UserName,
+				AccountBio = model.AccountBio,
+				NormalizedUserName = model.UserName.ToLower()
+			};
 
-		public IActionResult Register()
-		{
-			throw new NotImplementedException();
-		}
+			IdentityResult result = await userManager.CreateAsync(user, model.Password);
 
-		public async Task<IActionResult> Register(RegisterViewModel model)
-		{
-			throw new NotImplementedException();
+			return result;
 		}
 	}
 }

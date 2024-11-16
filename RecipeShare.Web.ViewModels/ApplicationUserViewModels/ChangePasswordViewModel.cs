@@ -13,11 +13,11 @@ namespace RecipeShare.Web.ViewModels.ApplicationUserViewModels
         [Required]
         [RegularExpression(RegexForPassword, ErrorMessage = ErrorMessagePassword)]
         [DataType(DataType.Password)]
-        [Compare("ConfirmedNewPasswored", ErrorMessage = ErrorMessageConfirmedPassword)]
         public string NewPassword { get; set; } = null!;
 
         [Required]
         [DataType(DataType.Password)]
-        public string ConfirmedNewPasswored { get; set; } = null!;
+		[Compare("NewPassword", ErrorMessage = ErrorMessageConfirmedPassword)]
+		public string ConfirmedNewPasswored { get; set; } = null!;
     }
 }

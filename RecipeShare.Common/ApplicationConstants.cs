@@ -34,7 +34,7 @@
         public const int UserBioMax = 20;
         public const int UserNameMinLen = 3;
         public const int UserNameMaxLen = 20;
-        public const string RegexForPassword = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,12}$";
+        public const string RegexForPassword = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,12}$";
 
         //Decimal
         public const int NumberOfDigits = 8;
