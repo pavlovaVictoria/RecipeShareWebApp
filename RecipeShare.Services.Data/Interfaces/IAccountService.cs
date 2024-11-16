@@ -10,5 +10,7 @@ namespace RecipeShare.Services.Data.Interfaces
 		Task<bool> LoginAsync(LoginViewModel model);
 
 		Task LogoutAsync();
+
+		Task<bool> ForgotPasswordAsync(ChangePasswordViewModel model);
 	}
 }

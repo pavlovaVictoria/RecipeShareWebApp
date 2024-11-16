@@ -49,5 +49,25 @@ namespace RecipeShare.Services.Data
 
 			return result;
 		}
+
+		public async Task<bool> ForgotPasswordAsync(ChangePasswordViewModel model)
+		{
+			ApplicationUser? user = await userManager.FindByEmailAsync(model.Email);
+			if (user == null)
+			{
+				return false;
+			}
+			IdentityResult result = await userManager.RemovePasswordAsync(user);
+			if (!result.Succeeded)
+			{
+                return false;
+            }
+			result = await userManager.AddPasswordAsync(user, model.NewPassword);
+			if (!result.Succeeded)
+			{
+                return false;
+            }
+			return true;
+        }
 	}
 }

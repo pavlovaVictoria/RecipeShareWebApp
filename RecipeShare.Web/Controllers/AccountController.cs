@@ -73,5 +73,30 @@ namespace RecipeShare.Web.Controllers
 			await accountService.LogoutAsync();
 			return RedirectToAction("Index", "Home");
 		}
-	}
+
+		[HttpGet]
+		public IActionResult ForgotPassword()
+		{
+			ChangePasswordViewModel changePasswordViewModel = new ChangePasswordViewModel();
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> ForgotPassword(ChangePasswordViewModel changePasswordViewModel)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(changePasswordViewModel);
+			}
+			bool result = await accountService.ForgotPasswordAsync(changePasswordViewModel);
+			if (result)
+			{
+				return RedirectToAction("Login");
+			}
+			else
+			{
+				return View(changePasswordViewModel);
+			}
+		}
+    }
 }
