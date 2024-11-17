@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
@@ -18,5 +20,103 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #FEFBF8;
+    font-family: "Quicksand", serif;
+}
+
+header {
+    background-color: #E58767;
+    color: white;
+    font-weight: 600;
+}
+footer {
+    background-color: #E58767;
+    font-weight: 600;
+}
+a{
+    color: white;
+}
+
+.logo-circle {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+.navbar-brand{
+    color: white;
+}
+
+.btn {
+    background-color: #E58767;
+    border-color: white;
+    border-width: thick;
+    color: white;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background-color: white;
+    border-color: #E58767;
+    color: #E58767;
+    font-weight: 600;
+}
+
+.form-label {
+    color: #333;
+    font-weight: bold;
+}
+
+.form-control {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    color: #555;
+}
+
+.form-control:focus{
+    border-color: #E58767;
+    box-shadow: 0 0 5px rgba(229, 135, 103, 0.5);
+    background-color: #fff;
+    color: #000;
+}
+
+input:focus + label, textarea:focus + label {
+    color: #E58767;
+}
+
+.form-control::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+.form-control:hover {
+    border-color: #E58767;
+}
+
+.form-control:not(:focus) {
+    border-color: #ccc;
+    box-shadow: none;
+}
+
+.form-check-input:checked {
+    background-color: #E58767;
+    border-color: #E58767;
+}
+
+.form-check-input:focus {
+    border-color: #E58767;
+    box-shadow: 0 0 3px rgba(229, 135, 103, 0.5);
+}
+
+.form-check-input:hover {
+    border-color: #E58767;
+}
+
+.form-check-label {
+    color: #333;
 }
