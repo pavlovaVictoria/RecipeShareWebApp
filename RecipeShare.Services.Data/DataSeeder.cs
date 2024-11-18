@@ -53,6 +53,22 @@ namespace RecipeShare.Services.Data
             }
         }
 
+        private static async Task SeedAllProductsAsync(RecipeShareDbContext context)
+        {
+            if (context.Categories.Any())
+            {
+                return;
+            }
+            string jsonFilePath = GetJsonFilePath("product.json");
+            List<Product>? productsData = JsonConvert.DeserializeObject<List<Product>>(await File.ReadAllTextAsync(jsonFilePath));
+
+            if (productsData != null)
+            {
+                await context.Products.AddRangeAsync(productsData);
+                await context.SaveChangesAsync();
+            }
+        }
+
         private static string GetJsonFilePath(string jsonName)
         {
             string solutionDir = Directory.GetCurrentDirectory();

@@ -1,0 +1,713 @@
+[
+    {
+      "ProductName": "Apple",
+      "ProductType": 1,
+      "Calories": 52
+    },
+    {
+      "ProductName": "Apricot",
+      "ProductType": 1,
+      "Calories": 48
+    },
+    {
+      "ProductName": "Avocado",
+      "ProductType": 1,
+      "Calories": 160
+    },
+    {
+      "ProductName": "Banana",
+      "ProductType": 1,
+      "Calories": 89
+    },
+    {
+      "ProductName": "Blackberry",
+      "ProductType": 1,
+      "Calories": 43
+    },
+    {
+      "ProductName": "Blueberry",
+      "ProductType": 1,
+      "Calories": 57
+    },
+    {
+      "ProductName": "Cherry",
+      "ProductType": 1,
+      "Calories": 50
+    },
+    {
+      "ProductName": "Coconut",
+      "ProductType": 1,
+      "Calories": 354
+    },
+    {
+      "ProductName": "Cranberry",
+      "ProductType": 1,
+      "Calories": 46
+    },
+    {
+      "ProductName": "Cucumber",
+      "ProductType": 0,
+      "Calories": 16
+    },
+    {
+      "ProductName": "Date",
+      "ProductType": 1,
+      "Calories": 282
+    },
+    {
+      "ProductName": "Dragonfruit",
+      "ProductType": 1,
+      "Calories": 50
+    },
+    {
+      "ProductName": "Durian",
+      "ProductType": 1,
+      "Calories": 147
+    },
+    {
+      "ProductName": "Fig",
+      "ProductType": 1,
+      "Calories": 74
+    },
+    {
+      "ProductName": "Grapefruit",
+      "ProductType": 1,
+      "Calories": 52
+    },
+    {
+      "ProductName": "Grapes",
+      "ProductType": 1,
+      "Calories": 69
+    },
+    {
+      "ProductName": "Guava",
+      "ProductType": 1,
+      "Calories": 68
+    },
+    {
+      "ProductName": "Honeydew",
+      "ProductType": 1,
+      "Calories": 36
+    },
+    {
+      "ProductName": "Kiwi",
+      "ProductType": 1,
+      "Calories": 61
+    },
+    {
+      "ProductName": "Lemon",
+      "ProductType": 1,
+      "Calories": 29
+    },
+    {
+      "ProductName": "Lime",
+      "ProductType": 1,
+      "Calories": 30
+    },
+    {
+      "ProductName": "Lychee",
+      "ProductType": 1,
+      "Calories": 66
+    },
+    {
+      "ProductName": "Mango",
+      "ProductType": 1,
+      "Calories": 60
+    },
+    {
+      "ProductName": "Melon",
+      "ProductType": 1,
+      "Calories": 50
+    },
+    {
+      "ProductName": "Nectarine",
+      "ProductType": 1,
+      "Calories": 44
+    },
+    {
+      "ProductName": "Orange",
+      "ProductType": 1,
+      "Calories": 47
+    },
+    {
+      "ProductName": "Papaya",
+      "ProductType": 1,
+      "Calories": 43
+    },
+    {
+      "ProductName": "Passionfruit",
+      "ProductType": 1,
+      "Calories": 97
+    },
+    {
+      "ProductName": "Peach",
+      "ProductType": 1,
+      "Calories": 39
+    },
+    {
+      "ProductName": "Pear",
+      "ProductType": 1,
+      "Calories": 57
+    },
+    {
+      "ProductName": "Persimmon",
+      "ProductType": 1,
+      "Calories": 81
+    },
+    {
+      "ProductName": "Pineapple",
+      "ProductType": 1,
+      "Calories": 50
+    },
+    {
+      "ProductName": "Plum",
+      "ProductType": 1,
+      "Calories": 46
+    },
+    {
+      "ProductName": "Pomegranate",
+      "ProductType": 1,
+      "Calories": 83
+    },
+    {
+      "ProductName": "Raspberry",
+      "ProductType": 1,
+      "Calories": 52
+    },
+    {
+      "ProductName": "Strawberry",
+      "ProductType": 1,
+      "Calories": 32
+    },
+    {
+      "ProductName": "Tangerine",
+      "ProductType": 1,
+      "Calories": 53
+    },
+    {
+      "ProductName": "Tomato",
+      "ProductType": 1,
+      "Calories": 18
+    },
+    {
+      "ProductName": "Watermelon",
+      "ProductType": 1,
+      "Calories": 30
+    },
+    {
+      "ProductName": "Artichoke",
+      "ProductType": 0,
+      "Calories": 47
+    },
+    {
+      "ProductName": "Arugula",
+      "ProductType": 0,
+      "Calories": 25
+    },
+    {
+      "ProductName": "Asparagus",
+      "ProductType": 0,
+      "Calories": 20
+    },
+    {
+      "ProductName": "Basil",
+      "ProductType": 0,
+      "Calories": 22
+    },
+    {
+      "ProductName": "Beetroot",
+      "ProductType": 0,
+      "Calories": 43
+    },
+    {
+      "ProductName": "Bell Pepper",
+      "ProductType": 0,
+      "Calories": 20
+    },
+    {
+      "ProductName": "Bok Choy",
+      "ProductType": 0,
+      "Calories": 13
+    },
+    {
+      "ProductName": "Broccoli",
+      "ProductType": 0,
+      "Calories": 34
+    },
+    {
+      "ProductName": "Brussels Sprouts",
+      "ProductType": 0,
+      "Calories": 43
+    },
+    {
+      "ProductName": "Cabbage",
+      "ProductType": 0,
+      "Calories": 25
+    },
+    {
+      "ProductName": "Carrot",
+      "ProductType": 0,
+      "Calories": 41
+    },
+    {
+      "ProductName": "Cauliflower",
+      "ProductType": 0,
+      "Calories": 25
+    },
+    {
+      "ProductName": "Celery",
+      "ProductType": 0,
+      "Calories": 16
+    },
+    {
+      "ProductName": "Chard",
+      "ProductType": 0,
+      "Calories": 19
+    },
+    {
+      "ProductName": "Collard Greens",
+      "ProductType": 0,
+      "Calories": 32
+    },
+    {
+      "ProductName": "Corn",
+      "ProductType": 0,
+      "Calories": 86
+    },
+    {
+      "ProductName": "Eggplant",
+      "ProductType": 0,
+      "Calories": 25
+    },
+    {
+      "ProductName": "Endive",
+      "ProductType": 0,
+      "Calories": 17
+    },
+    {
+      "ProductName": "Fennel",
+      "ProductType": 0,
+      "Calories": 31
+    },
+    {
+      "ProductName": "Garlic",
+      "ProductType": 0,
+      "Calories": 149
+    },
+    {
+      "ProductName": "Ginger",
+      "ProductType": 0,
+      "Calories": 80
+    },
+    {
+      "ProductName": "Green Beans",
+      "ProductType": 0,
+      "Calories": 31
+    },
+    {
+      "ProductName": "Kale",
+      "ProductType": 0,
+      "Calories": 49
+    },
+    {
+      "ProductName": "Leek",
+      "ProductType": 0,
+      "Calories": 61
+    },
+    {
+      "ProductName": "Lettuce",
+      "ProductType": 0,
+      "Calories": 5
+    },
+    {
+      "ProductName": "Mushroom",
+      "ProductType": 0,
+      "Calories": 22
+    },
+    {
+      "ProductName": "Mustard Greens",
+      "ProductType": 0,
+      "Calories": 32
+    },
+    {
+      "ProductName": "Okra",
+      "ProductType": 0,
+      "Calories": 33
+    },
+    {
+      "ProductName": "Onion",
+      "ProductType": 0,
+      "Calories": 40
+    },
+    {
+      "ProductName": "Parsley",
+      "ProductType": 0,
+      "Calories": 36
+    },
+    {
+      "ProductName": "Parsnip",
+      "ProductType": 0,
+      "Calories": 75
+    },
+    {
+      "ProductName": "Peas",
+      "ProductType": 0,
+      "Calories": 81
+    },
+    {
+      "ProductName": "Potato",
+      "ProductType": 0,
+      "Calories": 77
+    },
+    {
+      "ProductName": "Pumpkin",
+      "ProductType": 0,
+      "Calories": 26
+    },
+    {
+      "ProductName": "Radish",
+      "ProductType": 0,
+      "Calories": 16
+    },
+    {
+      "ProductName": "Shallot",
+      "ProductType": 0,
+      "Calories": 72
+    },
+    {
+      "ProductName": "Spinach",
+      "ProductType": 0,
+      "Calories": 23
+    },
+    {
+      "ProductName": "Sweet Potato",
+      "ProductType": 0,
+      "Calories": 86
+    },
+    {
+      "ProductName": "Turnip",
+      "ProductType": 0,
+      "Calories": 28
+    },
+    {
+      "ProductName": "Yam",
+      "ProductType": 0,
+      "Calories": 118
+    },
+    {
+      "ProductName": "Zucchini",
+      "ProductType": 0,
+      "Calories": 17
+    },
+    {
+      "ProductName": "Butter",
+      "ProductType": 2,
+      "Calories": 717
+    },
+    {
+      "ProductName": "Cheese",
+      "ProductType": 2,
+      "Calories": 402
+    },
+    {
+      "ProductName": "Cream",
+      "ProductType": 2,
+      "Calories": 400
+    },
+    {
+      "ProductName": "Cottage Cheese",
+      "ProductType": 2,
+      "Calories": 98
+    },
+    {
+      "ProductName": "Greek Yogurt",
+      "ProductType": 2,
+      "Calories": 59
+    },
+    {
+      "ProductName": "Heavy Cream",
+      "ProductType": 2,
+      "Calories": 340
+    },
+    {
+      "ProductName": "Ice Cream",
+      "ProductType": 2,
+      "Calories": 207
+    },
+    {
+      "ProductName": "Milk",
+      "ProductType": 2,
+      "Calories": 42
+    },
+    {
+      "ProductName": "Sour Cream",
+      "ProductType": 2,
+      "Calories": 193
+    },
+    {
+      "ProductName": "Whipping Cream",
+      "ProductType": 2,
+      "Calories": 345
+    },
+    {
+      "ProductName": "Yogurt",
+      "ProductType": 2,
+      "Calories": 59
+    },
+    {
+      "ProductName": "Bacon",
+      "ProductType": 3,
+      "Calories": 42
+    },
+    {
+      "ProductName": "Beef",
+      "ProductType": 3,
+      "Calories": 250
+    },
+    {
+      "ProductName": "Chicken",
+      "ProductType": 3,
+      "Calories": 165
+    },
+    {
+      "ProductName": "Duck",
+      "ProductType": 3,
+      "Calories": 337
+    },
+    {
+      "ProductName": "Ham",
+      "ProductType": 3,
+      "Calories": 145
+    },
+    {
+      "ProductName": "Lamb",
+      "ProductType": 3,
+      "Calories": 294
+    },
+    {
+      "ProductName": "Pork",
+      "ProductType": 3,
+      "Calories": 242
+    },
+    {
+      "ProductName": "Sausage",
+      "ProductType": 3,
+      "Calories": 301
+    },
+    {
+      "ProductName": "Turkey",
+      "ProductType": 3,
+      "Calories": 135
+    },
+    {
+      "ProductName": "Veal",
+      "ProductType": 3,
+      "Calories": 172
+    },
+    {
+      "ProductName": "Anchovies",
+      "ProductType": 4,
+      "Calories": 210
+    },
+    {
+      "ProductName": "Clams",
+      "ProductType": 4,
+      "Calories": 74
+    },
+    {
+      "ProductName": "Cod",
+      "ProductType": 4,
+      "Calories": 105
+    },
+    {
+      "ProductName": "Crab",
+      "ProductType": 4,
+      "Calories": 87
+    },
+    {
+      "ProductName": "Lobster",
+      "ProductType": 4,
+      "Calories": 90
+    },
+    {
+      "ProductName": "Mussels",
+      "ProductType": 4,
+      "Calories": 172
+    },
+    {
+      "ProductName": "Oysters",
+      "ProductType": 4,
+      "Calories": 81
+    },
+    {
+      "ProductName": "Salmon",
+      "ProductType": 4,
+      "Calories": 208
+    },
+    {
+      "ProductName": "Sardines",
+      "ProductType": 4,
+      "Calories": 208
+    },
+    {
+      "ProductName": "Shrimp",
+      "ProductType": 4,
+      "Calories": 99
+    },
+    {
+      "ProductName": "Squid",
+      "ProductType": 4,
+      "Calories": 92
+    },
+    {
+      "ProductName": "Tilapia",
+      "ProductType": 4,
+      "Calories": 128
+    },
+    {
+      "ProductName": "Tuna",
+      "ProductType": 4,
+      "Calories": 144
+    },
+    {
+      "ProductName": "Chicken Egg",
+      "ProductType": 5,
+      "Calories": 68
+    },
+    {
+      "ProductName": "Duck Egg",
+      "ProductType": 5,
+      "Calories": 130
+    },
+    {
+      "ProductName": "Quail Egg",
+      "ProductType": 5,
+      "Calories": 55
+    },
+    {
+      "ProductName": "Bagels",
+      "ProductType": 6,
+      "Calories": 250
+    },
+    {
+      "ProductName": "Barley",
+      "ProductType": 6,
+      "Calories": 354
+    },
+    {
+      "ProductName": "Bread",
+      "ProductType": 6,
+      "Calories": 265
+    },
+    {
+      "ProductName": "Cookies",
+      "ProductType": 6,
+      "Calories": 502
+    },
+    {
+      "ProductName": "Crackers",
+      "ProductType": 6,
+      "Calories": 80
+    },
+    {
+      "ProductName": "Flour Tortillas",
+      "ProductType": 6,
+      "Calories": 290
+    },
+    {
+      "ProductName": "Muffins",
+      "ProductType": 6,
+      "Calories": 380
+    },
+    {
+      "ProductName": "Pancakes",
+      "ProductType": 6,
+      "Calories": 227
+    },
+    {
+      "ProductName": "Pasta",
+      "ProductType": 6,
+      "Calories": 131
+    },
+    {
+      "ProductName": "Pretzels",
+      "ProductType": 6,
+      "Calories": 380
+    },
+    {
+      "ProductName": "Rolls",
+      "ProductType": 6,
+      "Calories": 250
+    },
+    {
+      "ProductName": "Scones",
+      "ProductType": 6,
+      "Calories": 290
+    },
+    {
+      "ProductName": "Wheat Flour",
+      "ProductType": 6,
+      "Calories": 364
+    },
+    {
+      "ProductName": "Almond Flour",
+      "ProductType": 7,
+      "Calories": 570
+    },
+    {
+      "ProductName": "Buckwheat",
+      "ProductType": 7,
+      "Calories": 343
+    },
+    {
+      "ProductName": "Cassava Flour",
+      "ProductType": 7,
+      "Calories": 360
+    },
+    {
+      "ProductName": "Chickpea Flour",
+      "ProductType": 7,
+      "Calories": 387
+    },
+    {
+      "ProductName": "Corn Tortillas",
+      "ProductType": 7,
+      "Calories": 96
+    },
+    {
+      "ProductName": "Gluten-Free Bread",
+      "ProductType": 7,
+      "Calories": 246
+    },
+    {
+      "ProductName": "Gluten-Free Pasta",
+      "ProductType": 7,
+      "Calories": 200
+    },
+    {
+      "ProductName": "Millet",
+      "ProductType": 7,
+      "Calories": 119
+    },
+    {
+      "ProductName": "Oatmeal",
+      "ProductType": 7,
+      "Calories": 68
+    },
+    {
+      "ProductName": "Quinoa",
+      "ProductType": 7,
+      "Calories": 120
+    },
+    {
+      "ProductName": "Rice",
+      "ProductType": 7,
+      "Calories": 130
+    },
+    {
+      "ProductName": "Tapioca",
+      "ProductType": 7,
+      "Calories": 358
+    }
+  ]
+  
