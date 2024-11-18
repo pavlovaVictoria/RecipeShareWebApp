@@ -1,0 +1,42 @@
+[
+    {
+      "AllergenName": "Celery",
+      "AllergenImage": "~/images/allergens/CeleryAllergen.png"
+    },
+    {
+      "AllergenName": "Crab",
+      "AllergenImage": "~/images/allergens/CrabAllergen.png"
+    },
+    {
+      "AllergenName": "Egg",
+      "AllergenImage": "~/images/allergens/EggAllergen.png"
+    },
+    {
+      "AllergenName": "Fish",
+      "AllergenImage": "~/images/allergens/FishAllergen.png"
+    },
+    {
+      "AllergenName": "Milk",
+      "AllergenImage": "~/images/allergens/MilkAllergen.png"
+    },
+    {
+      "AllergenName": "Mollusc",
+      "AllergenImage": "~/images/allergens/MolluscsAllergen.png"
+    },
+    {
+      "AllergenName": "Mustard",
+      "AllergenImage": "~/images/allergens/MustardAllergen.png"
+    },
+    {
+      "AllergenName": "Nut",
+      "AllergenImage": "~/images/allergens/NutAllergen.png"
+    },
+    {
+      "AllergenName": "Wheat",
+      "AllergenImage": "~/images/allergens/WheatAllergen.png"
+    },
+    {
+      "AllergenName": "Soya",
+      "AllergenImage": "~/images/allergens/SoyaAllergen.png"
+    }
+  ]

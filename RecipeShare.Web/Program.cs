@@ -37,6 +37,8 @@ builder.Services
 
 var app = builder.Build();
 
+await DataSeeder.SeedAsync(app.Services);
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
