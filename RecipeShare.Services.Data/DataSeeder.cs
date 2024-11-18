@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using RecipeShare.Data;
@@ -15,12 +16,9 @@ namespace RecipeShare.Services.Data
 
             await context.Database.MigrateAsync();
 
-            // Seed default user
-            //await SeedUsersAsync(scope.ServiceProvider);
-            //
-            //// Seed recipes
-            //await SeedRecipesAsync(context, scope.ServiceProvider);
+            //Seed all default values
             await SeedAllergensAsync(context);
+            await SeedAllCategoriesAsync(context);
         }
 
         private static async Task SeedAllergensAsync(RecipeShareDbContext context)
@@ -29,9 +27,7 @@ namespace RecipeShare.Services.Data
             {
                 return;
             }
-            string solutionDir = Directory.GetCurrentDirectory();
-            string wwwrootPath = Path.Combine(solutionDir, "..", "RecipeShare.Web", "wwwroot", "data", "allergen.json");
-            string jsonFilePath = Path.GetFullPath(wwwrootPath);
+            string jsonFilePath = GetJsonFilePath("allergen.json");
             List<Allergen>? allergensData = JsonConvert.DeserializeObject<List<Allergen>>(await File.ReadAllTextAsync(jsonFilePath));
             
             if (allergensData != null)
@@ -39,6 +35,30 @@ namespace RecipeShare.Services.Data
                 await context.Allergens.AddRangeAsync(allergensData);
                 await context.SaveChangesAsync();
             }
+        }
+
+        private static async Task SeedAllCategoriesAsync(RecipeShareDbContext context)
+        {
+            if (context.Categories.Any())
+            {
+                return;
+            }
+            string jsonFilePath = GetJsonFilePath("category.json");
+            List<Category>? categoriesData = JsonConvert.DeserializeObject<List<Category>>(await File.ReadAllTextAsync(jsonFilePath));
+
+            if (categoriesData != null)
+            {
+                await context.Categories.AddRangeAsync(categoriesData);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        private static string GetJsonFilePath(string jsonName)
+        {
+            string solutionDir = Directory.GetCurrentDirectory();
+            string wwwrootPath = Path.Combine(solutionDir, "..", "RecipeShare.Web", "wwwroot", "data", jsonName);
+            string jsonFilePath = Path.GetFullPath(wwwrootPath);
+            return jsonFilePath;
         }
     }
 }
