@@ -78,7 +78,7 @@ namespace RecipeShare.Services.Data
             ApplicationUser? defaultUser = await userManager.FindByEmailAsync("defaultuser@example.com");
             if (defaultUser == null)
             {
-                var user = new ApplicationUser
+                ApplicationUser user = new ApplicationUser
                 {
                     UserName = "Default User",
                     Email = "defaultuser@example.com",
@@ -86,13 +86,15 @@ namespace RecipeShare.Services.Data
                     AccountBio = "This is a default user made for practice!"
                 };
 
-                var result = await userManager.CreateAsync(user, "DefaultPassword123");
+                IdentityResult result = await userManager.CreateAsync(user, "DefaultPassword123");
                 if (!result.Succeeded)
                 {
                     return;
                 }
             }
         }
+
+
 
         private static string GetJsonFilePath(string jsonName)
         {
