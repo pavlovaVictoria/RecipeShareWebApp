@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -19,6 +20,8 @@ namespace RecipeShare.Services.Data
             //Seed all default values
             await SeedAllergensAsync(context);
             await SeedAllCategoriesAsync(context);
+            await SeedAllProductsAsync(context);
+            await SeedDefaultUserAsync(scope.ServiceProvider);
         }
 
         private static async Task SeedAllergensAsync(RecipeShareDbContext context)
@@ -55,7 +58,7 @@ namespace RecipeShare.Services.Data
 
         private static async Task SeedAllProductsAsync(RecipeShareDbContext context)
         {
-            if (context.Categories.Any())
+            if (context.Products.Any())
             {
                 return;
             }
@@ -66,6 +69,28 @@ namespace RecipeShare.Services.Data
             {
                 await context.Products.AddRangeAsync(productsData);
                 await context.SaveChangesAsync();
+            }
+        }
+
+        private static async Task SeedDefaultUserAsync(IServiceProvider serviceProvider)
+        {
+            UserManager<ApplicationUser> userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            ApplicationUser? defaultUser = await userManager.FindByEmailAsync("defaultuser@example.com");
+            if (defaultUser == null)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = "Default User",
+                    Email = "defaultuser@example.com",
+                    IsMale = true,
+                    AccountBio = "This is a default user made for practice!"
+                };
+
+                var result = await userManager.CreateAsync(user, "DefaultPassword123");
+                if (!result.Succeeded)
+                {
+                    return;
+                }
             }
         }
 
