@@ -84,6 +84,10 @@ namespace RecipeShare.Data.Models
         [Comment("If the User don't want to delete a recipe -> has the chance of archive it")]
         public bool IsArchived { get; set; } = false;
 
+        [Required]
+        [Comment("Shows if the Recipe is approved by the moderator")]
+        public bool IsApproved { get; set; } = false;
+
         [Comment("A collection of the Allergens of the given Recipe")]
         public virtual ICollection<RecipeAllergen> AllergensRecipes { get; set; } = new List<RecipeAllergen>();
 
