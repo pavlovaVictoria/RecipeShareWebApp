@@ -191,9 +191,115 @@ namespace RecipeShare.Services.Data
                             ProductId = context.Products.First(p=> p.ProductName == "Heavy Cream").Id,
                             UnitType = UnitType.Milliliters,
                             Quantity = 500.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Cheese").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 20.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p => p.ProductName == "Pasta").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 300.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p => p.ProductName == "Pasta").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 300.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p => p.ProductName == "Salt").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 10.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p => p.ProductName == "Black Pepper").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 5.00m
+                        }
+                    },
+                    AllergensRecipes =
+                    {
+                        new RecipeAllergen
+                        {
+                            AllergenId = context.Allergens.First(a => a.AllergenName == "Wheat").Id
+                        },
+                        new RecipeAllergen
+                        {
+                            AllergenId = context.Allergens.First(a => a.AllergenName == "Milk").Id
                         }
                     }
-                }
+                },
+                new Recipe
+                {
+                    RecipeTitle = "Vegetable Stir-Fry",
+                    NormalizedRecipeTitle = "VEGETABLE STIR-FRY",
+                    UserId = defaultUser.Id,
+                    Description = "A quick and healthy stir-fry",
+                    Preparation = "Stir-fry the vegetables in a wok with soy sauce and serve with rice.",
+                    MinutesForPrep = 25,
+                    MealType = MealType.Vegan,
+                    CategoryId = context.Categories.First(c=> c.CategoryName == "MainCourse").Id,
+                    Img = "https://natashaskitchen.com/wp-content/uploads/2020/08/Vegetable-Stir-Fry-2.jpg",
+                    DateOfRelease = DateTime.UtcNow,
+                    RecipesProductsDetails =
+                    {
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Rice").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 100.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Broccoli").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 20.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Bell Pepper").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 20.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Carrot").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 15.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Corn").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 15.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Mushroom").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 10.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Soy Sauce").Id,
+                            UnitType = UnitType.Milliliters,
+                            Quantity = 15.00m
+                        }
+                    },
+                    AllergensRecipes =
+                    {
+                        new RecipeAllergen
+                        {
+                            AllergenId = context.Allergens.First(a => a.AllergenName == "Soya").Id
+                        }
+                    }
+                },
             };
             if (recipes != null)
             {
@@ -240,14 +346,6 @@ namespace RecipeShare.Services.Data
     }
 }
 
-    //new Recipe
-    //{
-    //    RecipeTitle = "Grilled Chicken Alfredo",
-    //    NormalizedRecipeTitle = "GRILLED CHICKEN ALFREDO",
-    //    UserId = defaultUser.Id,
-    //    Description = "A creamy Alfredo pasta topped with grilled chicken.",
-    //    Preparation = "Cook the pasta. Grill the chicken. Mix pasta, chicken, and Alfredo sauce. Serve hot."
-    //},
     //new Recipe
     //{
     //    RecipeTitle = "Vegetable Stir-Fry",

@@ -738,6 +738,61 @@
     "ProductName": "Ginger",
     "ProductType": 8,
     "Calories": 80
+  },
+  {
+    "ProductName": "Salt",
+    "ProductType": 8,
+    "Calories": 0
+  },
+  {
+    "ProductName": "Soy Sauce",
+    "ProductType": 9,
+    "Calories": 53
+  },
+  {
+    "ProductName": "Ketchup",
+    "ProductType": 9,
+    "Calories": 112
+  },
+  {
+    "ProductName": "Mustard",
+    "ProductType": 9,
+    "Calories": 66
+  },
+  {
+    "ProductName": "Mayonnaise",
+    "ProductType": 9,
+    "Calories": 680
+  },
+  {
+    "ProductName": "Barbecue Sauce",
+    "ProductType": 9,
+    "Calories": 132
+  },
+  {
+    "ProductName": "Hot Sauce",
+    "ProductType": 9,
+    "Calories": 5
+  },
+  {
+    "ProductName": "Pesto Sauce",
+    "ProductType": 9,
+    "Calories": 304
+  },
+  {
+    "ProductName": "Ranch Dressing",
+    "ProductType": 9,
+    "Calories": 145
+  },
+  {
+    "ProductName": "Caesar Dressing",
+    "ProductType": 9,
+    "Calories": 158
+  },
+  {
+    "ProductName": "Sweet Chili Sauce",
+    "ProductType": 9,
+    "Calories": 89
   }
 ]
   

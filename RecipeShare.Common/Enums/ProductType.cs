@@ -10,6 +10,7 @@
         Egg = 5,
         Gluten = 6,
         GlutenFree = 7,
-        Spice = 8
+        Spice = 8,
+        Sauce = 9
     }
 }
