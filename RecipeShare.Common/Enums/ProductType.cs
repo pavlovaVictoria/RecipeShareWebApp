@@ -9,6 +9,7 @@
         Seafood = 4,
         Egg = 5,
         Gluten = 6,
-        GlutenFree = 7
+        GlutenFree = 7,
+        Spice = 8
     }
 }

@@ -166,6 +166,34 @@ namespace RecipeShare.Services.Data
                         }
                     }
                 },
+                new Recipe
+                {
+                    RecipeTitle = "Chicken Alfredo",
+                    NormalizedRecipeTitle = "CHICKEN ALFREDO",
+                    UserId = defaultUser.Id,
+                    Description = "A creamy Alfredo pasta.",
+                    Preparation = "Cook the pasta. Grill the chicken. Make the Alfredo sauce with cream and cheese on the stove. Mix the pasta, chicken and the Alfredo sauce. Serve hot.",
+                    MinutesForPrep = 30,
+                    MealType = MealType.WithMeat,
+                    CategoryId = context.Categories.First(c=> c.CategoryName == "MainCourse").Id,
+                    Img = "https://www.budgetbytes.com/wp-content/uploads/2022/07/Chicken-Alfredo-above.jpg",
+                    DateOfRelease = DateTime.UtcNow,
+                    RecipesProductsDetails =
+                    {
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Chicken").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 100.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Heavy Cream").Id,
+                            UnitType = UnitType.Milliliters,
+                            Quantity = 500.00m
+                        }
+                    }
+                }
             };
             if (recipes != null)
             {
@@ -198,14 +226,16 @@ namespace RecipeShare.Services.Data
         //For testing
         private static async Task ClearSpecificTableAsync(RecipeShareDbContext context)
         {
-            context.Allergens.RemoveRange(context.Allergens);
+            //context.Allergens.RemoveRange(context.Allergens);
+            //await context.SaveChangesAsync();
+            context.Recipes.RemoveRange(context.Recipes);
             await context.SaveChangesAsync();
-
+            
             context.Products.RemoveRange(context.Products);
             await context.SaveChangesAsync();
 
-            context.Categories.RemoveRange(context.Categories);
-            await context.SaveChangesAsync();
+            //context.Categories.RemoveRange(context.Categories);
+            //await context.SaveChangesAsync();
         }
     }
 }
