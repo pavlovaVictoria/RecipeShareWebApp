@@ -29,6 +29,12 @@ namespace RecipeShare.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<IdentityRole<Guid>>().HasData(
+                new IdentityRole<Guid> { Id = Guid.NewGuid(), Name = "User", NormalizedName = "USER"},
+                new IdentityRole<Guid> { Id = Guid.NewGuid(), Name = "Moderator", NormalizedName = "MODERATOR"},
+                new IdentityRole<Guid> { Id = Guid.NewGuid(), Name = "Administrator", NormalizedName = "ADMINISTRATOR"}
+            );
+
             //Composite primary keys
             builder.Entity<LikedRecipe>().HasKey(x => new
             {
