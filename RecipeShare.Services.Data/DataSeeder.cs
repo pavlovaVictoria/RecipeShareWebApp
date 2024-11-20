@@ -96,6 +96,13 @@ namespace RecipeShare.Services.Data
                     return;
                 }
             }
+            else
+            {
+                if (!await userManager.IsInRoleAsync(defaultUser, "User"))
+                {
+                    await userManager.AddToRoleAsync(defaultUser, "User");
+                }
+            }
         }
 
         private static async Task SeedAllRecipesAsync(RecipeShareDbContext context, IServiceProvider serviceProvider)
@@ -172,6 +179,20 @@ namespace RecipeShare.Services.Data
             string wwwrootPath = Path.Combine(solutionDir, "..", "RecipeShare.Web", "wwwroot", "data", jsonName);
             string jsonFilePath = Path.GetFullPath(wwwrootPath);
             return jsonFilePath;
+        }
+
+        //For testing
+        private static async Task AddRoleToUser(IServiceProvider serviceProvider)
+        {
+            UserManager<ApplicationUser> userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            ApplicationUser? defaultUser = await userManager.FindByEmailAsync("vikiuchi83@gmail.com");
+            if (defaultUser != null)
+            {
+                if (!await userManager.IsInRoleAsync(defaultUser, "User"))
+                {
+                    await userManager.AddToRoleAsync(defaultUser, "User");
+                }
+            }
         }
 
         //For testing

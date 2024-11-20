@@ -32,6 +32,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("CanViewAndAddRecipes", policy =>
+        policy.RequireRole("User", "Moderator", "Administrator"))
+    .AddPolicy("CanApproveRecipes", policy =>
+        policy.RequireRole("Moderator", "Administrator"))
+    .AddPolicy("CanManageEverything", policy =>
+        policy.RequireRole("Administrator"));
+
 builder.Services
     .AddScoped<IAccountService, AccountService>();
 
