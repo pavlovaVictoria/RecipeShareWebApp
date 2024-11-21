@@ -47,12 +47,14 @@ var app = builder.Build();
 
 await DataSeeder.SeedAsync(app.Services);
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Error/500"); // Custom page for server errors.
+    app.UseStatusCodePagesWithReExecute("/Error/{0}"); // Custom pages for status codes like 404 or 403.
 }
 
 app.UseHttpsRedirection();
