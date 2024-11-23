@@ -793,6 +793,270 @@
     "ProductName": "Sweet Chili Sauce",
     "ProductType": 9,
     "Calories": 89
+  },
+  {
+    "ProductName": "Water",
+    "ProductType": 10,
+    "Calories": 0
+  },
+  {
+    "ProductName": "Orange Juice",
+    "ProductType": 10,
+    "Calories": 45
+  },
+  {
+    "ProductName": "Lemonade",
+    "ProductType": 10,
+    "Calories": 50
+  },
+  {
+    "ProductName": "Apple Juice",
+    "ProductType": 10,
+    "Calories": 47
+  },
+  {
+    "ProductName": "Coca Cola",
+    "ProductType": 10,
+    "Calories": 150
+  },
+  {
+    "ProductName": "Iced Tea",
+    "ProductType": 10,
+    "Calories": 100
+  },
+  {
+    "ProductName": "Sparkling Water",
+    "ProductType": 10,
+    "Calories": 0
+  },
+  {
+    "ProductName": "Beer",
+    "ProductType": 11,
+    "Calories": 150
+  },
+  {
+    "ProductName": "Red Wine",
+    "ProductType": 11,
+    "Calories": 125
+  },
+  {
+    "ProductName": "White Wine",
+    "ProductType": 11,
+    "Calories": 120
+  },
+  {
+    "ProductName": "Whiskey",
+    "ProductType": 11,
+    "Calories": 70
+  },
+  {
+    "ProductName": "Vodka",
+    "ProductType": 11,
+    "Calories": 96
+  },
+  {
+    "ProductName": "Rum",
+    "ProductType": 11,
+    "Calories": 97
+  },
+  {
+    "ProductName": "Gin",
+    "ProductType": 11,
+    "Calories": 110
+  },
+  {
+    "ProductName": "Tequila",
+    "ProductType": 11,
+    "Calories": 97
+  },
+  {
+    "ProductName": "Champagne",
+    "ProductType": 11,
+    "Calories": 90
+  },
+  {
+    "ProductName": "White Sugar",
+    "ProductType": 12,
+    "Calories": 387
+  },
+  {
+    "ProductName": "Brown Sugar",
+    "ProductType": 12,
+    "Calories": 380
+  },
+  {
+    "ProductName": "Honey",
+    "ProductType": 12,
+    "Calories": 304
+  },
+  {
+    "ProductName": "Maple Syrup",
+    "ProductType": 12,
+    "Calories": 260
+  },
+  {
+    "ProductName": "Agave Syrup",
+    "ProductType": 12,
+    "Calories": 310
+  },
+  {
+    "ProductName": "Stevia",
+    "ProductType": 12,
+    "Calories": 0
+  },
+  {
+    "ProductName": "Coconut Sugar",
+    "ProductType": 12,
+    "Calories": 375
+  },
+  {
+    "ProductName": "Molasses",
+    "ProductType": 12,
+    "Calories": 290
+  },
+  {
+    "ProductName": "Corn Syrup",
+    "ProductType": 12,
+    "Calories": 286
+  },
+  {
+    "ProductName": "Powdered Sugar",
+    "ProductType": 12,
+    "Calories": 400
+  },
+  {
+    "ProductName": "Almond",
+    "ProductType": 13,
+    "Calories": 579
+  },
+  {
+    "ProductName": "Cashew",
+    "ProductType": 13,
+    "Calories": 553
+  },
+  {
+    "ProductName": "Walnut",
+    "ProductType": 13,
+    "Calories": 654
+  },
+  {
+    "ProductName": "Pistachio",
+    "ProductType": 13,
+    "Calories": 562
+  },
+  {
+    "ProductName": "Hazelnut",
+    "ProductType": 13,
+    "Calories": 628
+  },
+  {
+    "ProductName": "Pecan",
+    "ProductType": 13,
+    "Calories": 691
+  },
+  {
+    "ProductName": "Macadamia Nut",
+    "ProductType": 13,
+    "Calories": 718
+  },
+  {
+    "ProductName": "Brazil Nut",
+    "ProductType": 13,
+    "Calories": 659
+  },
+  {
+    "ProductName": "Chestnut",
+    "ProductType": 13,
+    "Calories": 213
+  },
+  {
+    "ProductName": "Dried Coconut",
+    "ProductType": 13,
+    "Calories": 660
+  },
+  {
+    "ProductName": "Olive Oil",
+    "ProductType": 14,
+    "Calories": 884
+  },
+  {
+    "ProductName": "Coconut Oil",
+    "ProductType": 14,
+    "Calories": 862
+  },
+  {
+    "ProductName": "Vegetable Oil",
+    "ProductType": 14,
+    "Calories": 884
+  },
+  {
+    "ProductName": "Sunflower Oil",
+    "ProductType": 14,
+    "Calories": 884
+  },
+  {
+    "ProductName": "Canola Oil",
+    "ProductType": 14,
+    "Calories": 884
+  },
+  {
+    "ProductName": "Avocado Oil",
+    "ProductType": 14,
+    "Calories": 884
+  },
+  {
+    "ProductName": "Peanut Oil",
+    "ProductType": 14,
+    "Calories": 884
+  },
+  {
+    "ProductName": "Yeast",
+    "ProductType": 15,
+    "Calories": 40
+  },
+  {
+    "ProductName": "Baking Powder",
+    "ProductType": 15,
+    "Calories": 53
+  },
+  {
+    "ProductName": "Baking Soda",
+    "ProductType": 15,
+    "Calories": 0
+  },
+  {
+    "ProductName": "Cornstarch",
+    "ProductType": 16,
+    "Calories": 30
+  },
+  {
+    "ProductName": "Bread Crumbs",
+    "ProductType": 6,
+    "Calories": 120
+  },
+  {
+    "ProductName": "Rice Flour",
+    "ProductType": 6,
+    "Calories": 360
+  },
+  {
+    "ProductName": "Cocoa Powder",
+    "ProductType": 7,
+    "Calories": 50
+  },
+  {
+    "ProductName": "Gelatin",
+    "ProductType": 16,
+    "Calories": 335
+  },
+  {
+    "ProductName": "Agar Agar",
+    "ProductType": 16,
+    "Calories": 3
+  },
+  {
+    "ProductName": "Potato Starch",
+    "ProductType": 16,
+    "Calories": 358
   }
 ]
-  
