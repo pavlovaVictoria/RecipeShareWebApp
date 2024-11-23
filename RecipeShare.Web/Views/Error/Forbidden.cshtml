@@ -1,1 +1,6 @@
-﻿
+﻿@{
+    ViewData["ErrorCode"] = "403";
+    ViewData["Message"] = "Access Denied";
+    ViewData["Description"] = "You don't have permission to view this page.";
+}
+@await Html.PartialAsync("_ErrorLayout")

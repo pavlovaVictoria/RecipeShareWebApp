@@ -1,1 +1,6 @@
-﻿
+﻿@{
+    ViewData["ErrorCode"] = "404";
+    ViewData["Message"] = "Oops! Page Not Found.";
+    ViewData["Description"] = "The page you're looking for doesn't exist.";
+}
+@await Html.PartialAsync("_ErrorLayout")

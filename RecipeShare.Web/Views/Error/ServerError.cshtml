@@ -1,1 +1,6 @@
-﻿
+﻿@{
+    ViewData["ErrorCode"] = "500";
+    ViewData["Message"] = "We're experiencing some technical difficulties. Please try again later.";
+    ViewData["Description"] = "If the problem persists, you can contact support or try refreshing the page.";
+}
+@await Html.PartialAsync("_ErrorLayout")
