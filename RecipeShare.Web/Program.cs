@@ -40,7 +40,8 @@ builder.Services.AddAuthorizationBuilder()
         policy.RequireRole("Administrator"));
 
 builder.Services
-    .AddScoped<IAccountService, AccountService>();
+    .AddScoped<IAccountService, AccountService>()
+    .AddScoped<IRecipeService, RecipeService>();
 
 var app = builder.Build();
 

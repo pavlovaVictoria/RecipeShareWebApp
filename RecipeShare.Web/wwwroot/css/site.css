@@ -120,3 +120,7 @@ input:focus + label, textarea:focus + label {
 .form-check-label {
     color: #333;
 }
+
+.border-primary {
+    border-color: #E58767 !important;
+}

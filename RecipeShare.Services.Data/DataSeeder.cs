@@ -121,6 +121,7 @@ namespace RecipeShare.Services.Data
             {
                 new Recipe
                 {
+                    IsApproved = true,
                     RecipeTitle = "Classic Caesar Salad",
                     NormalizedRecipeTitle = "CLASSIC CAESAR SALAD",
                     UserId = defaultUser.Id,
@@ -168,6 +169,7 @@ namespace RecipeShare.Services.Data
                 },
                 new Recipe
                 {
+                    IsApproved = true,
                     RecipeTitle = "Chicken Alfredo",
                     NormalizedRecipeTitle = "CHICKEN ALFREDO",
                     UserId = defaultUser.Id,
@@ -231,6 +233,7 @@ namespace RecipeShare.Services.Data
                 },
                 new Recipe
                 {
+                    IsApproved = true,
                     RecipeTitle = "Vegetable Stir-Fry",
                     NormalizedRecipeTitle = "VEGETABLE STIR-FRY",
                     UserId = defaultUser.Id,
@@ -296,6 +299,7 @@ namespace RecipeShare.Services.Data
                 },
                 new Recipe
                 {
+                    IsApproved = true,
                     RecipeTitle = "Fresh Bruschetta",
                     NormalizedRecipeTitle = "FRESH BRUSCHETTA",
                     UserId = defaultUser.Id,
@@ -347,6 +351,7 @@ namespace RecipeShare.Services.Data
                 },
                 new Recipe
                 {
+                    IsApproved = true,
                     RecipeTitle = "Lemon Meringue Pie",
                     NormalizedRecipeTitle = "LEMON MERINGUE PIE",
                     UserId = defaultUser.Id,
@@ -408,6 +413,7 @@ namespace RecipeShare.Services.Data
                 },
                 new Recipe
                 {
+                    IsApproved = true,
                     RecipeTitle = "Sweet Greek Yogurt",
                     NormalizedRecipeTitle = "SWEET GREEK YOGURT",
                     UserId = defaultUser.Id,
@@ -453,6 +459,7 @@ namespace RecipeShare.Services.Data
                 },
                 new Recipe
                 {
+                    IsApproved = true,
                     RecipeTitle = "Pizza Dough",
                     NormalizedRecipeTitle = "PIZZA DOUGH",
                     UserId = defaultUser.Id,
@@ -512,6 +519,7 @@ namespace RecipeShare.Services.Data
                 },
                 new Recipe
                 {
+                    IsApproved = true,
                     RecipeTitle = "Tomato Soup",
                     NormalizedRecipeTitle = "TOMATO SOUP",
                     UserId = defaultUser.Id,
@@ -565,6 +573,7 @@ namespace RecipeShare.Services.Data
                 },
                 new Recipe
                 {
+                    IsApproved = true,
                     RecipeTitle = "Sangria",
                     NormalizedRecipeTitle = "SANGRIA",
                     UserId = defaultUser.Id,
@@ -623,6 +632,7 @@ namespace RecipeShare.Services.Data
                 },
                 new Recipe
                 {
+                    IsApproved = true,
                     RecipeTitle = "Chocolate Cookies",
                     NormalizedRecipeTitle = "CHOCOLATE COOKIES",
                     UserId = defaultUser.Id,
@@ -676,6 +686,7 @@ namespace RecipeShare.Services.Data
                 },
                 new Recipe
                 {
+                    IsApproved = true,
                     RecipeTitle = "Shrimp pasta",
                     NormalizedRecipeTitle = "SHRIMP PASTA",
                     UserId = defaultUser.Id,
@@ -747,6 +758,7 @@ namespace RecipeShare.Services.Data
                 },
                 new Recipe
                 {
+                    IsApproved = true,
                     RecipeTitle = "Pasta Dough",
                     NormalizedRecipeTitle = "PASTA DOUGH",
                     UserId = defaultUser.Id,
