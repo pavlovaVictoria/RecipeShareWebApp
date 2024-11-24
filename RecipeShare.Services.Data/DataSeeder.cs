@@ -166,7 +166,6 @@ namespace RecipeShare.Services.Data
                         }
                     }
                 },
-                //not seeded
                 new Recipe
                 {
                     RecipeTitle = "Chicken Alfredo",
@@ -198,12 +197,6 @@ namespace RecipeShare.Services.Data
                             ProductId = context.Products.First(p=> p.ProductName == "Cheese").Id,
                             UnitType = UnitType.Grams,
                             Quantity = 20.00m
-                        },
-                        new RecipeProductDetails
-                        {
-                            ProductId = context.Products.First(p => p.ProductName == "Pasta").Id,
-                            UnitType = UnitType.Grams,
-                            Quantity = 300.00m
                         },
                         new RecipeProductDetails
                         {
@@ -306,9 +299,10 @@ namespace RecipeShare.Services.Data
                     RecipeTitle = "Fresh Bruschetta",
                     NormalizedRecipeTitle = "FRESH BRUSCHETTA",
                     UserId = defaultUser.Id,
-                    Description = "Bruschetta with Tomato and Basil",
+                    Description = "Tomato and Basil Bruschetta",
                     Preparation = "Toast the bread, mix the tomato topping, and spoon it over the bread. Optionally, top with cheese and serve.",
                     MinutesForPrep = 15,
+                    MealType = MealType.Vegetarian,
                     CategoryId = context.Categories.First(c=> c.CategoryName == "Appetizer").Id,
                     Img = "https://www.recipetineats.com/tachyon/2018/12/Bruschetta_2a.jpg",
                     DateOfRelease = DateTime.UtcNow,
@@ -356,9 +350,10 @@ namespace RecipeShare.Services.Data
                     RecipeTitle = "Lemon Meringue Pie",
                     NormalizedRecipeTitle = "LEMON MERINGUE PIE",
                     UserId = defaultUser.Id,
-                    Description = "A lemon pie with fluffy meringue",
+                    Description = "A lemon pie",
                     Preparation = "Prepare the lemon filling, pour into pie crust, and bake with meringue on top.",
                     MinutesForPrep = 90,
+                    MealType = MealType.Vegetarian,
                     CategoryId = context.Categories.First(c=> c.CategoryName == "Dessert").Id,
                     Img = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6WrcVGMxkO8Bms3S-4PFp8mvjavv8iXgFw&s",
                     DateOfRelease = DateTime.UtcNow,
@@ -416,9 +411,10 @@ namespace RecipeShare.Services.Data
                     RecipeTitle = "Sweet Greek Yogurt",
                     NormalizedRecipeTitle = "SWEET GREEK YOGURT",
                     UserId = defaultUser.Id,
-                    Description = "Greek Yogurt with Honey and Almonds",
+                    Description = "Honey and Almonds Yogurt",
                     Preparation = "Scoop yogurt into a bowl, drizzle with honey, top with sliced almonds, and sprinkle cinnamon if desired.",
                     MinutesForPrep = 5,
+                    MealType = MealType.Vegetarian,
                     CategoryId = context.Categories.First(c=> c.CategoryName == "Snack").Id,
                     Img = "https://www.modernhoney.com/wp-content/uploads/2016/10/IMG_1210edit-copycrop.jpg",
                     DateOfRelease = DateTime.UtcNow,
@@ -463,8 +459,9 @@ namespace RecipeShare.Services.Data
                     Description = "Perfect pizza dough",
                     Preparation = "In a bowl, mix water with olive oil, sugar and yeast and wait 10 minutes. Then we add the salt and flour and knead until it becomes a dough.",
                     MinutesForPrep = 5,
+                    MealType = MealType.Vegan,
                     CategoryId = context.Categories.First(c=> c.CategoryName == "Snack").Id,
-                    Img = "https://www.modernhoney.com/wp-content/uploads/2016/10/IMG_1210edit-copycrop.jpg",
+                    Img = "https://www.foodandwine.com/thmb/S4Xys0wnd7Xu9D-41jDVn1b9Iqc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/homemade-pizza-dough-FT-RECIPE0422-7d3aa2fbd4244e88afaff987753866d6.jpg",
                     DateOfRelease = DateTime.UtcNow,
                     RecipesProductsDetails =
                     {
@@ -521,6 +518,7 @@ namespace RecipeShare.Services.Data
                     Description = "Classic creamy tomato soup",
                     Preparation = "Bake onions, garlic, tomatoes and bell peppers in a pan. Then blend them and serve the soup with cream.",
                     MinutesForPrep = 5,
+                    MealType = MealType.Vegetarian,
                     CategoryId = context.Categories.First(c=> c.CategoryName == "Snack").Id,
                     Img = "https://www.modernhoney.com/wp-content/uploads/2016/10/IMG_1210edit-copycrop.jpg",
                     DateOfRelease = DateTime.UtcNow,
@@ -567,7 +565,230 @@ namespace RecipeShare.Services.Data
                 },
                 new Recipe
                 {
-
+                    RecipeTitle = "Sangria",
+                    NormalizedRecipeTitle = "SANGRIA",
+                    UserId = defaultUser.Id,
+                    Description = "Spanish drink",
+                    Preparation = "Mix the wine, the orange juice and the chopped fruit.",
+                    MinutesForPrep = 10,
+                    MealType = MealType.Vegan,
+                    CategoryId = context.Categories.First(c=> c.CategoryName == "Drink").Id,
+                    Img = "https://whatmollymade.com/wp-content/uploads/2022/02/winter-sangria-18.jpg",
+                    DateOfRelease = DateTime.UtcNow,
+                    RecipesProductsDetails =
+                    {
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Cherry").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 20.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Apple").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 20.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Grapes").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 20.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Lime").Id,
+                            UnitType = UnitType.Count,
+                            Quantity = 2m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Orange Juice").Id,
+                            UnitType = UnitType.Milliliters,
+                            Quantity = 300.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Sparkling Water").Id,
+                            UnitType = UnitType.Milliliters,
+                            Quantity = 500.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Red Wine").Id,
+                            UnitType = UnitType.Milliliters,
+                            Quantity = 200.00m
+                        },
+                    },
+                },
+                new Recipe
+                {
+                    RecipeTitle = "Chocolate Cookies",
+                    NormalizedRecipeTitle = "CHOCOLATE COOKIES",
+                    UserId = defaultUser.Id,
+                    Description = "Soft and chewy cookies",
+                    Preparation = "Mix the ingredients, form dough balls and bake at 170C for 10 minutes.",
+                    MinutesForPrep = 30,
+                    MealType = MealType.Vegetarian,
+                    CategoryId = context.Categories.First(c=> c.CategoryName == "Dessert").Id,
+                    Img = "https://assets.bonappetit.com/photos/5ca534485e96521ff23b382b/1:1/w_2560%2Cc_limit/chocolate-chip-cookie.jpg",
+                    DateOfRelease = DateTime.UtcNow,
+                    RecipesProductsDetails =
+                    {
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Chicken Egg").Id,
+                            UnitType = UnitType.Count,
+                            Quantity = 2m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Butter").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 200.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Baking Soda").Id,
+                            UnitType = UnitType.TeaSpoon,
+                            Quantity = 1m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Chocolate Chips").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 100.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Wheat Flour").Id,
+                            UnitType = UnitType.Cups,
+                            Quantity = 2m
+                        },
+                    },
+                    AllergensRecipes =
+                    {
+                        new RecipeAllergen
+                        {
+                            AllergenId = context.Allergens.First(a => a.AllergenName == "Wheat").Id
+                        }
+                    }
+                },
+                new Recipe
+                {
+                    RecipeTitle = "Shrimp pasta",
+                    NormalizedRecipeTitle = "SHRIMP PASTA",
+                    UserId = defaultUser.Id,
+                    Description = "Creamy shrimp pasta",
+                    Preparation = "The shrimps are heated in a pan with garlic, then cream and cherry tomatoes are added. After the pasta is cooked, mix it with the sauce.",
+                    MinutesForPrep = 30,
+                    MealType = MealType.WithMeat,
+                    CategoryId = context.Categories.First(c=> c.CategoryName == "MainCourse").Id,
+                    Img = "https://newmansown.com/wp-content/uploads/2022/03/shrimp-marinara-with-pasta.png",
+                    DateOfRelease = DateTime.UtcNow,
+                    RecipesProductsDetails =
+                    {
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Garlic").Id,
+                            UnitType = UnitType.Count,
+                            Quantity = 1m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Tomato").Id,
+                            UnitType = UnitType.Count,
+                            Quantity = 1m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Cheese").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 15.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Cream").Id,
+                            UnitType = UnitType.Milliliters,
+                            Quantity = 200.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Shrimp").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 100.00m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Pasta").Id,
+                            UnitType = UnitType.Grams,
+                            Quantity = 500.00m
+                        }
+                    },
+                    AllergensRecipes =
+                    {
+                        new RecipeAllergen
+                        {
+                            AllergenId = context.Allergens.First(a => a.AllergenName == "Milk").Id
+                        },
+                        new RecipeAllergen
+                        {
+                            AllergenId = context.Allergens.First(a => a.AllergenName == "Egg").Id
+                        },
+                        new RecipeAllergen
+                        {
+                            AllergenId = context.Allergens.First(a => a.AllergenName == "Wheat").Id
+                        },
+                        new RecipeAllergen
+                        {
+                            AllergenId = context.Allergens.First(a => a.AllergenName == "Crab").Id
+                        }
+                    }
+                },
+                new Recipe
+                {
+                    RecipeTitle = "Pasta Dough",
+                    NormalizedRecipeTitle = "PASTA DOUGH",
+                    UserId = defaultUser.Id,
+                    Description = "Fresh pasta dough",
+                    Preparation = "We make the dough by mixing flour, eggs and salt.",
+                    MinutesForPrep = 20,
+                    MealType = MealType.Vegetarian,
+                    CategoryId = context.Categories.First(c=> c.CategoryName == "Dough").Id,
+                    Img = "https://www.foodandwine.com/thmb/71SG19or6KD4Cu_O_3rDjw01dT4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/fresh-pasta-dough-FT-RECIPE0921-5ae4cdc40d3f44ada10db2b2a5fd7de3.jpg",
+                    DateOfRelease = DateTime.UtcNow,
+                    RecipesProductsDetails =
+                    {
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Wheat Flour").Id,
+                            UnitType = UnitType.Cups,
+                            Quantity = 2m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Chicken Egg").Id,
+                            UnitType = UnitType.Count,
+                            Quantity = 2m
+                        },
+                        new RecipeProductDetails
+                        {
+                            ProductId = context.Products.First(p=> p.ProductName == "Salt").Id,
+                            UnitType = UnitType.TeaSpoon,
+                            Quantity = 0.5m
+                        }
+                    },
+                    AllergensRecipes =
+                    {
+                        new RecipeAllergen
+                        {
+                            AllergenId = context.Allergens.First(a => a.AllergenName == "Wheat").Id
+                        },
+                        new RecipeAllergen
+                        {
+                            AllergenId = context.Allergens.First(a => a.AllergenName == "Egg").Id
+                        }
+                    }
                 }
             };
             if (recipes != null)
@@ -614,38 +835,3 @@ namespace RecipeShare.Services.Data
         }
     }
 }
-
-    
-    //new Recipe
-    //{
-    //    RecipeTitle = "Margarita Pizza",
-    //    NormalizedRecipeTitle = "MARGARITA PIZZA",
-    //    UserId = defaultUser.Id,
-    //    Description = "A simple pizza with tomato sauce, fresh mozzarella, and basil.",
-    //    Preparation = "Spread the tomato sauce on the dough, add mozzarella, and basil. Bake until golden."
-    //},
-    //new Recipe
-    //{
-    //    RecipeTitle = "Chocolate Chip Cookies",
-    //    NormalizedRecipeTitle = "CHOCOLATE CHIP COOKIES",
-    //    UserId = defaultUser.Id,
-    //    Description = "Soft and chewy cookies with chocolate chips.",
-    //    Preparation = "Mix the ingredients, form dough balls, bake at 350°F for 10 minutes."
-    //},
-    //new Recipe
-    //{
-    //    RecipeTitle = "Beef Tacos",
-    //    NormalizedRecipeTitle = "BEEF TACOS",
-    //    UserId = defaultUser.Id,
-    //    Description = "Ground beef, seasoned with taco spices, served in soft tortillas.",
-    //    Preparation = "Cook ground beef with taco seasoning. Fill tortillas with beef, lettuce, and cheese."
-    //},
-    //new Recipe
-    //{
-    //    RecipeTitle = "Spaghetti Bolognese",
-    //    NormalizedRecipeTitle = "SPAGHETTI BOLOGNESE",
-    //    UserId = defaultUser.Id,
-    //    Description = "A rich meat sauce served over pasta.",
-    //    Preparation = "Cook ground beef, onions, and tomatoes. Serve over spaghetti."
-    //},
-//};

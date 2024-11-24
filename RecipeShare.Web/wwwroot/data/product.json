@@ -1058,5 +1058,30 @@
     "ProductName": "Potato Starch",
     "ProductType": 16,
     "Calories": 358
+  },
+  {
+    "ProductName": "Milk Chocolate",
+    "ProductType": 17,
+    "Calories": 535
+  },
+  {
+    "ProductName": "Dark Chocolate",
+    "ProductType": 17,
+    "Calories": 600
+  },
+  {
+    "ProductName": "White Chocolate",
+    "ProductType": 17,
+    "Calories": 539
+  },
+  {
+    "ProductName": "Chocolate Chips",
+    "ProductType": 17,
+    "Calories": 480
+  },
+  {
+    "ProductName": "Unsweet Chocolate",
+    "ProductType": 17,
+    "Calories": 520
   }
 ]

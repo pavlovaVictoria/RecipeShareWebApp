@@ -18,6 +18,7 @@
         Nut = 13,
         Oil = 14,
         LeaveningAgent = 15,
-        Thickener = 16
+        Thickener = 16,
+        Chocolate = 17
     }
 }
