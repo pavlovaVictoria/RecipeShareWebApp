@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RecipeShare.Data;
 
@@ -11,9 +12,11 @@ using RecipeShare.Data;
 namespace RecipeShare.Data.Migrations
 {
     [DbContext(typeof(RecipeShareDbContext))]
-    partial class RecipeShareDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241125223042_NewMigration")]
+    partial class NewMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,19 +55,19 @@ namespace RecipeShare.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0904fcd8-6b81-45aa-9c9b-2c0b3bcaa2fd"),
+                            Id = new Guid("6d08dfe6-bfc4-443f-b475-b56607f00ef3"),
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = new Guid("f3434fa0-acf0-4d8a-abe4-109f7dd9d732"),
+                            Id = new Guid("b1512246-afef-49a8-a925-908ea1746b67"),
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = new Guid("2f7c5b8a-91fa-4352-abcf-6079b15ef0c5"),
+                            Id = new Guid("46648a15-3f51-428d-9752-01bd7817b822"),
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -282,10 +285,6 @@ namespace RecipeShare.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit")
-                        .HasComment("Shows if the ApplicationUser is deleted or not -> Soft Deleting");
 
                     b.Property<bool>("IsMale")
                         .HasColumnType("bit")

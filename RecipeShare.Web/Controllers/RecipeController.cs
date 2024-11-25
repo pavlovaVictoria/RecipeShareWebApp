@@ -26,7 +26,17 @@ namespace RecipeShare.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> AllRecipesByCategory(Guid categoryId)
         {
-            return View();
+			RecipeByCategoryViewModel recipes;
+
+			try
+            {
+                recipes = await recipeService.RcipesByCategoryAsync(categoryId);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 404 });
+            }
+            return View(recipes);
         }
 
         [HttpGet]

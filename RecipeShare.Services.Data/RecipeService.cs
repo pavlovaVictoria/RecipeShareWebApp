@@ -41,6 +41,7 @@ namespace RecipeShare.Services.Data
                 .ToListAsync();
 
             List<CategoryViewModel> categories = await context.Categories
+                .Where(c => c.IsDeleted == false)
                 .AsNoTracking()
                 .Select(c => new CategoryViewModel
                 {
@@ -59,7 +60,7 @@ namespace RecipeShare.Services.Data
         public async Task<RecipeDetailsViewModel?> RecipeDetailsAsync(Guid recipeId, Guid userId)
         {
             RecipeDetailsViewModel? model = await context.Recipes
-                .Where(r => r.Id == recipeId)
+                .Where(r => r.Id == recipeId && r.IsDeleted == false)
                 .AsNoTracking()
                 .Select(r => new RecipeDetailsViewModel
                 {
@@ -73,6 +74,7 @@ namespace RecipeShare.Services.Data
                     Category = r.Category.CategoryName,
                     DateOfRelease = r.DateOfRelease.ToString(RecipeReleaseDatePattern),
                     Comments = r.Comments
+                    .Where(c => c.IsDeleted == false)
                     .Select(c => new CommentViewModel
                     {
                         UserName = c.User.UserName ?? "Unknown User",
@@ -80,6 +82,7 @@ namespace RecipeShare.Services.Data
                         Text = c.Text
                     }).ToList(),
                     Allergens = r.AllergensRecipes.Select(ar => ar.Allergen)
+                    .Where(a => a.IsDeleted == false)
                     .Select(a => new AllergenViewModel 
                     { 
                         AllergenImage = a.AllergenImage,
@@ -95,12 +98,12 @@ namespace RecipeShare.Services.Data
 
         public async Task<(bool isLiked, int likes)> LikeRecipeAsync(Guid recipeId, Guid userId)
         {
-            Recipe? recipe = await context.Recipes.Where(r => r.Id == recipeId).Include(r => r.LikedRecipes).FirstOrDefaultAsync();
+            Recipe? recipe = await context.Recipes.Where(r => r.Id == recipeId && r.IsDeleted == false).Include(r => r.LikedRecipes).FirstOrDefaultAsync();
             if (recipe == null)
             {
                 throw new ArgumentException("Recipe not found.");
             }
-            bool isLikedNow = context.LikedRecipes.Any(lr => lr.UserId == userId && lr.RecipeId == recipeId);
+            bool isLikedNow = await context.LikedRecipes.AnyAsync(lr => lr.UserId == userId && lr.RecipeId == recipeId);
             if (isLikedNow)
             {
                 LikedRecipe? likedRecipe = await context.LikedRecipes.Where(lr => lr.UserId == userId && lr.RecipeId == recipeId).FirstOrDefaultAsync();
@@ -125,5 +128,33 @@ namespace RecipeShare.Services.Data
             int count = await context.LikedRecipes.Where(lr => lr.RecipeId == recipeId).CountAsync();
             return (!isLikedNow, count);
         }
-    }
+
+        public async Task<RecipeByCategoryViewModel> RcipesByCategoryAsync(Guid categoryId)
+        {
+            bool validCategory = await context.Categories.AnyAsync(c => c.Id == categoryId && c.IsDeleted == false);
+            if (!validCategory)
+            {
+				throw new ArgumentException("Category not found.");
+			}
+            RecipeByCategoryViewModel model = await context.Categories
+                .Where(c => c.Id == categoryId)
+                .AsNoTracking()
+                .Select(c => new RecipeByCategoryViewModel
+                {
+                    CategoryId = c.Id,
+                    CategoryName = c.CategoryName,
+                    Recipes = context.Recipes.Where(r => r.CategoryId == c.Id && r.IsDeleted == false)
+                    .Select(r => new InfoRecipeViewModel
+                    {
+                        Id = r.Id,
+                        RecipeTitle = r.RecipeTitle,
+                        Description = r.Description,
+                        DateOfRelease = r.DateOfRelease.ToString(RecipeReleaseDatePattern),
+                        ImageUrl = r.Img ?? "~/images/recipes/Recipe.png"
+                    }).ToList()
+                }).FirstAsync();
+            return model;
+        }
+
+	}
 }

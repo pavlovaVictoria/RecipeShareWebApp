@@ -34,7 +34,7 @@ $(function () {
                 }
             },
             error: function () {
-                window.location.href = '/Error/General';
+                window.location.href = 'Error/500';
             }
         });
     });

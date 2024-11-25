@@ -21,12 +21,16 @@ namespace RecipeShare.Data.Models
         [Comment("Shows if the user is male -> true or female -> false")]
         public bool IsMale { get; set; }
 
-        [AllowNull]
+        [Required]
         [Comment("The user's short bio")]
         [StringLength(UserBioMax, ErrorMessage = ErrorMessageUserBio)]
         public string AccountBio { get; set; }
 
-        [Comment("A collection of Recipes made by the given User")]
+		[Required]
+		[Comment("Shows if the ApplicationUser is deleted or not -> Soft Deleting")]
+		public bool IsDeleted { get; set; } = false;
+
+		[Comment("A collection of Recipes made by the given User")]
         public virtual ICollection<Recipe> Recipes { get; set; } = new List<Recipe>();
 
         [Comment("A collection of the Liked Recipes of the given User")]

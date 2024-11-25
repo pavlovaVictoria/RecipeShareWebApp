@@ -17,7 +17,11 @@ namespace RecipeShare.Data.Models
         [Comment("The Id of the Comment")]
         public Guid Id { get; set; }
 
-        [Required]
+		[Required]
+		[Comment("Shows if the Comment is deleted or not -> Soft Deleting")]
+		public bool IsDeleted { get; set; } = false;
+
+		[Required]
         [Comment("The Date of release of the Comment")]
         [RegularExpression(RegexDateTimePattern, ErrorMessage = ErrorMessageDate)]
         public DateTime DateOfRelease { get; set; }

@@ -467,7 +467,7 @@ namespace RecipeShare.Services.Data
                     Preparation = "In a bowl, mix water with olive oil, sugar and yeast and wait 10 minutes. Then we add the salt and flour and knead until it becomes a dough.",
                     MinutesForPrep = 5,
                     MealType = MealType.Vegan,
-                    CategoryId = context.Categories.First(c=> c.CategoryName == "Snack").Id,
+                    CategoryId = context.Categories.First(c=> c.CategoryName == "Dough").Id,
                     Img = "https://www.foodandwine.com/thmb/S4Xys0wnd7Xu9D-41jDVn1b9Iqc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/homemade-pizza-dough-FT-RECIPE0422-7d3aa2fbd4244e88afaff987753866d6.jpg",
                     DateOfRelease = DateTime.UtcNow,
                     RecipesProductsDetails =
