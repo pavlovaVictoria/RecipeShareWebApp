@@ -41,7 +41,8 @@ builder.Services.AddAuthorizationBuilder()
 
 builder.Services
     .AddScoped<IAccountService, AccountService>()
-    .AddScoped<IRecipeService, RecipeService>();
+    .AddScoped<IRecipeService, RecipeService>()
+    .AddScoped<IHomeService, HomeService>();
 
 var app = builder.Build();
 

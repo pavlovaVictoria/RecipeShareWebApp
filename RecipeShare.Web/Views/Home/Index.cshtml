@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<InfoRecipeViewModel>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,12 +7,22 @@
 
     <img src="@Url.Content("~/images/home/FrontPage.png")" class="img-fluid" style="object-fit: contain; max-height: 550px; width: 100%;" alt="">
 
-    <div class="row">
-        @for(int i = 1; i <= 3; i++)
-        {
-            <div class="col-md-4">
-                <p>Recipe</p>
-            </div>
-        }
+    <div class="container text-center rounded border border-4 border-primary p-2 shadow-sm">
+        <h2 class="text-center m-4 text-muted">Top 3 Recipes</h2>
+        <div class="row justify-content-center">
+            @foreach (var recipe in Model)
+            {
+                <div class="card d-flex align-items-center justify-content-center m-3 shadow-sm" style="width: 18rem;">
+                    <img src="@Url.Content(recipe.ImageUrl)" class="card-img-top" style="width: 16rem; height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">@recipe.RecipeTitle</h5>
+                        <p class="card-text">@recipe.Description</p>
+                        <a asp-controller="Recipe" asp-action="RecipeDetails" asp-route-recipeId="@recipe.Id" class="btn btn-primary">View More</a>
+                        <p class="card-footer">@recipe.DateOfRelease</p>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
+
 </div>
