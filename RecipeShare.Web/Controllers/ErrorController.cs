@@ -22,10 +22,13 @@ namespace RecipeShare.Web.Controllers
             {
                 return View("Forbidden");
             }
-            else
-            {
-                return View("GenericError");
-            }
+            return View("GeneralError");
+        }
+
+        [Route("Error/General")]
+        public IActionResult GeneralError()
+        {
+            return View("GeneralError");
         }
     }
 }

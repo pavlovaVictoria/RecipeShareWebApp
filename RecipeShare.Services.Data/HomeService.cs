@@ -20,7 +20,7 @@ namespace RecipeShare.Services.Data
             List<InfoRecipeViewModel> recipes = await context.Recipes
                 .Where(r => r.IsApproved)
                 .OrderByDescending(r => r.LikedRecipes.Count)
-                .OrderBy(r => r.RecipeTitle)
+                .ThenBy(r => r.RecipeTitle)
                 .AsNoTracking()
                 .Select(r => new InfoRecipeViewModel
                 {

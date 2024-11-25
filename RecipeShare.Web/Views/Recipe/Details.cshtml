@@ -1,0 +1,84 @@
+﻿@model RecipeDetailsViewModel
+@{
+    ViewData["Title"] = "Recipe Details";
+}
+<div class="container mt-5">
+    <button class="btn btn-outline-primary" onclick="goBack()">
+        <i class="bi bi-arrow-left"></i> Go Back
+    </button>
+    <h1 class="text-center mb-4">@Model.RecipeTitle</h1>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Author: @Model.UserName</h5>
+            <p class="card-text text-muted">Published on: @Model.DateOfRelease</p>
+            <hr class="my-4">
+            <p class="card-text"><strong>Allergens: </strong> 
+                @foreach(var a in Model.Allergens)
+                {
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="@a.AllergenName">
+                        <img src="@Url.Content(a.AllergenImage)" alt="@a.AllergenName" class="rounded-circle border" style="width: 50px; height: 50px; object-fit: cover;" />
+                    </span>
+                }
+            </p>
+            <p class="card-text"><strong>Category:</strong> @Model.Category</p>
+            <p class="card-text"><strong>Meal Type:</strong> @Model.MealType</p>
+            <p class="card-text"><strong>Preparation Time:</strong> @Model.MinutesForPrep minutes</p>
+            <p class="card-text">@Model.Description</p>
+
+            <h4>Preparation</h4>
+            <p>@Model.Preparation</p>
+
+            @if(User?.Identity?.Name == Model.UserName)
+            {
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <p><strong>Likes:</strong></p>
+                    <span class="likes-count-circle likes-count">@Model.Likes</span>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <p><strong>Likes:</strong></p>
+                    <span class="likes-count-circle likes-count">@Model.Likes</span>
+                    <button class="btn btn-outline-primary like-btn" data-url="@Url.Action("LikeRecipe", "Recipe")" data-recipe-id="@Model.Id">
+                        @(Model.IsLikedByCurrentUser ? "Unlike" : "Like")
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <h3 class="text-center mb-4">Comments</h3>
+
+    @if (Model.Comments.Any())
+    {
+        <div class="list-group">
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <span><strong>@comment.UserName</strong></span>
+                        <span class="text-muted">@comment.DateOfRelease</span>
+                    </div>
+                    <p class="mt-2">@comment.Text</p>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-muted text-center">No comments yet. Be the first to comment!</p>
+    }
+
+    <div class="mt-4">
+        <h4>Add a Comment</h4>
+        <form method="post" asp-action="AddComment" asp-controller="Recipe">
+            <div class="form-group mb-3">
+                <textarea class="form-control" name="Text" placeholder="Write your comment..." rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+    </div>
+
+</div>

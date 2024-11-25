@@ -13,6 +13,10 @@ namespace RecipeShare.Data.Models
         {
             this.Id = Guid.NewGuid();
         }
+
+        [Required]
+        public override string? UserName { get; set; } = null!;
+        
         [Required]
         [Comment("Shows if the user is male -> true or female -> false")]
         public bool IsMale { get; set; }

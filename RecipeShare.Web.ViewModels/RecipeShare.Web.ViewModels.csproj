@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RecipeShare.Common\RecipeShare.Common.csproj" />
+    <ProjectReference Include="..\RecipeShare.Data.Model\RecipeShare.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

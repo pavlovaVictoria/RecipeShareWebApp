@@ -124,3 +124,16 @@ input:focus + label, textarea:focus + label {
 .border-primary {
     border-color: #E58767 !important;
 }
+
+.likes-count-circle {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    background-color: #E58767;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+}

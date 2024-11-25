@@ -17,7 +17,7 @@
                     <div class="card-body">
                         <h5 class="card-title">@recipe.RecipeTitle</h5>
                         <p class="card-text">@recipe.Description</p>
-                        <a asp-controller="Recipe" asp-action="RecipeDetails" asp-route-recipeId="@recipe.Id" class="btn btn-primary">View More</a>
+                            <a asp-controller="Recipe" asp-action="Details" asp-route-recipeId="@recipe.Id" class="btn btn-primary">View More</a>
                         <p class="card-footer">@recipe.DateOfRelease</p>
                     </div>
                 </div>
