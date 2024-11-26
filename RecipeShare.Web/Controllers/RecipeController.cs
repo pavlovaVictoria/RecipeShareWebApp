@@ -106,6 +106,7 @@ namespace RecipeShare.Web.Controllers
             try
             {
                 await recipeService.AddRecipeAsync(model, currentUserId);
+                TempData["SuccessMessage"] = "Your recipe was successfully added!";
                 return RedirectToAction("Index");
             }
             catch (Exception)
@@ -113,6 +114,8 @@ namespace RecipeShare.Web.Controllers
                 return View(model);
             }
         }
+
+        
         private Guid GetCurrentUserId()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

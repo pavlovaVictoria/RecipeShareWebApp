@@ -527,8 +527,8 @@ namespace RecipeShare.Services.Data
                     Preparation = "Bake onions, garlic, tomatoes and bell peppers in a pan. Then blend them and serve the soup with cream.",
                     MinutesForPrep = 5,
                     MealType = MealType.Vegetarian,
-                    CategoryId = context.Categories.First(c=> c.CategoryName == "Snack").Id,
-                    Img = "https://www.modernhoney.com/wp-content/uploads/2016/10/IMG_1210edit-copycrop.jpg",
+                    CategoryId = context.Categories.First(c=> c.CategoryName == "Soup").Id,
+                    Img = "https://cdn.loveandlemons.com/wp-content/uploads/2023/01/tomato-soup-recipe-500x500.jpg",
                     DateOfRelease = DateTime.UtcNow,
                     RecipesProductsDetails =
                     {

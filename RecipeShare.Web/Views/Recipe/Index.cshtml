@@ -16,6 +16,9 @@
     </div>
 </div>
 <div class="container text-center">
+    <a class="btn mt-3" asp-controller="Recipe" asp-action="Add">Add New Recipe</a>
+</div>
+<div class="container text-center">
     <h2 class="text-center m-4 text-muted">Top 3 Recipes</h2>
     <div class="row justify-content-center">
         @foreach(var recipe in Model.Recipes)
