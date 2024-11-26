@@ -25,6 +25,10 @@ namespace RecipeShare.Services.Data
             {
                 return false;
             }
+			if(!await userManager.IsInRoleAsync(user, "User") && !await userManager.IsInRoleAsync(user, "Moderator") && !await userManager.IsInRoleAsync(user, "Administrator"))
+			{
+				await userManager.AddToRoleAsync(user, "User");
+            }
             SignInResult result = await signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
 			return true;
 		}
@@ -34,7 +38,7 @@ namespace RecipeShare.Services.Data
 			await signInManager.SignOutAsync();
 		}
 
-		public async Task<IdentityResult> RegisterAsync(RegisterViewModel model)
+		public async Task<bool> RegisterAsync(RegisterViewModel model)
 		{
 			ApplicationUser user = new ApplicationUser
 			{
@@ -46,8 +50,15 @@ namespace RecipeShare.Services.Data
 			};
 
 			IdentityResult result = await userManager.CreateAsync(user, model.Password);
-
-			return result;
+			if (result.Succeeded)
+			{
+                await userManager.AddToRoleAsync(user, "User");
+				return true;
+            }
+			else
+			{
+				return false;
+			}
 		}
 
 		public async Task<bool> ForgotPasswordAsync(ChangePasswordViewModel model)

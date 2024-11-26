@@ -14,5 +14,7 @@ namespace RecipeShare.Services.Data.Interfaces
         Task<RecipeDetailsViewModel?> RecipeDetailsAsync(Guid recipeId, Guid userId);
         Task<(bool isLiked, int likes)> LikeRecipeAsync(Guid recipeId, Guid userId);
         Task<RecipeByCategoryViewModel> RcipesByCategoryAsync(Guid categoryId);
+        Task<AddAndEditViewModel> ModelForAddAsync();
+        Task AddRecipeAsync(AddAndEditViewModel model, Guid currentUserId);
     }
 }

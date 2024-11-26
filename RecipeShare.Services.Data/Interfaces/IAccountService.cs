@@ -6,7 +6,7 @@ namespace RecipeShare.Services.Data.Interfaces
 {
 	public interface IAccountService
 	{
-		Task<IdentityResult> RegisterAsync(RegisterViewModel model);
+		Task<bool> RegisterAsync(RegisterViewModel model);
 		Task<bool> LoginAsync(LoginViewModel model);
 
 		Task LogoutAsync();

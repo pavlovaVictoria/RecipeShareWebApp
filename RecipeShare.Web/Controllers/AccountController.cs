@@ -56,9 +56,9 @@ namespace RecipeShare.Web.Controllers
 				return View(registerViewModel);
 			}
 
-			IdentityResult result = await accountService.RegisterAsync(registerViewModel);
+			bool result = await accountService.RegisterAsync(registerViewModel);
 
-			if (result.Succeeded)
+			if (result)
 			{
 				return RedirectToAction("Login");
 			}

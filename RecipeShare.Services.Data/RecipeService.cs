@@ -2,11 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RecipeShare.Common.Enums;
 using RecipeShare.Data;
 using RecipeShare.Data.Models;
 using RecipeShare.Services.Data.Interfaces;
 using RecipeShare.Web.ViewModels.CommentViewModels;
 using RecipeShare.Web.ViewModels.RecipeViewModels;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using static RecipeShare.Common.ApplicationConstants;
 
 namespace RecipeShare.Services.Data
@@ -25,7 +28,7 @@ namespace RecipeShare.Services.Data
         public async Task<RecipesIndexViewModel> IndexPageOfRecipesAsync()
         {
             List<InfoRecipeViewModel> recipes = await context.Recipes
-                .Where(r => r.IsApproved)
+                .Where(r => r.IsApproved && r.IsDeleted == false && r.IsArchived == false)
                 .OrderByDescending(r => r.LikedRecipes.Count)
                 .ThenBy(r => r.RecipeTitle)
                 .AsNoTracking()
@@ -60,7 +63,7 @@ namespace RecipeShare.Services.Data
         public async Task<RecipeDetailsViewModel?> RecipeDetailsAsync(Guid recipeId, Guid userId)
         {
             RecipeDetailsViewModel? model = await context.Recipes
-                .Where(r => r.Id == recipeId && r.IsDeleted == false)
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false)
                 .AsNoTracking()
                 .Select(r => new RecipeDetailsViewModel
                 {
@@ -98,7 +101,7 @@ namespace RecipeShare.Services.Data
 
         public async Task<(bool isLiked, int likes)> LikeRecipeAsync(Guid recipeId, Guid userId)
         {
-            Recipe? recipe = await context.Recipes.Where(r => r.Id == recipeId && r.IsDeleted == false).Include(r => r.LikedRecipes).FirstOrDefaultAsync();
+            Recipe? recipe = await context.Recipes.Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false).Include(r => r.LikedRecipes).FirstOrDefaultAsync();
             if (recipe == null)
             {
                 throw new ArgumentException("Recipe not found.");
@@ -143,7 +146,7 @@ namespace RecipeShare.Services.Data
                 {
                     CategoryId = c.Id,
                     CategoryName = c.CategoryName,
-                    Recipes = context.Recipes.Where(r => r.CategoryId == c.Id && r.IsDeleted == false)
+                    Recipes = context.Recipes.Where(r => r.CategoryId == c.Id && r.IsDeleted == false && r.IsApproved && r.IsArchived == false)
                     .Select(r => new InfoRecipeViewModel
                     {
                         Id = r.Id,
@@ -156,5 +159,80 @@ namespace RecipeShare.Services.Data
             return model;
         }
 
-	}
+        public async Task<AddAndEditViewModel> ModelForAddAsync()
+        {
+            AddAndEditViewModel model = new AddAndEditViewModel();
+            model.Categories = await context.Categories
+                .Where(c => c.IsDeleted == false)
+                .AsNoTracking()
+                .Select(c => new CategoryViewModel
+                {
+                    Id = c.Id,
+                    CategoryName = c.CategoryName,
+                })
+                .ToListAsync();
+
+            model.Allergens = await context.Allergens
+                .Where(a => a.IsDeleted == false)
+                .AsNoTracking()
+                .Select(a => new AllergenForAddAndEditRecipeViewModel 
+                { 
+                    AllergenId = a.Id,
+                    AllergenName = a.AllergenName
+                })
+                .ToListAsync();
+
+            model.Products = await context.Products
+                .Where(p => p.IsDeleted == false)
+                .AsNoTracking()
+                .Select(p => new ProductsViewModel
+                {
+                    ProductId = p.Id,
+                    ProductName = p.ProductName,
+                    ProductType = (int)p.ProductType
+                })
+                .OrderBy(p => p.ProductType)
+                .ThenBy(p => p.ProductName)
+                .ToListAsync();
+            return model;
+        }
+
+        public async Task AddRecipeAsync(AddAndEditViewModel model, Guid currentUserId)
+        {
+            Recipe recipe = new Recipe()
+            {
+                RecipeTitle = model.RecipeTitle,
+                NormalizedRecipeTitle = model.RecipeTitle.ToUpper(),
+                UserId = currentUserId,
+                Description = model.Description,
+                Preparation = model.Preparation,
+                MinutesForPrep = model.MinutesForPrep,
+                MealType = (MealType)model.MealType,
+                CategoryId = model.CategoryId,
+                Img = model.Img ?? "~/images/recipes/Recipe.png",
+                DateOfRelease = DateTime.UtcNow,
+                RecipesProductsDetails = model.ProductsDetails.Select(pd => new RecipeProductDetails
+                {
+                    ProductId = pd.ProductId,
+                    Quantity = pd.Quantity,
+                    UnitType = (UnitType)pd.UnitType
+                }).ToList(),
+            };
+            foreach(Guid allergenId in model.SelectedAllergenIds)
+            {
+                Allergen? allergen = await context.Allergens.Where(a => a.Id == allergenId && a.IsDeleted == false).FirstOrDefaultAsync();
+                if(allergen != null && !(await context.RecipesAllergens.AnyAsync(ra => ra.AllergenId == allergenId && ra.RecipeId == recipe.Id)))
+                {
+                    RecipeAllergen recipeAllergen = new RecipeAllergen
+                    {
+                        RecipeId = recipe.Id,
+                        AllergenId = allergenId
+                    };
+                    recipe.AllergensRecipes.Add(recipeAllergen);
+                }
+            }
+            await context.Recipes.AddAsync(recipe);
+            await context.SaveChangesAsync();
+        }
+    }
 }

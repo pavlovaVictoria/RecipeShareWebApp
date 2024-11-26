@@ -15,6 +15,9 @@
         public const string RecipeReleaseDatePattern = "yyyy/MM/dd HH:mm";
         public const string RegexDateTimePattern = @"^\d{4}/(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])\s([01][0-9]|2[0-3]):[0-5][0-9]$";
 
+        public const int MinutesMin = 1;
+        public const int MinutesMax = 2880;
+
         //Product Constants
         public const int ProductNameMinLen = 3;
         public const int ProductNameMaxLen = 20;

@@ -7,6 +7,7 @@
         public const string ErrorMessageRecipeDescription = "The length of the Description must be between 10 and 30";
         public const string ErrorMessageRecipePreparation = "The length of the Preparation must be between 100 and 500";
         public const string ErrorMessageDate = "The pattern of the DateTime is not correct";
+        public const string ErrorMessageMinutes = "Minutes for preparation must be between 1 and 2880";
 
         //Product Messages
         public const string ErrorMessageProductName = "The length of the Product Name must be between 3 and 20";

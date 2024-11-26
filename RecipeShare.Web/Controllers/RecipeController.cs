@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RecipeShare.Data.Models;
 using RecipeShare.Services.Data.Interfaces;
 using RecipeShare.Web.ViewModels.RecipeViewModels;
+using System.Globalization;
 using System.Security.Claims;
+using static RecipeShare.Common.ApplicationConstants;
 
 namespace RecipeShare.Web.Controllers
 {
@@ -82,6 +83,36 @@ namespace RecipeShare.Web.Controllers
             }
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            AddAndEditViewModel model = await recipeService.ModelForAddAsync();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(AddAndEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+            }
+            try
+            {
+                await recipeService.AddRecipeAsync(model, currentUserId);
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return View(model);
+            }
+        }
         private Guid GetCurrentUserId()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

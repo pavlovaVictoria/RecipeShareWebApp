@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RecipeShare.Common.Custom_Validations;
 using RecipeShare.Common.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
@@ -51,7 +50,7 @@ namespace RecipeShare.Data.Models
 
         [Required]
         [Comment("The Minutes that were needed for the Preparation of the Recipe")]
-        [MinutesForPrepCustomValidation]
+        [Range(MinutesMin, MinutesMax, ErrorMessage = ErrorMessageMinutes)]
         public int MinutesForPrep { get; set; }
 
         [Required]
