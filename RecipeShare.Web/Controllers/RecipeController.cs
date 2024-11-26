@@ -115,7 +115,43 @@ namespace RecipeShare.Web.Controllers
             }
         }
 
-        
+        //[HttpGet]
+        //public async Task<IActionResult> Edit(Guid recipeId)
+        //{
+        //
+        //}
+        //
+        //[HttpPost]
+        //public async Task<IActionResult> Edit(AddAndEditViewModel model)
+        //{
+        //
+        //}
+
+
+        [HttpGet]
+        public async Task<IActionResult> MyCollection()
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+            }
+            List<InfoRecipeViewModel> model = await recipeService.ViewCreatedRecipesAsync(currentUserId);
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LikedRecipes()
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+            }
+            List<InfoRecipeViewModel> model = await recipeService.ViewLikedRecipesAsync(currentUserId);
+            return View(model);
+        }
+
         private Guid GetCurrentUserId()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

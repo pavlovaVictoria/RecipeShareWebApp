@@ -234,5 +234,37 @@ namespace RecipeShare.Services.Data
             await context.Recipes.AddAsync(recipe);
             await context.SaveChangesAsync();
         }
+
+        public async Task<List<InfoRecipeViewModel>> ViewCreatedRecipesAsync(Guid userId)
+        {
+            List<InfoRecipeViewModel> model = await context.Recipes
+                .Where(r => r.UserId == userId && r.IsDeleted == false && r.IsArchived == false && r.IsApproved)
+                .Select(r => new InfoRecipeViewModel
+                {
+                    Id = r.Id,
+                    RecipeTitle = r.RecipeTitle,
+                    ImageUrl = r.Img ?? "~/images/recipes/Recipe.png",
+                    Description = r.Description,
+                    DateOfRelease = r.DateOfRelease.ToString(RecipeReleaseDatePattern)
+                })
+                .ToListAsync();
+            return model;
+        }
+
+        public async Task<List<InfoRecipeViewModel>> ViewLikedRecipesAsync(Guid userId)
+        {
+            List<InfoRecipeViewModel> model = await context.LikedRecipes
+                .Where(lr => lr.UserId == userId)
+                .Select(lr => lr.Recipe)
+                .Select(r => new InfoRecipeViewModel 
+                { 
+                    Id = r.Id,
+                    RecipeTitle = r.RecipeTitle,
+                    DateOfRelease = r.DateOfRelease.ToString(RecipeReleaseDatePattern),
+                    Description = r.Description,
+                    ImageUrl = r.Img ?? "~/images/recipes/Recipe.png"
+                }).ToListAsync();
+            return model;
+        }
     }
 }

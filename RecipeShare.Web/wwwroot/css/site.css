@@ -60,6 +60,15 @@ a{
     font-weight: 600;
 }
 
+.delete-btn {
+    background-color: white;
+    border-color: #E58767;
+    border-width: thick;
+    color: #E58767;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+
 .btn:hover {
     background-color: white;
     border-color: #E58767;

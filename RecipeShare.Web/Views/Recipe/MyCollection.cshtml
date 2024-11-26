@@ -1,0 +1,38 @@
+﻿@model IEnumerable<InfoRecipeViewModel>
+@{
+    ViewData["Title"] = "My Collection";
+}
+
+<div class="container text-center">
+    <button class="btn btn-outline-primary" onclick="goBack()">
+        <i class="bi bi-arrow-left"></i> Go Back
+    </button>
+    <h2 class="text-center m-4 text-muted">My Collection Of Recipes</h2>
+    <div class="row justify-content-center">
+        @if (Model.Any())
+        {
+            @foreach (var recipe in Model)
+            {
+                <div class="card d-flex align-items-center justify-content-center m-3 shadow-sm" style="width: 18rem;">
+                    <img src="@Url.Content(recipe.ImageUrl)" class="card-img-top" style="width: 16rem; height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">@recipe.RecipeTitle</h5>
+                        <p class="card-text">@recipe.Description</p>
+                        <a asp-controller="Recipe" asp-action="Edit" asp-route-recipeId="@recipe.Id" class="btn btn-primary">Edit</a>
+                        <a class="delete-btn" asp-controller="Recipe" asp-action="Delete" asp-route-recipeId="@recipe.Id" class="btn btn-primary">Delete</a>
+                        <p class="card-footer">@recipe.DateOfRelease</p>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-center">There are no created Recipes or the Recipes you have created are waiting for the approval of the Moderator</p>
+        }
+
+        <div class="container text-center">
+            <a class="btn mt-3" asp-controller="Recipe" asp-action="Add">Add New Recipe</a>
+        </div>
+    </div>
+</div>
+
