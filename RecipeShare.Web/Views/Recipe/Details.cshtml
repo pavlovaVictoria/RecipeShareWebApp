@@ -26,6 +26,14 @@
             <p class="card-text"><strong>Preparation Time:</strong> @Model.MinutesForPrep minutes</p>
             <p class="card-text">@Model.Description</p>
 
+            <h4>Products</h4>
+            <ul>
+            @foreach(var prductDetail in Model.ProductDetails)
+            {
+                <li><p><strong>@prductDetail.ProductName</strong>: @prductDetail.Quantity @prductDetail.UnitType</p></li>
+            }
+            </ul>
+
             <h4>Preparation</h4>
             <p>@Model.Preparation</p>
 

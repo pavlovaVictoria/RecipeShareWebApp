@@ -15,6 +15,7 @@ namespace RecipeShare.Web.ViewModels.RecipeViewModels
         public required string MealType { get; set; }
         public required string Category { get; set; }
         public required string DateOfRelease { get; set; }
+        public List<RecipeProductDetailsViewModel> ProductDetails { get; set; } = new List<RecipeProductDetailsViewModel>();
         public List<CommentViewModel> Comments { get; set; } = new List<CommentViewModel>();
         public List<AllergenViewModel> Allergens { get; set; } = new List<AllergenViewModel>();
         public required int Likes { get; set; }

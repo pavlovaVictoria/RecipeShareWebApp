@@ -100,7 +100,16 @@ namespace RecipeShare.Services.Data
                     })
                     .ToList(),
                     Likes = r.LikedRecipes.Count(),
-                    IsLikedByCurrentUser = (r.LikedRecipes.Any(lr => lr.User.Id == userId))
+                    IsLikedByCurrentUser = (r.LikedRecipes.Any(lr => lr.User.Id == userId)),
+                    ProductDetails = context.RecipesProductsDetails
+                    .Where(rp => rp.RecipeId == recipeId)
+                    .Select(rp => new RecipeProductDetailsViewModel 
+                    { 
+                        ProductName = rp.Product.ProductName,
+                        Quantity = rp.Quantity,
+                        UnitType = rp.UnitType.ToString()
+                    })
+                    .ToList(),
                 })
                 .FirstOrDefaultAsync();
             return model;
