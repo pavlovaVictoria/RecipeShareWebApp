@@ -1,4 +1,5 @@
-﻿using Azure.Messaging;
+﻿using Azure;
+using Azure.Messaging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ using RecipeShare.Web.ViewModels.CommentViewModels;
 using RecipeShare.Web.ViewModels.PaginationViewModels;
 using RecipeShare.Web.ViewModels.RecipeViewModels;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing.Printing;
 using System.Globalization;
 using System.Net;
 using static RecipeShare.Common.ApplicationConstants;
@@ -265,7 +267,7 @@ namespace RecipeShare.Services.Data
             return recipes;
         }
 
-        public async Task<List<InfoRecipeViewModel>> ViewLikedRecipesAsync(Guid userId)
+        public async Task<PaginatedList<InfoRecipeViewModel>> ViewLikedRecipesAsync(Guid userId, int page, int pageSize)
         {
             List<InfoRecipeViewModel> model = await context.LikedRecipes
                 .Where(lr => lr.UserId == userId)
@@ -279,7 +281,16 @@ namespace RecipeShare.Services.Data
                     Description = r.Description,
                     ImageUrl = r.Img ?? "~/images/recipes/Recipe.png"
                 }).ToListAsync();
-            return model;
+            IEnumerable<InfoRecipeViewModel> paginatedRecipes = model
+            .Skip((page - 1) * pageSize).Take(pageSize);
+
+            PaginatedList<InfoRecipeViewModel> recipes = new PaginatedList<InfoRecipeViewModel>(
+                paginatedRecipes,
+            model.Count(),
+                page,
+                pageSize
+            );
+            return recipes;
         }
 
         public async Task<EditRecipeViewModel> ModelForEdidAsync(Guid recipeId, Guid currentUserId)
@@ -462,7 +473,7 @@ namespace RecipeShare.Services.Data
             await context.SaveChangesAsync();
         }
 
-        public async Task<List<InfoRecipeViewModel>> ViewArchivedRecipesAsync(Guid currentUserId)
+        public async Task<PaginatedList<InfoRecipeViewModel>> ViewArchivedRecipesAsync(Guid currentUserId, int page, int pageSize)
         {
             List<InfoRecipeViewModel> model = await context.Recipes
                 .Where(r => r.IsDeleted == false && r.IsApproved && r.IsArchived == true && r.UserId == currentUserId)
@@ -474,7 +485,16 @@ namespace RecipeShare.Services.Data
                     Description = r.Description,
                     ImageUrl = r.Img ?? "~/images/recipes/Recipe.png"
                 }).ToListAsync();
-            return model;
+            IEnumerable<InfoRecipeViewModel> paginatedRecipes = model
+                .Skip((page - 1) * pageSize).Take(pageSize);
+
+            PaginatedList<InfoRecipeViewModel> recipes = new PaginatedList<InfoRecipeViewModel>(
+                paginatedRecipes,
+                model.Count(),
+                page,
+                pageSize
+            );
+            return recipes;
         }
     }
 }

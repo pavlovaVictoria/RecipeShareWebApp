@@ -179,14 +179,14 @@ namespace RecipeShare.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> LikedRecipes()
+        public async Task<IActionResult> LikedRecipes(int page = 1, int pageSize = 4)
         {
             Guid currentUserId = GetCurrentUserId();
             if (currentUserId == Guid.Empty)
             {
                 return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
             }
-            List<InfoRecipeViewModel> model = await recipeService.ViewLikedRecipesAsync(currentUserId);
+            PaginatedList<InfoRecipeViewModel> model = await recipeService.ViewLikedRecipesAsync(currentUserId, page, pageSize);
             return View(model);
         }
 
@@ -250,14 +250,14 @@ namespace RecipeShare.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ArchivedRecipes()
+        public async Task<IActionResult> ArchivedRecipes(int page = 1, int pageSize = 4)
         {
             Guid currentUserId = GetCurrentUserId();
             if (currentUserId == Guid.Empty)
             {
                 return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
             }
-            List<InfoRecipeViewModel> model = await recipeService.ViewArchivedRecipesAsync(currentUserId);
+            PaginatedList<InfoRecipeViewModel> model = await recipeService.ViewArchivedRecipesAsync(currentUserId, page, pageSize);
             return View(model);
         }
 

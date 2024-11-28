@@ -146,3 +146,28 @@ input:focus + label, textarea:focus + label {
     font-weight: bold;
     font-size: 1rem;
 }
+
+.custom-pagination .page-link {
+    color: #ffffff;
+    background-color: #E58767;
+    border: 1px solid #ffffff;
+    transition: all 0.3s ease;
+}
+
+.custom-pagination .page-link:hover {
+    background-color: #E58767;
+    border-color: #45a049;
+    color: #ffffff;
+}
+
+.custom-pagination .page-item.active .page-link {
+    background-color: #ffffff;
+    border-color: #E58767;
+    color: #E58767;
+}
+
+.custom-pagination .page-item.disabled .page-link {
+    background-color: #e9ecef;
+    color: #6c757d;
+    pointer-events: none;
+}
