@@ -9,7 +9,7 @@
         public const int RecipeDescriptionMinLen = 10;
         public const int RecipeDescriptionMaxLen = 30;
 
-        public const int RecipePreparationMinLen = 100;
+        public const int RecipePreparationMinLen = 50;
         public const int RecipePreparationMaxLen = 500;
 
         public const string RecipeReleaseDatePattern = "yyyy/MM/dd HH:mm";

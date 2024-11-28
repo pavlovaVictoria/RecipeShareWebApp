@@ -8,7 +8,8 @@ using RecipeShare.Services.Data.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddViewOptions(options => options.HtmlHelperOptions.ClientValidationEnabled = true);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
@@ -44,6 +45,11 @@ builder.Services
     .AddScoped<IRecipeService, RecipeService>()
     .AddScoped<IHomeService, HomeService>();
 
+builder.Services.AddAntiforgery(options =>
+{
+    options.HeaderName = "RequestVerificationToken";
+});
+
 var app = builder.Build();
 
 await DataSeeder.SeedAsync(app.Services);
@@ -63,12 +69,16 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseExceptionHandler("/Error/500");
+app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseAntiforgery();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id:guid?}");
 app.MapRazorPages();
 
 app.Run();

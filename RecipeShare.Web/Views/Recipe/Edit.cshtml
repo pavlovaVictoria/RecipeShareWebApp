@@ -1,4 +1,140 @@
-﻿@{
+﻿@using RecipeShare.Common.Enums
+@model EditRecipeViewModel
+
+@{
     ViewData["Title"] = "Edit Recipe";
 }
 
+<div class="container text-center">
+    <button class="btn btn-outline-primary" onclick="goBack()">
+        <i class="bi bi-arrow-left"></i> Go Back
+    </button>
+    <h2>@ViewData["Title"]</h2>
+</div>
+
+<form asp-action="Edit" asp-route-recipeId="@Model.RecipeId" asp-antiforgery="true" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="RecipeId" />
+
+    <div class="form-group mb-1">
+        <label for="RecipeTitle">Recipe Title</label>
+        <input asp-for="RecipeTitle" class="form-control" aria-required="true" />
+        <span asp-validation-for="RecipeTitle" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-1">
+        <label for="Img">Image Url</label>
+        <input asp-for="Img" class="form-control" />
+        <span asp-validation-for="Img" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-1">
+        <label for="Description">Description</label>
+        <textarea asp-for="Description" class="form-control" id="Description"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-1">
+        <label for="Preparation">Preparation</label>
+        <textarea asp-for="Preparation" class="form-control" id="Preparation"></textarea>
+        <span asp-validation-for="Preparation" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-1">
+        <label for="MinutesForPrep">Minutes for Preparation</label>
+        <input asp-for="MinutesForPrep" class="form-control" id="MinutesForPrep" type="number" />
+        <span asp-validation-for="MinutesForPrep" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-1">
+        <label for="MealType">Meal Type</label>
+        <select asp-for="MealType" class="form-control" id="MealType">
+            @foreach (var mealType in Enum.GetValues(typeof(MealType)))
+            {
+                <option value="@((int)mealType)">@mealType</option>
+            }
+        </select>
+        <span asp-validation-for="MealType" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-1">
+        <label asp-for="CategoryId" class="form-label-add-edit">Select Category</label>
+        <select asp-for="CategoryId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Categories, "Id", "CategoryName", Model.CategoryId))">
+            <option value="">Select Category...</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-1">
+        <label for="Allergens">Allergens</label>
+        <div id="Allergens" class="form-check">
+            @for (int i = 0; i < Model.Allergens.Count; i++)
+            {
+                var allergen = Model.Allergens[i];
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="@allergen.AllergenId" name="SelectedAllergenIds" value="@allergen.AllergenId" @(Model.SelectedAllergenIds.Contains(allergen.AllergenId) ? "checked" : "") />
+                    <label class="form-check-label" for="@allergen.AllergenId">
+                        @allergen.AllergenName
+                    </label>
+                </div>
+            }
+        </div>
+    </div>
+
+    <h4>Products</h4>
+    <table class="table" id="productTable">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.ProductsDetails.Count; i++)
+        {
+            var productDetail = Model.ProductsDetails[i];
+            <tr>
+                <td>
+                    <select class="form-select product-select" name="ProductsDetails[@i].ProductId">
+                        <option value="">Select a product</option>
+                        @foreach (int type in Model.ProductTypes)
+                        {
+                            <optgroup label="@Enum.GetName(typeof(ProductType), type)">
+                                @foreach (var product in Model.Products.Where(p => p.ProductType == type))
+                                {
+                                        <option value="@product.ProductId" selected="@(productDetail.ProductId == product.ProductId ? "selected" : null)">
+                                            @product.ProductName
+                                        </option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <input type="number" class="form-control product-quantity" name="ProductsDetails[@i].Quantity" value="@productDetail.Quantity" />
+                </td>
+                <td>
+                    <select class="form-select unit-select" id="unitSelect" name="ProductsDetails[@i].UnitType">
+                    @foreach (var unit in Enum.GetValues(typeof(UnitType)))
+                    {
+                        <option value="@((int)unit)" selected="@(productDetail.UnitType == (int)unit ? "selected": null)">
+                            @unit
+                        </option>
+                    }
+                    </select>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-remove-row">Remove</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<button type="button" id="addRowBtn" class="btn btn-primary">Add Product</button>
+
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+</form>

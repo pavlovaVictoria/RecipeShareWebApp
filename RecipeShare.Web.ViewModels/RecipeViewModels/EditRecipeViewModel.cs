@@ -1,19 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RecipeShare.Common.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static RecipeShare.Common.ApplicationConstants;
 using static RecipeShare.Common.EntityValidationMessages;
 
 namespace RecipeShare.Web.ViewModels.RecipeViewModels
 {
-    public class AddAndEditViewModel
+    public class EditRecipeViewModel
     {
+        [Required]
+        public Guid RecipeId { get; set; }
+        
         [Required]
         [Comment("The Title of the Recipe")]
         [StringLength(RecipeTitleMaxLen, MinimumLength = RecipeTitleMinLen, ErrorMessage = ErrorMessageRecipeTitle)]

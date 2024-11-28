@@ -10,10 +10,10 @@ namespace RecipeShare.Web.Controllers
             return View("ServerError");
         }
 
-        // Handles other status codes like 404
         [Route("Error/{statusCode}")]
         public IActionResult HttpStatusCodeHandler(int statusCode)
         {
+            Response.StatusCode = statusCode;
             if (statusCode == 404)
             {
                 return View("NotFound");
@@ -22,7 +22,10 @@ namespace RecipeShare.Web.Controllers
             {
                 return View("Forbidden");
             }
-            return View("ServerError");
+            else
+            {
+                return View("ServerError");
+            }
         }
     }
 }

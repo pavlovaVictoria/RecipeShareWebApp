@@ -29,6 +29,11 @@ namespace RecipeShare.Services.Data
 			{
 				await userManager.AddToRoleAsync(user, "User");
             }
+			bool validPassword = await userManager.CheckPasswordAsync(user, model.Password);
+			if(!validPassword)
+			{
+				return false;
+			}
             SignInResult result = await signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
 			return true;
 		}

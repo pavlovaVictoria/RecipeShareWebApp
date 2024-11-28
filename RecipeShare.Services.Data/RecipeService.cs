@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Azure.Messaging;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecipeShare.Common.Enums;
+using RecipeShare.Common.Exceptions;
 using RecipeShare.Data;
 using RecipeShare.Data.Models;
 using RecipeShare.Services.Data.Interfaces;
@@ -10,6 +12,7 @@ using RecipeShare.Web.ViewModels.CommentViewModels;
 using RecipeShare.Web.ViewModels.RecipeViewModels;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Net;
 using static RecipeShare.Common.ApplicationConstants;
 
 namespace RecipeShare.Services.Data
@@ -104,7 +107,7 @@ namespace RecipeShare.Services.Data
             Recipe? recipe = await context.Recipes.Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false).Include(r => r.LikedRecipes).FirstOrDefaultAsync();
             if (recipe == null)
             {
-                throw new ArgumentException("Recipe not found.");
+                throw new HttpStatusException(404);
             }
             bool isLikedNow = await context.LikedRecipes.AnyAsync(lr => lr.UserId == userId && lr.RecipeId == recipeId);
             if (isLikedNow)
@@ -112,7 +115,7 @@ namespace RecipeShare.Services.Data
                 LikedRecipe? likedRecipe = await context.LikedRecipes.Where(lr => lr.UserId == userId && lr.RecipeId == recipeId).FirstOrDefaultAsync();
                 if (likedRecipe == null)
                 {
-                    throw new ArgumentException("Recipe not found.");
+                    throw new HttpStatusException(404);
                 }
                 recipe.LikedRecipes.Remove(likedRecipe);
                 context.LikedRecipes.Remove(likedRecipe);
@@ -137,7 +140,7 @@ namespace RecipeShare.Services.Data
             bool validCategory = await context.Categories.AnyAsync(c => c.Id == categoryId && c.IsDeleted == false);
             if (!validCategory)
             {
-				throw new ArgumentException("Category not found.");
+				throw new HttpStatusException(404);
 			}
             RecipeByCategoryViewModel model = await context.Categories
                 .Where(c => c.Id == categoryId)
@@ -159,9 +162,9 @@ namespace RecipeShare.Services.Data
             return model;
         }
 
-        public async Task<AddAndEditViewModel> ModelForAddAsync()
+        public async Task<AddRecipeViewModel> ModelForAddAsync()
         {
-            AddAndEditViewModel model = new AddAndEditViewModel();
+            AddRecipeViewModel model = new AddRecipeViewModel();
             model.Categories = await context.Categories
                 .Where(c => c.IsDeleted == false)
                 .AsNoTracking()
@@ -197,7 +200,7 @@ namespace RecipeShare.Services.Data
             return model;
         }
 
-        public async Task AddRecipeAsync(AddAndEditViewModel model, Guid currentUserId)
+        public async Task AddRecipeAsync(AddRecipeViewModel model, Guid currentUserId)
         {
             Recipe recipe = new Recipe()
             {
@@ -265,6 +268,124 @@ namespace RecipeShare.Services.Data
                     ImageUrl = r.Img ?? "~/images/recipes/Recipe.png"
                 }).ToListAsync();
             return model;
+        }
+
+        public async Task<EditRecipeViewModel> ModelForEdidAsync(Guid recipeId, Guid currentUserId)
+        {
+            Recipe? recipe = await context.Recipes
+                .Where(r => r.Id == recipeId && r.UserId == currentUserId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false)
+                .FirstOrDefaultAsync();
+            if (recipe == null)
+            {
+                if (await context.Recipes.AnyAsync(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false))
+                {
+                    throw new HttpStatusException(403);
+                }
+                throw new HttpStatusException(404);
+            }
+            EditRecipeViewModel model = new EditRecipeViewModel
+            {
+                RecipeId = recipeId,
+                RecipeTitle = recipe.RecipeTitle,
+                Description = recipe.Description,
+                Preparation = recipe.Preparation,
+                MinutesForPrep = recipe.MinutesForPrep,
+                MealType = (int)recipe.MealType,
+                CategoryId = recipe.CategoryId,
+                Categories = context.Categories.Where(c => c.IsDeleted == false)
+                .Select(c => new CategoryViewModel 
+                { 
+                    Id = c.Id,
+                    CategoryName = c.CategoryName,
+                }).ToList(),
+                Img = recipe.Img,
+                Allergens = context.Allergens
+                .Where(a => a.IsDeleted == false)
+                .AsNoTracking()
+                .Select(a => new AllergenForAddAndEditRecipeViewModel
+                {
+                    AllergenId = a.Id,
+                    AllergenName = a.AllergenName
+                }).ToList(),
+                SelectedAllergenIds = context.RecipesAllergens.Where(ra => ra.RecipeId == recipeId)
+                .Select(ra => ra.AllergenId).ToList(),
+                ProductsDetails = context.RecipesProductsDetails.Where(pd => pd.RecipeId == recipeId)
+                .Select(pd => new ProductDetailsViewModel 
+                { 
+                    ProductId = pd.ProductId,
+                    Quantity = pd.Quantity,
+                    UnitType = (int)pd.UnitType
+                }).ToList(),
+                Products = context.Products
+                .Where(p => p.IsDeleted == false)
+                .AsNoTracking()
+                .Select(p => new ProductsViewModel
+                {
+                    ProductId = p.Id,
+                    ProductName = p.ProductName,
+                    ProductType = (int)p.ProductType
+                })
+                .OrderBy(p => p.ProductType)
+                .ThenBy(p => p.ProductName)
+                .ToList()
+            };
+            return model;
+        }
+
+        public async Task EditRecipeAsync(EditRecipeViewModel model, Guid recipeId, Guid currentUserId)
+        {
+            Recipe? recipe = await context.Recipes
+                .Where(r => r.Id == recipeId && r.UserId == currentUserId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false)
+                .FirstOrDefaultAsync();
+            if (recipe == null)
+            {
+                if(await context.Recipes.AnyAsync(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false))
+                {
+                    throw new HttpStatusException(403);
+                }
+                throw new HttpStatusException(404);
+            }
+            recipe.RecipeTitle = model.RecipeTitle;
+            recipe.NormalizedRecipeTitle = model.RecipeTitle.ToUpper();
+            recipe.Description = model.Description;
+            recipe.Preparation = model.Preparation;
+            recipe.MinutesForPrep = model.MinutesForPrep;
+            recipe.MealType = (MealType)model.MealType;
+            recipe.CategoryId = model.CategoryId;
+            recipe.Img = model.Img;
+            //recipe.IsApproved = false;
+            List<RecipeAllergen> currentRecipeAllergens = await context.RecipesAllergens
+                .Where(ra => ra.RecipeId == recipe.Id)
+                .ToListAsync();
+            context.RecipesAllergens.RemoveRange(currentRecipeAllergens);
+
+            foreach (Guid allergenId in model.SelectedAllergenIds)
+            {
+                Allergen? allergen = await context.Allergens.Where(a => a.Id == allergenId && a.IsDeleted == false).FirstOrDefaultAsync();
+                if (allergen != null && !(await context.RecipesAllergens.AnyAsync(ra => ra.AllergenId == allergenId && ra.RecipeId == recipe.Id)))
+                {
+                    RecipeAllergen recipeAllergen = new RecipeAllergen
+                    {
+                        RecipeId = recipe.Id,
+                        AllergenId = allergenId
+                    };
+                    recipe.AllergensRecipes.Add(recipeAllergen);
+                }
+            }
+
+            List<RecipeProductDetails> currentRecipeProductDetails = await context.RecipesProductsDetails
+                .Where(rpd => rpd.RecipeId == recipe.Id)
+                .ToListAsync();
+            context.RecipesProductsDetails.RemoveRange(currentRecipeProductDetails);
+
+            recipe.RecipesProductsDetails = model.ProductsDetails.Select(pd => new RecipeProductDetails
+            {
+                ProductId = pd.ProductId,
+                Quantity = pd.Quantity,
+                UnitType = (UnitType)pd.UnitType
+            }).ToList();
+            ;
+            await context.SaveChangesAsync();
         }
     }
 }

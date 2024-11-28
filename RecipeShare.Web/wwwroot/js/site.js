@@ -15,11 +15,15 @@ $(function () {
         var recipeId = button.data('recipe-id');
         var likesCount = button.siblings('.likes-count');
         var url = button.data('url')
+        var csrfToken = $('#csrfToken').val();
 
         $.ajax({
             url: url,
             type: 'POST',
             data: { recipeId: recipeId },
+            headers: {
+                'RequestVerificationToken': csrfToken
+            },
             success: function (response) {
                 if (response.success) {
                     if (response.isLiked) {

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RecipeShare.Common.Exceptions;
 using RecipeShare.Services.Data.Interfaces;
 using RecipeShare.Web.ViewModels.RecipeViewModels;
 using System.Globalization;
@@ -33,14 +35,15 @@ namespace RecipeShare.Web.Controllers
             {
                 recipes = await recipeService.RcipesByCategoryAsync(categoryId);
             }
-            catch (Exception)
+            catch (HttpStatusException statusCode)
             {
-                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 404 });
+                return View($"Error/{statusCode}");
             }
             return View(recipes);
         }
 
         [HttpGet]
+        [Route("Recipe/Details/{recipeId:guid}")]
         public async Task<IActionResult> Details(Guid recipeId)
         {
             Guid currentUserId = GetCurrentUserId();
@@ -72,7 +75,7 @@ namespace RecipeShare.Web.Controllers
                     likes
                 });
             }
-            catch (Exception ex)
+            catch (HttpStatusException ex)
             {
                 return Json(new
                 {
@@ -87,12 +90,13 @@ namespace RecipeShare.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            AddAndEditViewModel model = await recipeService.ModelForAddAsync();
+            AddRecipeViewModel model = await recipeService.ModelForAddAsync();
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddAndEditViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add(AddRecipeViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -109,23 +113,56 @@ namespace RecipeShare.Web.Controllers
                 TempData["SuccessMessage"] = "Your recipe was successfully added!";
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (HttpStatusException statusCode)
             {
-                return View(model);
+                return View($"Error/{statusCode}");
             }
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(Guid recipeId)
-        //{
-        //
-        //}
-        //
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(AddAndEditViewModel model)
-        //{
-        //
-        //}
+        [HttpGet]
+        [Route("Recipe/Edit/{recipeId:guid}")]
+        public async Task<IActionResult> Edit(Guid recipeId)
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+            }
+            try
+            {
+                EditRecipeViewModel model = await recipeService.ModelForEdidAsync(recipeId, currentUserId);
+                return View(model);
+            }
+            catch (HttpStatusException statusCode)
+            {
+                return View($"Error/{statusCode}");
+            }
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditRecipeViewModel model, Guid recipeId)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+            }
+            try
+            {
+                await recipeService.EditRecipeAsync(model, recipeId, currentUserId);
+                return RedirectToAction("Index", "Recipe");
+            }
+            catch (HttpStatusException statusCode)
+            {
+                return View($"Error/{statusCode}");
+            }
+        }
 
 
         [HttpGet]
