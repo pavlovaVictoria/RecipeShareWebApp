@@ -411,7 +411,7 @@ namespace RecipeShare.Services.Data
             return model;
         }
 
-        public async Task DeleteRecipeAsync(Guid recipeId, Guid currentUserId)
+        public async Task DeleteOrArchiveAsync(Guid recipeId, Guid currentUserId, string action)
         {
             Recipe? recipe = await context.Recipes
                 .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.UserId == currentUserId)
@@ -424,14 +424,21 @@ namespace RecipeShare.Services.Data
                 }
                 throw new HttpStatusException(404);
             }
-            recipe.IsDeleted = true;
+            if (action == "delete")
+            {
+                recipe.IsDeleted = true;
+            }
+            else if (action == "archive")
+            {
+                recipe.IsArchived = true;
+            }
             await context.SaveChangesAsync();
         }
 
-        public async Task ArchiveRecipeAsync(Guid recipeId, Guid currentUserId)
+        public async Task UnarchiveRecipeAsync(Guid recipeId, Guid currentUserId)
         {
             Recipe? recipe = await context.Recipes
-                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.UserId == currentUserId)
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.UserId == currentUserId && r.IsArchived == true)
                 .FirstOrDefaultAsync();
             if (recipe == null)
             {
@@ -441,8 +448,23 @@ namespace RecipeShare.Services.Data
                 }
                 throw new HttpStatusException(404);
             }
-            recipe.IsArchived = true;
+            recipe.IsArchived = false;
             await context.SaveChangesAsync();
+        }
+
+        public async Task<List<InfoRecipeViewModel>> ViewArchivedRecipesAsync(Guid currentUserId)
+        {
+            List<InfoRecipeViewModel> model = await context.Recipes
+                .Where(r => r.IsDeleted == false && r.IsApproved && r.IsArchived == true && r.UserId == currentUserId)
+                .Select(r => new InfoRecipeViewModel
+                {
+                    Id = r.Id,
+                    RecipeTitle = r.RecipeTitle,
+                    DateOfRelease = r.DateOfRelease.ToString(RecipeReleaseDatePattern),
+                    Description = r.Description,
+                    ImageUrl = r.Img ?? "~/images/recipes/Recipe.png"
+                }).ToListAsync();
+            return model;
         }
     }
 }

@@ -219,7 +219,7 @@ namespace RecipeShare.Web.Controllers
             }
             try
             {
-                await recipeService.DeleteRecipeAsync(model.Id, currentUserId);
+                await recipeService.DeleteOrArchiveAsync(model.Id, currentUserId, "delete");
                 return RedirectToAction("MyCollection", "Recipe");
             }
             catch (HttpStatusException statusCode)
@@ -239,7 +239,39 @@ namespace RecipeShare.Web.Controllers
             }
             try
             {
-                await recipeService.ArchiveRecipeAsync(model.Id, currentUserId);
+                await recipeService.DeleteOrArchiveAsync(model.Id, currentUserId, "archive");
+                return RedirectToAction("MyCollection", "Recipe");
+            }
+            catch (HttpStatusException statusCode)
+            {
+                return View($"Error/{statusCode}");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ArchivedRecipes()
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+            }
+            List<InfoRecipeViewModel> model = await recipeService.ViewArchivedRecipesAsync(currentUserId);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Unarchive(Guid recipeId)
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return View($"Error/{403}");
+            }
+            try
+            {
+                await recipeService.UnarchiveRecipeAsync(recipeId, currentUserId);
                 return RedirectToAction("MyCollection", "Recipe");
             }
             catch (HttpStatusException statusCode)

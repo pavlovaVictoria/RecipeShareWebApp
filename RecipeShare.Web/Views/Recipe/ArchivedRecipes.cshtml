@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<InfoRecipeViewModel>
 @{
-    ViewData["Title"] = "Liked Recipes";
+    ViewData["Title"] = "Archived Recipes";
 }
 
 <div class="container text-center">
     <button class="btn btn-outline-primary" onclick="goBack()">
         <i class="bi bi-arrow-left"></i> Go Back
     </button>
-    <h2 class="text-center m-4 text-muted">My Liked Recipes</h2>
+    <h2 class="text-center m-4 text-muted">My Archived Recipes</h2>
     <div class="row justify-content-center">
         @if (Model.Any())
         {
@@ -18,7 +18,12 @@
                     <div class="card-body">
                         <h5 class="card-title">@recipe.RecipeTitle</h5>
                         <p class="card-text">@recipe.Description</p>
-                        <a asp-controller="Recipe" asp-action="Details" asp-route-recipeId="@recipe.Id" class="btn btn-primary">View More</a>
+                        <form asp-action="Unarchive" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="recipeId" value="@recipe.Id" />
+                            <button type="submit" class="btn btn-secondary">Unarchive</button>
+                        </form>
+                        <a class="delete-btn" asp-controller="Recipe" asp-action="Delete" asp-route-recipeId="@recipe.Id" class="btn btn-primary">Delete</a>
                         <p class="card-footer">@recipe.DateOfRelease</p>
                     </div>
                 </div>
@@ -26,12 +31,7 @@
         }
         else
         {
-            <p class="text-center">There are no liked Recipes</p>
+            <p class="text-center">There are no archived recipes</p>
         }
-
-        <div class="container text-center">
-            <a class="btn mt-3" asp-controller="Recipe" asp-action="Index">View More Recipes</a>
-        </div>
     </div>
 </div>
-

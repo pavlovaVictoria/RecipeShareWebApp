@@ -21,7 +21,8 @@ namespace RecipeShare.Services.Data.Interfaces
         Task<EditRecipeViewModel> ModelForEdidAsync(Guid recipeId, Guid currentUserId);
         Task EditRecipeAsync(EditRecipeViewModel model, Guid recipeId, Guid currentUserId);
         Task<DeleteRecipeViewModel> ModelForDeleteAsync(Guid recipeId, Guid currentUserId);
-        Task DeleteRecipeAsync(Guid recipeId, Guid currentUserId);
-        Task ArchiveRecipeAsync(Guid recipeId, Guid currentUserId);
+        Task UnarchiveRecipeAsync(Guid recipeId, Guid currentUserId);
+        Task DeleteOrArchiveAsync(Guid recipeId, Guid currentUserId, string action);
+        Task<List<InfoRecipeViewModel>> ViewArchivedRecipesAsync(Guid currentUserId);
     }
 }
