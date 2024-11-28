@@ -14,6 +14,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using static RecipeShare.Common.ApplicationConstants;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace RecipeShare.Services.Data
 {
@@ -259,6 +260,7 @@ namespace RecipeShare.Services.Data
             List<InfoRecipeViewModel> model = await context.LikedRecipes
                 .Where(lr => lr.UserId == userId)
                 .Select(lr => lr.Recipe)
+                .Where(r => r.IsDeleted == false && r.IsApproved && r.IsArchived == false)
                 .Select(r => new InfoRecipeViewModel 
                 { 
                     Id = r.Id,
@@ -385,6 +387,61 @@ namespace RecipeShare.Services.Data
                 UnitType = (UnitType)pd.UnitType
             }).ToList();
             ;
+            await context.SaveChangesAsync();
+        }
+
+        public async Task<DeleteRecipeViewModel> ModelForDeleteAsync(Guid recipeId, Guid currentUserId)
+        {
+            DeleteRecipeViewModel? model = await context.Recipes
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.UserId == currentUserId)
+                .Select(r => new DeleteRecipeViewModel
+                {
+                    Id = r.Id,
+                    RecipeTitle = r.RecipeTitle
+                })
+                .FirstOrDefaultAsync();
+            if (model == null)
+            {
+                if(await context.Recipes.AnyAsync(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved))
+                {
+                    throw new HttpStatusException(403);
+                }
+                throw new HttpStatusException(404);
+            }
+            return model;
+        }
+
+        public async Task DeleteRecipeAsync(Guid recipeId, Guid currentUserId)
+        {
+            Recipe? recipe = await context.Recipes
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.UserId == currentUserId)
+                .FirstOrDefaultAsync();
+            if (recipe == null)
+            {
+                if (await context.Recipes.AnyAsync(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved))
+                {
+                    throw new HttpStatusException(403);
+                }
+                throw new HttpStatusException(404);
+            }
+            recipe.IsDeleted = true;
+            await context.SaveChangesAsync();
+        }
+
+        public async Task ArchiveRecipeAsync(Guid recipeId, Guid currentUserId)
+        {
+            Recipe? recipe = await context.Recipes
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.UserId == currentUserId)
+                .FirstOrDefaultAsync();
+            if (recipe == null)
+            {
+                if (await context.Recipes.AnyAsync(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved))
+                {
+                    throw new HttpStatusException(403);
+                }
+                throw new HttpStatusException(404);
+            }
+            recipe.IsArchived = true;
             await context.SaveChangesAsync();
         }
     }

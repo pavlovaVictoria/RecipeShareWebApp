@@ -18,7 +18,7 @@ namespace RecipeShare.Services.Data
         public async Task<List<InfoRecipeViewModel>> Top3Recipes()
         {
             List<InfoRecipeViewModel> recipes = await context.Recipes
-                .Where(r => r.IsApproved)
+                .Where(r => r.IsApproved && r.IsDeleted == false && r.IsArchived == false)
                 .OrderByDescending(r => r.LikedRecipes.Count)
                 .ThenBy(r => r.RecipeTitle)
                 .AsNoTracking()

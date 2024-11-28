@@ -126,7 +126,7 @@ namespace RecipeShare.Web.Controllers
             Guid currentUserId = GetCurrentUserId();
             if (currentUserId == Guid.Empty)
             {
-                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+                return View($"Error/{403}");
             }
             try
             {
@@ -187,6 +187,65 @@ namespace RecipeShare.Web.Controllers
             }
             List<InfoRecipeViewModel> model = await recipeService.ViewLikedRecipesAsync(currentUserId);
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid recipeId)
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return View($"Error/{403}");
+            }
+            try
+            {
+                DeleteRecipeViewModel model = await recipeService.ModelForDeleteAsync(recipeId, currentUserId);
+                return View(model);
+            }
+            catch (HttpStatusException statusCode)
+            {
+                return View($"Error/{statusCode}");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(DeleteRecipeViewModel model)
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return View($"Error/{403}");
+            }
+            try
+            {
+                await recipeService.DeleteRecipeAsync(model.Id, currentUserId);
+                return RedirectToAction("MyCollection", "Recipe");
+            }
+            catch (HttpStatusException statusCode)
+            {
+                return View($"Error/{statusCode}");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Archive(DeleteRecipeViewModel model)
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return View($"Error/{403}");
+            }
+            try
+            {
+                await recipeService.ArchiveRecipeAsync(model.Id, currentUserId);
+                return RedirectToAction("MyCollection", "Recipe");
+            }
+            catch (HttpStatusException statusCode)
+            {
+                return View($"Error/{statusCode}");
+            }
         }
 
         private Guid GetCurrentUserId()

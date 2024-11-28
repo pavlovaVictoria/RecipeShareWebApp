@@ -18,8 +18,10 @@ namespace RecipeShare.Services.Data.Interfaces
         Task AddRecipeAsync(AddRecipeViewModel model, Guid currentUserId);
         Task<List<InfoRecipeViewModel>> ViewCreatedRecipesAsync(Guid userId);
         Task<List<InfoRecipeViewModel>> ViewLikedRecipesAsync(Guid userId);
-
         Task<EditRecipeViewModel> ModelForEdidAsync(Guid recipeId, Guid currentUserId);
         Task EditRecipeAsync(EditRecipeViewModel model, Guid recipeId, Guid currentUserId);
+        Task<DeleteRecipeViewModel> ModelForDeleteAsync(Guid recipeId, Guid currentUserId);
+        Task DeleteRecipeAsync(Guid recipeId, Guid currentUserId);
+        Task ArchiveRecipeAsync(Guid recipeId, Guid currentUserId);
     }
 }

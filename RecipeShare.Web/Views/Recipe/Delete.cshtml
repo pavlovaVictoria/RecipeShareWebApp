@@ -1,0 +1,24 @@
+﻿@model DeleteRecipeViewModel
+@{
+    ViewData["Title"] = "Delete Recipe";
+}
+
+<div class="container mt-4 text-center">
+    <button class="btn btn-outline-primary mb-4" onclick="goBack()">
+        <i class="bi bi-arrow-left"></i> Go Back
+    </button>
+    <h3>Delete Recipe</h3>
+    <p>Are you sure you want to delete the recipe <strong>@Model.RecipeTitle</strong>?</p>
+
+    <form asp-action="Delete" method="post" style="display:inline;">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    </form>
+
+    <form asp-action="Archive" method="post" style="display:inline;">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-secondary">No, just Archive it</button>
+    </form>
+</div>
