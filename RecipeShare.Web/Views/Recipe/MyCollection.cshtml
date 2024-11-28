@@ -1,4 +1,4 @@
-﻿@model IEnumerable<InfoRecipeViewModel>
+﻿@model PaginatedList<InfoRecipeViewModel>
 @{
     ViewData["Title"] = "My Collection";
 }
@@ -9,9 +9,9 @@
     </button>
     <h2 class="text-center m-4 text-muted">My Collection Of Recipes</h2>
     <div class="row justify-content-center">
-        @if (Model.Any())
+        @if (Model.Items.Any())
         {
-            @foreach (var recipe in Model)
+            @foreach (var recipe in Model.Items)
             {
                 <div class="card d-flex align-items-center justify-content-center m-3 shadow-sm" style="width: 18rem;">
                     <img src="@Url.Content(recipe.ImageUrl)" class="card-img-top" style="width: 16rem; height: 200px; object-fit: cover;">
@@ -31,8 +31,8 @@
         }
 
         <div class="container text-center">
-            <a class="btn mt-3" asp-controller="Recipe" asp-action="Add">Add New Recipe</a>
+            <a class="btn mt-3 mb-3" asp-controller="Recipe" asp-action="Add">Add New Recipe</a>
         </div>
     </div>
 </div>
-
+@await Html.PartialAsync("_PaginationPartial", Model)

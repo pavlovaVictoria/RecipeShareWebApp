@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RecipeShare.Web.ViewModels.PaginationViewModels;
 using RecipeShare.Web.ViewModels.RecipeViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace RecipeShare.Services.Data.Interfaces
         Task<RecipeByCategoryViewModel> RcipesByCategoryAsync(Guid categoryId);
         Task<AddRecipeViewModel> ModelForAddAsync();
         Task AddRecipeAsync(AddRecipeViewModel model, Guid currentUserId);
-        Task<List<InfoRecipeViewModel>> ViewCreatedRecipesAsync(Guid userId);
+        Task<PaginatedList<InfoRecipeViewModel>> ViewCreatedRecipesAsync(Guid userId, int page, int pageSize);
         Task<List<InfoRecipeViewModel>> ViewLikedRecipesAsync(Guid userId);
         Task<EditRecipeViewModel> ModelForEdidAsync(Guid recipeId, Guid currentUserId);
         Task EditRecipeAsync(EditRecipeViewModel model, Guid recipeId, Guid currentUserId);

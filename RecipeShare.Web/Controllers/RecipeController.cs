@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RecipeShare.Common.Exceptions;
 using RecipeShare.Services.Data.Interfaces;
+using RecipeShare.Web.ViewModels.PaginationViewModels;
 using RecipeShare.Web.ViewModels.RecipeViewModels;
 using System.Globalization;
 using System.Security.Claims;
@@ -166,14 +167,14 @@ namespace RecipeShare.Web.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> MyCollection()
+        public async Task<IActionResult> MyCollection(int page = 1, int pageSize = 4)
         {
             Guid currentUserId = GetCurrentUserId();
             if (currentUserId == Guid.Empty)
             {
                 return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
             }
-            List<InfoRecipeViewModel> model = await recipeService.ViewCreatedRecipesAsync(currentUserId);
+            PaginatedList<InfoRecipeViewModel> model = await recipeService.ViewCreatedRecipesAsync(currentUserId, page, pageSize);
             return View(model);
         }
 

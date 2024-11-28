@@ -9,6 +9,7 @@ using RecipeShare.Data;
 using RecipeShare.Data.Models;
 using RecipeShare.Services.Data.Interfaces;
 using RecipeShare.Web.ViewModels.CommentViewModels;
+using RecipeShare.Web.ViewModels.PaginationViewModels;
 using RecipeShare.Web.ViewModels.RecipeViewModels;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -239,7 +240,7 @@ namespace RecipeShare.Services.Data
             await context.SaveChangesAsync();
         }
 
-        public async Task<List<InfoRecipeViewModel>> ViewCreatedRecipesAsync(Guid userId)
+        public async Task<PaginatedList<InfoRecipeViewModel>> ViewCreatedRecipesAsync(Guid userId, int page, int pageSize)
         {
             List<InfoRecipeViewModel> model = await context.Recipes
                 .Where(r => r.UserId == userId && r.IsDeleted == false && r.IsArchived == false && r.IsApproved)
@@ -252,7 +253,16 @@ namespace RecipeShare.Services.Data
                     DateOfRelease = r.DateOfRelease.ToString(RecipeReleaseDatePattern)
                 })
                 .ToListAsync();
-            return model;
+            IEnumerable<InfoRecipeViewModel> paginatedRecipes = model
+                .Skip((page - 1) * pageSize).Take(pageSize);
+
+            PaginatedList<InfoRecipeViewModel> recipes = new PaginatedList<InfoRecipeViewModel>(
+				paginatedRecipes,
+		        model.Count(),
+		        page,
+		        pageSize
+            );
+            return recipes;
         }
 
         public async Task<List<InfoRecipeViewModel>> ViewLikedRecipesAsync(Guid userId)
