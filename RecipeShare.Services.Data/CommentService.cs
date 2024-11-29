@@ -31,7 +31,8 @@ namespace RecipeShare.Services.Data
                 Text = text,
                 DateOfRelease = DateTime.UtcNow,
                 RecipeId = recipeId,
-                UserId = currentUserId
+                UserId = currentUserId,
+                IsResponse = false
             };
             await context.Comments.AddAsync(comment);
             await context.SaveChangesAsync();
@@ -51,6 +52,35 @@ namespace RecipeShare.Services.Data
                 throw new HttpStatusException(404);
             }
             comment.IsDeleted = true;
+            await context.SaveChangesAsync();
+        }
+
+        public async Task AddResponseAsync(string text, Guid recipeId, Guid currentUserId, Guid commentId)
+        {
+            Recipe? recipe = await context.Recipes
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsArchived == false && r.IsApproved)
+                .FirstOrDefaultAsync();
+            if (recipe == null)
+            {
+                throw new HttpStatusException(404);
+            }
+            Comment? comment = await context.Comments
+                .Where(c => c.Id == commentId && c.IsDeleted == false)
+                .FirstOrDefaultAsync();
+            if (comment == null)
+            {
+                throw new HttpStatusException(404);
+            }
+            Comment response = new Comment()
+            {
+                Text = text,
+                DateOfRelease = DateTime.UtcNow,
+                RecipeId = recipeId,
+                UserId = currentUserId,
+                ParentCommentId = commentId,
+                IsResponse = true
+            };
+            await context.Comments.AddAsync(response);
             await context.SaveChangesAsync();
         }
     }

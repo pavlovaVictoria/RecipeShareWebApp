@@ -27,6 +27,10 @@ namespace RecipeShare.Data.Models
         public DateTime DateOfRelease { get; set; }
 
         [Required]
+        [Comment("Shows if the comment is a Response")]
+        public bool IsResponse { get; set; } = false;
+
+        [Required]
         [Comment("The text of the Comment")]
         [StringLength(CommentTextMaxLen, ErrorMessage = ErrorMessageCommentText)]
         public string Text { get; set; } = null!;

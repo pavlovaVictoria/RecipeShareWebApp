@@ -82,9 +82,80 @@
                             </ul>
                         }
                     </div>
+                    <!---->
                     <p class="mt-2">@comment.Text</p>
                     <div class="container text-end">
                         <span class="text-muted">@comment.DateOfRelease</span>
+                    </div>
+                    <div class="container text-center">
+                        <a class="btn btn-primary mb-1" data-bs-toggle="collapse" href="#addResponse" role="button" aria-expanded="false" aria-controls="addResponse">
+                            Add Response
+                        </a>
+                        <div class="collapse" id="addResponse">
+                            <div class="card card-body">
+                                <div class="mt-4">
+                                   <h4>Add a Response</h4>
+                                   <form method="post" asp-action="AddResponse" asp-controller="Comment">
+                                       @Html.AntiForgeryToken()
+                                       <input type="hidden" name="recipeId" value="@Model.Id" />
+                                       <input type="hidden" name="commentId" value="@comment.Id" />
+                                       <div class="form-group mb-3">
+                                           <textarea class="form-control"
+                                                     name="text"
+                                                     id="commentText"
+                                                     placeholder="Write your comment..."
+                                                     rows="3"
+                                                     required
+                                                     oninput="toggleButton()">
+                                           </textarea>
+                                       </div>
+                                       <button type="submit" class="btn btn-primary" id="addCommentButton" disabled>Add Response</button>
+                                   </form>
+                                </div>
+                             </div>
+                        </div>
+                          <!---->
+                        @if (comment.Responses.Any())
+                        {
+                            <a class="btn btn-primary mb-1" data-bs-toggle="collapse" href="#viewResponses" role="button" aria-expanded="false" aria-controls="viewResponses">
+                                View Responses
+                            </a>
+                            <div class="collapse" id="viewResponses">
+                                <div class="card card-body">
+                                    <div class="mt-4">
+                                        <h4>All Responses</h4>
+                                        <div class="list-group">
+                                            @foreach(var response in comment.Responses)
+                                            {
+                                                <div class="list-group-item">
+                                                    <div class="d-flex justify-content-between">
+                                                        <span><strong>@response.UserName</strong></span>
+                                                        @if(User?.Identity?.Name == Model.UserName || User?.Identity?.Name == response.UserName)
+                                                        {
+                                                            <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"></i>
+                                                            <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <form method="post" asp-action="Delete" asp-controller="Comment">
+                                                                        @Html.AntiForgeryToken()
+                                                                        <input type="hidden" name="recipeId" value="@Model.Id" />
+                                                                        <input type="hidden" name="commentId" value="@comment.Id" />
+                                                                        <button type="submit" class="dropdown-item text-danger">Delete</button>
+                                                                    </form>
+                                                                </li>
+                                                            </ul>
+                                                        }
+                                                    </div>
+                                                    <p class="mt-2">@comment.Text</p>
+                                                    <div class="container text-end">
+                                                        <span class="text-muted">@comment.DateOfRelease</span>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             }

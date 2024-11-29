@@ -4,5 +4,6 @@
     {
         Task AddCommentAsync(string text, Guid recipeId, Guid currentUserId);
         Task DeleteCommentAsync(Guid commentId, Guid currentUserId);
+        Task AddResponseAsync(string text, Guid recipeId, Guid currentUserId, Guid commentId);
     }
 }

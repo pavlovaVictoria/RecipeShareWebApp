@@ -1,4 +1,5 @@
-﻿using RecipeShare.Data.Models;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using RecipeShare.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace RecipeShare.Web.ViewModels.CommentViewModels
         public required string DateOfRelease { get; set; }
         public required string Text { get; set; }
         public required string UserName { get; set; }
-        public List<Comment> Responses { get; set; } = new List<Comment>();
+        public List<CommentViewModel> Responses { get; set; } = new List<CommentViewModel>();
+        public required bool IsResponse { get; set; } = false;
     }
 }

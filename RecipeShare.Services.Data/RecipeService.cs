@@ -84,13 +84,25 @@ namespace RecipeShare.Services.Data
                     Category = r.Category.CategoryName,
                     DateOfRelease = r.DateOfRelease.ToString(RecipeReleaseDatePattern),
                     Comments = r.Comments
-                    .Where(c => c.IsDeleted == false)
+                    .Where(c => c.IsDeleted == false && c.IsResponse == false)
                     .Select(c => new CommentViewModel
                     {
                         Id = c.Id,
                         UserName = c.User.UserName ?? "Unknown User",
                         DateOfRelease = c.DateOfRelease.ToString(RecipeReleaseDatePattern),
-                        Text = c.Text
+                        Text = c.Text,
+                        Responses = c.Responses
+                        .Where(cr => cr.IsDeleted == false && cr.IsResponse == true)
+                        .Select(cr => new CommentViewModel 
+                        {
+                            Id = cr.Id,
+                            DateOfRelease = cr.DateOfRelease.ToString(RecipeReleaseDatePattern),
+                            Text = cr.Text,
+                            UserName = cr.User.UserName ?? "Unknown User",
+                            IsResponse = c.IsResponse
+                        })
+                        .ToList(),
+                        IsResponse = c.IsResponse
                     }).ToList(),
                     Allergens = r.AllergensRecipes.Select(ar => ar.Allergen)
                     .Where(a => a.IsDeleted == false)

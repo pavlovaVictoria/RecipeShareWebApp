@@ -55,6 +55,25 @@ namespace RecipeShare.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddResponse(string text, Guid recipeId, Guid commentId)
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return View($"Error/{403}");
+            }
+            try
+            {
+                await commentService.AddResponseAsync(text, recipeId, currentUserId, commentId);
+                return RedirectToAction("Details", "Recipe", new { recipeId = recipeId });
+            }
+            catch (HttpStatusException statusCode)
+            {
+                return View($"Error/{statusCode}");
+            }
+        }
+
         private Guid GetCurrentUserId()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
