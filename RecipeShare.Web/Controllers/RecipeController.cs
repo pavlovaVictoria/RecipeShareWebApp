@@ -47,7 +47,15 @@ namespace RecipeShare.Web.Controllers
         [Route("Recipe/Details/{recipeId:guid}")]
         public async Task<IActionResult> Details(Guid recipeId)
         {
+            if (recipeId == Guid.Empty)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return View($"Error/{403}");
+            }
             RecipeDetailsViewModel? recipe = await recipeService.RecipeDetailsAsync(recipeId, currentUserId);
             if (recipe == null)
             {

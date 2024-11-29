@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecipeShare.Common.Exceptions;
+using RecipeShare.Data.Models;
 using RecipeShare.Services.Data.Interfaces;
 using System.Security.Claims;
 
@@ -16,11 +17,6 @@ namespace RecipeShare.Web.Controllers
             commentService = _commentService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Add(Guid recipeId, string text)
         {
@@ -32,7 +28,26 @@ namespace RecipeShare.Web.Controllers
             try
             {
                 await commentService.AddCommentAsync(text, recipeId, currentUserId);
-                return RedirectToAction("Details", "Recipe", recipeId);
+                return RedirectToAction("Details", "Recipe", new { recipeId = recipeId });
+            }
+            catch (HttpStatusException statusCode)
+            {
+                return View($"Error/{statusCode}");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid recipeId, Guid commentId)
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return View($"Error/{403}");
+            }
+            try
+            {
+                await commentService.DeleteCommentAsync(commentId, currentUserId);
+                return RedirectToAction("Details", "Recipe", new { recipeId = recipeId });
             }
             catch (HttpStatusException statusCode)
             {

@@ -3,5 +3,6 @@
     public interface ICommentService
     {
         Task AddCommentAsync(string text, Guid recipeId, Guid currentUserId);
+        Task DeleteCommentAsync(Guid commentId, Guid currentUserId);
     }
 }

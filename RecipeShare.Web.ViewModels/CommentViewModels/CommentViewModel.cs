@@ -9,6 +9,7 @@ namespace RecipeShare.Web.ViewModels.CommentViewModels
 {
     public class CommentViewModel
     {
+        public required Guid Id { get; set; }
         public required string DateOfRelease { get; set; }
         public required string Text { get; set; }
         public required string UserName { get; set; }

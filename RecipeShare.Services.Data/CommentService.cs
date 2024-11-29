@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RecipeShare.Common.Exceptions;
 using RecipeShare.Data;
+using RecipeShare.Data.Migrations;
 using RecipeShare.Data.Models;
 using RecipeShare.Services.Data.Interfaces;
 using System.Data;
@@ -33,6 +34,23 @@ namespace RecipeShare.Services.Data
                 UserId = currentUserId
             };
             await context.Comments.AddAsync(comment);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteCommentAsync(Guid commentId, Guid currentUserId)
+        {
+            Comment? comment = await context.Comments
+                .Where(c => c.IsDeleted == false && c.Id == commentId && (c.UserId == currentUserId || c.Recipe.UserId == currentUserId))
+                .FirstOrDefaultAsync();
+            if (comment == null)
+            {
+                if (await context.Comments.AnyAsync(c => c.IsDeleted == false && c.Id == commentId))
+                {
+                    throw new HttpStatusException(403);
+                }
+                throw new HttpStatusException(404);
+            }
+            comment.IsDeleted = true;
             await context.SaveChangesAsync();
         }
     }

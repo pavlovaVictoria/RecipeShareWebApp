@@ -87,6 +87,7 @@ namespace RecipeShare.Services.Data
                     .Where(c => c.IsDeleted == false)
                     .Select(c => new CommentViewModel
                     {
+                        Id = c.Id,
                         UserName = c.User.UserName ?? "Unknown User",
                         DateOfRelease = c.DateOfRelease.ToString(RecipeReleaseDatePattern),
                         Text = c.Text
