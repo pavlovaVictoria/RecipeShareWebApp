@@ -51,7 +51,7 @@ namespace RecipeShare.Web.Controllers
             RecipeDetailsViewModel? recipe = await recipeService.RecipeDetailsAsync(recipeId, currentUserId);
             if (recipe == null)
             {
-                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 404 });
+                return View($"Error/{404}");
             }
             return View(recipe);
         }
@@ -62,7 +62,7 @@ namespace RecipeShare.Web.Controllers
             Guid currenrUserId = GetCurrentUserId();
             if (currenrUserId == Guid.Empty)
             {
-                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+                return View($"Error/{403}");
             }
 
             try
@@ -106,7 +106,7 @@ namespace RecipeShare.Web.Controllers
             Guid currentUserId = GetCurrentUserId();
             if (currentUserId == Guid.Empty)
             {
-                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+                return View($"Error/{403}");
             }
             try
             {
@@ -152,7 +152,7 @@ namespace RecipeShare.Web.Controllers
             Guid currentUserId = GetCurrentUserId();
             if (currentUserId == Guid.Empty)
             {
-                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+                return View($"Error/{403}");
             }
             try
             {
@@ -172,7 +172,7 @@ namespace RecipeShare.Web.Controllers
             Guid currentUserId = GetCurrentUserId();
             if (currentUserId == Guid.Empty)
             {
-                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+                return View($"Error/{403}");
             }
             PaginatedList<InfoRecipeViewModel> model = await recipeService.ViewCreatedRecipesAsync(currentUserId, page, pageSize);
             return View(model);
@@ -184,7 +184,7 @@ namespace RecipeShare.Web.Controllers
             Guid currentUserId = GetCurrentUserId();
             if (currentUserId == Guid.Empty)
             {
-                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+                return View($"Error/{403}");
             }
             PaginatedList<InfoRecipeViewModel> model = await recipeService.ViewLikedRecipesAsync(currentUserId, page, pageSize);
             return View(model);
@@ -255,7 +255,7 @@ namespace RecipeShare.Web.Controllers
             Guid currentUserId = GetCurrentUserId();
             if (currentUserId == Guid.Empty)
             {
-                return RedirectToAction("HttpStatusCodeHandler", "Error", new { statusCade = 403 });
+                return View($"Error/{403}");
             }
             PaginatedList<InfoRecipeViewModel> model = await recipeService.ViewArchivedRecipesAsync(currentUserId, page, pageSize);
             return View(model);

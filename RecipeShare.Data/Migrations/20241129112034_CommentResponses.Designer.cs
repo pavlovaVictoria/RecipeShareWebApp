@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RecipeShare.Data;
 
@@ -11,9 +12,11 @@ using RecipeShare.Data;
 namespace RecipeShare.Data.Migrations
 {
     [DbContext(typeof(RecipeShareDbContext))]
-    partial class RecipeShareDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241129112034_CommentResponses")]
+    partial class CommentResponses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,19 +55,19 @@ namespace RecipeShare.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7134a18f-a655-45dc-9738-018a913d0bb6"),
+                            Id = new Guid("7be0dbb0-3b3d-4ca3-a37b-84cc2e1381e3"),
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = new Guid("a0598eac-ad1a-4c31-8076-6851577c7c96"),
+                            Id = new Guid("3d7d3cfd-80a9-42f8-a7c0-0533ee9673ba"),
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = new Guid("b1e95e55-5f02-4fc8-a9ca-e985f2bc7f1f"),
+                            Id = new Guid("92865ff1-22a3-4bcf-8434-f86a777c3473"),
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

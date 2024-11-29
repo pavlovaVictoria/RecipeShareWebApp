@@ -171,3 +171,10 @@ input:focus + label, textarea:focus + label {
     color: #6c757d;
     pointer-events: none;
 }
+
+.btn-primary:disabled {
+    background-color: #d6d6d6;
+    border-color: #d6d6d6;
+    color: #a0a0a0;
+    cursor: not-allowed;
+}

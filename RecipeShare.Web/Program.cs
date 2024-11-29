@@ -43,7 +43,8 @@ builder.Services.AddAuthorizationBuilder()
 builder.Services
     .AddScoped<IAccountService, AccountService>()
     .AddScoped<IRecipeService, RecipeService>()
-    .AddScoped<IHomeService, HomeService>();
+    .AddScoped<IHomeService, HomeService>()
+    .AddScoped<ICommentService, CommentService>();
 
 builder.Services.AddAntiforgery(options =>
 {

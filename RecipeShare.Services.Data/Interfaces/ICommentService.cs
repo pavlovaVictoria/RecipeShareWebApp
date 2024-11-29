@@ -2,5 +2,6 @@
 {
     public interface ICommentService
     {
+        Task AddCommentAsync(string text, Guid recipeId, Guid currentUserId);
     }
 }

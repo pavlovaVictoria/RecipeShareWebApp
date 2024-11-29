@@ -48,5 +48,15 @@ namespace RecipeShare.Data.Models
         [Comment("The User who has created the comment")]
         [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser User { get; set; } = null!;
+
+        [Comment("If the comment is a response -> shows which is the Id of the parent comment")]
+        public Guid? ParentCommentId { get; set; }
+
+        [Comment("If the comment is a response -> shows which is the parent comment")]
+        [ForeignKey(nameof(ParentCommentId))]
+        public virtual Comment? ParentComment { get; set; }
+
+        [Comment("A collection of Responses of the given comment")]
+        public virtual ICollection<Comment> Responses { get; set; } = new List<Comment>();
     }
 }

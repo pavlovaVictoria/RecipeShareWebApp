@@ -81,12 +81,32 @@
 
     <div class="mt-4">
         <h4>Add a Comment</h4>
-        <form method="post" asp-action="AddComment" asp-controller="Recipe">
+        <form method="post" asp-action="Add" asp-controller="Comment">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="recipeId" value="@Model.Id" />
             <div class="form-group mb-3">
-                <textarea class="form-control" name="Text" placeholder="Write your comment..." rows="3" required></textarea>
+                <textarea class="form-control"
+                    name="text"
+                    id="commentText"
+                    placeholder="Write your comment..."
+                    rows="3"
+                    required
+                    oninput="toggleButton()"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Post Comment</button>
+            <button type="submit" class="btn btn-primary" id="addCommentButton" disabled>Add Comment</button>
         </form>
     </div>
+    <script>
+        function toggleButton() {
+            const textArea = document.getElementById("commentText");
+            const addButton = document.getElementById("addCommentButton");
+
+            if (textArea.value.trim().length > 0) {
+                addButton.disabled = false;
+            } else {
+                addButton.disabled = true;
+            }
+        }
+    </script>
 
 </div>
