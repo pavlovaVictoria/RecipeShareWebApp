@@ -19,13 +19,24 @@ namespace RecipeShare.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<InfoRecipeViewModel> topRecipes = await homeService.Top3Recipes();
+            List<InfoRecipeViewModel> topRecipes = await homeService.Top3RecipesAsync();
             return View(topRecipes);
         }
 
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string inputText)
+        {
+            if (string.IsNullOrEmpty(inputText))
+            {
+                return RedirectToAction("Index");
+            }
+            List<InfoRecipeViewModel> recipes = await homeService.SearchForRecipesAsync(inputText);
+            return View(recipes);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

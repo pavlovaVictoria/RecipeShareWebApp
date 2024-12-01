@@ -4,6 +4,7 @@ namespace RecipeShare.Services.Data.Interfaces
 {
     public interface IHomeService
     {
-        Task<List<InfoRecipeViewModel>> Top3Recipes();
+        Task<List<InfoRecipeViewModel>> Top3RecipesAsync();
+        Task<List<InfoRecipeViewModel>> SearchForRecipesAsync(string inputText);
     }
 }

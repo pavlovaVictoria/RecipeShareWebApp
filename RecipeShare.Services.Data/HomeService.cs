@@ -15,7 +15,7 @@ namespace RecipeShare.Services.Data
             context = _context;
         }
 
-        public async Task<List<InfoRecipeViewModel>> Top3Recipes()
+        public async Task<List<InfoRecipeViewModel>> Top3RecipesAsync()
         {
             List<InfoRecipeViewModel> recipes = await context.Recipes
                 .Where(r => r.IsApproved && r.IsDeleted == false && r.IsArchived == false)
@@ -31,6 +31,23 @@ namespace RecipeShare.Services.Data
                     ImageUrl = r.Img ?? "~/images/recipes/Recipe.png"
                 })
                 .Take(3)
+                .ToListAsync();
+            return recipes;
+        }
+
+        public async Task<List<InfoRecipeViewModel>> SearchForRecipesAsync(string inputText)
+        {
+            string text= inputText.ToUpper();
+            List<InfoRecipeViewModel> recipes = await context.Recipes
+                .Where(r => r.IsDeleted == false && r.IsArchived == false && r.IsApproved && (r.NormalizedRecipeTitle.Contains(inputText)))
+                .Select(r => new InfoRecipeViewModel 
+                { 
+                    Id = r.Id,
+                    RecipeTitle = r.RecipeTitle,
+                    Description = r.Description,
+                    DateOfRelease = r.DateOfRelease.ToString(RecipeReleaseDatePattern),
+                    ImageUrl = r.Img ?? "~/images/recipes/Recipe.png"
+                })
                 .ToListAsync();
             return recipes;
         }

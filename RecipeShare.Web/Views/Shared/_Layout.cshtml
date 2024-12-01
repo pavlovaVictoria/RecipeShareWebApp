@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm justify-content-between navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                     <img src="@Url.Content("~/images/home/Logo.png")" alt="Logo" class="logo-circle">
@@ -23,7 +23,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1 mr-auto">
                         <li class="nav-item">
                             <a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -45,8 +45,15 @@
                                 </ul>
                             </li>
                         }
-                        <partial name="_LoginPartial" />
                     </ul>
+                    @if(User?.Identity?.IsAuthenticated == true)
+                    {
+                        <form class="d-flex me-5" method="get" asp-action="Search" asp-controller="Home">
+                            <input class="form-control me-2" type="text" name="inputText" placeholder="Search recipes..." aria-label="Search" />
+                            <button class="btn btn-outline-primary" type="submit">Search</button>
+                        </form>
+                    }
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
