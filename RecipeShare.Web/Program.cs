@@ -34,7 +34,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("CanViewAndAddRecipes", policy =>
-        policy.RequireRole("User", "Moderator", "Administrator"))
+        policy.RequireRole("User", "Administrator"))
     .AddPolicy("CanApproveRecipes", policy =>
         policy.RequireRole("Moderator", "Administrator"))
     .AddPolicy("CanManageEverything", policy =>
@@ -44,7 +44,9 @@ builder.Services
     .AddScoped<IAccountService, AccountService>()
     .AddScoped<IRecipeService, RecipeService>()
     .AddScoped<IHomeService, HomeService>()
-    .AddScoped<ICommentService, CommentService>();
+    .AddScoped<ICommentService, CommentService>()
+    .AddScoped<IAdministratorService, AdministratorService>()
+    .AddScoped<IModeratorService, ModeratorService>();
 
 builder.Services.AddAntiforgery(options =>
 {
@@ -76,6 +78,10 @@ app.UseStatusCodePagesWithReExecute("/Error/{0}");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseAntiforgery();
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

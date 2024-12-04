@@ -23,6 +23,8 @@ namespace RecipeShare.Services.Data
             await SeedAllCategoriesAsync(context);
             await SeedAllProductsAsync(context);
             await SeedDefaultUserAsync(scope.ServiceProvider);
+            await SeedAdministratorAsync(scope.ServiceProvider);
+            await SeedModeratorAsync(scope.ServiceProvider);
             await SeedAllRecipesAsync(context, scope.ServiceProvider);
         }
 
@@ -95,12 +97,73 @@ namespace RecipeShare.Services.Data
                 {
                     return;
                 }
+                await userManager.AddToRoleAsync(user, "User");
             }
             else
             {
                 if (!await userManager.IsInRoleAsync(defaultUser, "User"))
                 {
                     await userManager.AddToRoleAsync(defaultUser, "User");
+                }
+            }
+        }
+
+        private static async Task SeedAdministratorAsync(IServiceProvider serviceProvider)
+        {
+            UserManager<ApplicationUser> userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            ApplicationUser? administrator = await userManager.FindByEmailAsync("administrator@example.com");
+            if (administrator == null)
+            {
+                ApplicationUser admin = new ApplicationUser
+                {
+                    UserName = "Administrator",
+                    Email = "administrator@example.com",
+                    IsMale = true,
+                    AccountBio = "The example admin"
+                };
+
+                IdentityResult result = await userManager.CreateAsync(admin, "Admin123");
+                if (!result.Succeeded)
+                {
+                    return;
+                }
+                await userManager.AddToRoleAsync(admin, "Administrator");
+            }
+            else
+            {
+                if (!await userManager.IsInRoleAsync(administrator, "Administrator"))
+                {
+                    await userManager.AddToRoleAsync(administrator, "Administrator");
+                }
+            }
+        }
+
+        private static async Task SeedModeratorAsync(IServiceProvider serviceProvider)
+        {
+            UserManager<ApplicationUser> userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            ApplicationUser? moderator = await userManager.FindByEmailAsync("moderator@example.com");
+            if (moderator == null)
+            {
+                ApplicationUser m = new ApplicationUser
+                {
+                    UserName = "Moderator",
+                    Email = "moderator@example.com",
+                    IsMale = true,
+                    AccountBio = "Example moderator"
+                };
+
+                IdentityResult result = await userManager.CreateAsync(m, "Moderator123");
+                if (!result.Succeeded)
+                {
+                    return;
+                }
+                await userManager.AddToRoleAsync(m, "Moderator");
+            }
+            else
+            {
+                if (!await userManager.IsInRoleAsync(moderator, "Moderator"))
+                {
+                    await userManager.AddToRoleAsync(moderator, "Moderator");
                 }
             }
         }

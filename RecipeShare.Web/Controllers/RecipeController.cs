@@ -11,7 +11,7 @@ using static RecipeShare.Common.ApplicationConstants;
 
 namespace RecipeShare.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "CanViewAndAddRecipes")]
     public class RecipeController : Controller
     {
         private readonly IRecipeService recipeService;
