@@ -32,18 +32,32 @@
                         </li>
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-muted" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Recipes
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="Index">All Recipes</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="Add">Add New Recipe</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="MyCollection">My Recipes</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="LikedRecipes">Liked Recipes</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="ArchivedRecipes">Archived Recipes</a></li>
-                                </ul>
-                            </li>
+                            @if(User?.IsInRole("Moderator") ?? false)
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-muted" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Recipes
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="Index">All Recipes</a></li>
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-muted" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Recipes
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="Index">All Recipes</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="Add">Add New Recipe</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="MyCollection">My Recipes</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="LikedRecipes">Liked Recipes</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="ArchivedRecipes">Archived Recipes</a></li>
+                                    </ul>
+                                </li>
+                            }
                         }
                     </ul>
                     @if(User?.Identity?.IsAuthenticated == true)

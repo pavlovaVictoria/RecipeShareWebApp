@@ -32,6 +32,7 @@ namespace RecipeShare.Web.Controllers
             bool result = await accountService.LoginAsync(loginViewModel);
             if (result)
             {
+				
                 TempData["SuccessMessage"] = "Wellcome to the RecipeShare App. Now you can view and add recipes. Enjoy!";
                 return RedirectToAction("Index", "Home");
             }

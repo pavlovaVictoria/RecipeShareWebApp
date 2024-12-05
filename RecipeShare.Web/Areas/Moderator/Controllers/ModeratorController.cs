@@ -6,6 +6,7 @@ using RecipeShare.Web.ViewModels.RecipeViewModels;
 
 namespace RecipeShare.Web.Areas.Moderator.Controllers
 {
+    [Area("Moderator")]
     [Authorize(Policy = "CanApproveRecipes")]
     public class ModeratorController : Controller
     {

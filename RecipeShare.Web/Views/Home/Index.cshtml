@@ -6,7 +6,18 @@
 <div class="text-center w-100">
 
     <img src="@Url.Content("~/images/home/FrontPage.png")" class="img-fluid" style="object-fit: contain; max-height: 550px; width: 100%;" alt="">
-
+    @if (User?.IsInRole("Moderator") ?? false)
+    {
+        <a asp-area="Moderator" asp-controller="Moderator" asp-action="Index" class="btn btn-primary mb-3 p-4">
+            Go to Moderator Dashboard
+        </a>
+    }
+    else if (User?.IsInRole("Administrator") ?? false)
+    {
+        <a asp-area="Admin" asp-controller="Administrator" asp-action="Index" class="btn btn-success mb-3 p-4">
+            Go to Admin Dashboard
+        </a>
+    }
     <div class="container text-center rounded border border-4 border-primary p-2 shadow">
         <h2 class="text-center m-4 text-muted">Top 3 Recipes</h2>
         <div class="row justify-content-center">

@@ -1,0 +1,43 @@
+﻿@using RecipeShare.Web.ViewModels.PaginationViewModels;
+@using RecipeShare.Web.ViewModels.RecipeViewModels;
+@model PaginatedList<InfoRecipeViewModel>
+@{
+    ViewData["Title"] = "Liked Recipes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container text-center">
+    <button class="btn btn-outline-primary" onclick="goBack()">
+        <i class="bi bi-arrow-left"></i> Go Back
+    </button>
+    <h2 class="text-center m-4 text-muted">Recipes for approval</h2>
+    <div class="row justify-content-center">
+        @if (Model.Items.Any())
+
+        {
+            @foreach (var recipe in Model.Items)
+
+            {
+                <div class="card d-flex align-items-center justify-content-center m-3 shadow-sm" style="width: 18rem;">
+                    <img src="@Url.Content(recipe.ImageUrl)" class="card-img-top" style="width: 16rem; height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">@recipe.RecipeTitle</h5>
+                        <p class="card-text">@recipe.Description</p>
+                        <a asp-controller="Recipe" asp-action="Details" asp-route-recipeId="@recipe.Id" class="btn btn-primary">View More</a>
+                        <div class="d-flex gap-2">
+                            <a class="btn btn-primary">Approve Recipe</a>
+                            <a class="btn btn-primary">Delete Recipe</a>
+                        </div>
+                        <p class="card-footer">@recipe.DateOfRelease</p>
+                    </div>
+                </div>
+            }
+        }
+
+        else
+
+        {
+            <p class="text-center">There are no Recipes for approval</p>
+        }
+    </div>
+</div>
+@await Html.PartialAsync("_PaginationPartial", Model)
