@@ -1,7 +1,10 @@
 ﻿using Azure;
 using Microsoft.EntityFrameworkCore;
+using RecipeShare.Common.Exceptions;
 using RecipeShare.Data;
+using RecipeShare.Data.Models;
 using RecipeShare.Services.Data.Interfaces;
+using RecipeShare.Web.ViewModels.CommentViewModels;
 using RecipeShare.Web.ViewModels.PaginationViewModels;
 using RecipeShare.Web.ViewModels.RecipeViewModels;
 using System.Drawing.Printing;
@@ -16,7 +19,7 @@ namespace RecipeShare.Services.Data
         {
             context = _context;
         }
-        public async Task<PaginatedList<InfoRecipeViewModel>> ViewAllUnapprovedRecipes(int page, int pageSize)
+        public async Task<PaginatedList<InfoRecipeViewModel>> ViewAllUnapprovedRecipesAsync(int page, int pageSize)
         {
             List<InfoRecipeViewModel> model = await context.Recipes
                 .Where(r => r.IsApproved == false && r.IsDeleted == false && r.IsArchived == false)
@@ -39,6 +42,82 @@ namespace RecipeShare.Services.Data
                 pageSize
             );
             return recipes;
+        }
+        public async Task<RecipeDetailsViewModel?> RecipeDetailsAsync(Guid recipeId, Guid userId)
+        {
+            RecipeDetailsViewModel? model = await context.Recipes
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false && r.IsArchived == false)
+                .AsNoTracking()
+                .Select(r => new RecipeDetailsViewModel
+                {
+                    Id = r.Id,
+                    RecipeTitle = r.RecipeTitle,
+                    Description = r.Description,
+                    UserName = r.User.UserName ?? "Unknown User",
+                    Preparation = r.Preparation,
+                    MinutesForPrep = r.MinutesForPrep,
+                    MealType = r.MealType.ToString(),
+                    Category = r.Category.CategoryName,
+                    DateOfRelease = r.DateOfRelease.ToString(RecipeReleaseDatePattern),
+                    Comments = r.Comments
+                    .Where(c => c.IsDeleted == false && c.IsResponse == false)
+                    .Select(c => new CommentViewModel
+                    {
+                        Id = c.Id,
+                        UserName = c.User.UserName ?? "Unknown User",
+                        DateOfRelease = c.DateOfRelease.ToString(RecipeReleaseDatePattern),
+                        Text = c.Text,
+                        Responses = c.Responses
+                        .Where(cr => cr.IsDeleted == false && cr.IsResponse == true)
+                        .Select(cr => new CommentViewModel
+                        {
+                            Id = cr.Id,
+                            DateOfRelease = cr.DateOfRelease.ToString(RecipeReleaseDatePattern),
+                            Text = cr.Text,
+                            UserName = cr.User.UserName ?? "Unknown User",
+                            IsResponse = c.IsResponse
+                        })
+                        .ToList(),
+                        IsResponse = c.IsResponse
+                    }).ToList(),
+                    Allergens = r.AllergensRecipes.Select(ar => ar.Allergen)
+                    .Where(a => a.IsDeleted == false)
+                    .Select(a => new AllergenViewModel
+                    {
+                        AllergenImage = a.AllergenImage,
+                        AllergenName = a.AllergenName
+                    })
+                    .ToList(),
+                    Likes = r.LikedRecipes.Count(),
+                    IsLikedByCurrentUser = (r.LikedRecipes.Any(lr => lr.User.Id == userId)),
+                    ProductDetails = context.RecipesProductsDetails
+                    .Where(rp => rp.RecipeId == recipeId)
+                    .Select(rp => new RecipeProductDetailsViewModel
+                    {
+                        ProductName = rp.Product.ProductName,
+                        Quantity = rp.Quantity,
+                        UnitType = rp.UnitType.ToString()
+                    })
+                    .ToList(),
+                })
+                .FirstOrDefaultAsync();
+            return model;
+        }
+        public async Task UnapproveRecipeAsync(Guid recipeId, Guid userId)
+        {
+            Recipe? recipe = await context.Recipes
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false)
+                .FirstOrDefaultAsync();
+            if (recipe == null)
+            {
+                if (await context.Recipes.AnyAsync(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false))
+                {
+                    throw new HttpStatusException(403);
+                }
+                throw new HttpStatusException(404);
+            }
+            recipe.IsDeleted = true;
+            await context.SaveChangesAsync();
         }
     }
 }

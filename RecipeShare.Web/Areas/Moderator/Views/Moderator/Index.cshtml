@@ -1,6 +1,4 @@
-﻿@using RecipeShare.Web.ViewModels.PaginationViewModels;
-@using RecipeShare.Web.ViewModels.RecipeViewModels;
-@model PaginatedList<InfoRecipeViewModel>
+﻿@model PaginatedList<InfoRecipeViewModel>
 @{
     ViewData["Title"] = "Liked Recipes";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,17 +20,20 @@
                     <div class="card-body">
                         <h5 class="card-title">@recipe.RecipeTitle</h5>
                         <p class="card-text">@recipe.Description</p>
-                        <a asp-controller="Recipe" asp-action="Details" asp-route-recipeId="@recipe.Id" class="btn btn-primary">View More</a>
+                        <a asp-area="Moderator" asp-controller="Moderator" asp-action="Details" asp-route-recipeId="@recipe.Id" class="btn btn-primary">View More</a>
                         <div class="d-flex gap-2">
-                            <a class="btn btn-primary">Approve Recipe</a>
-                            <a class="btn btn-primary">Delete Recipe</a>
+                            <a asp-area="Moderator" asp-controller="Moderator" asp-action="Approve" class="btn btn-primary">Approve Recipe</a>
+                            <form asp-area="Moderator" asp-controller="Moderator" asp-action="Unapprove" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="recipeId" asp-for="@recipe.Id" />
+                                <button type="submit" class="btn btn-primary">Unapprove Recipe</button>
+                            </form>
                         </div>
                         <p class="card-footer">@recipe.DateOfRelease</p>
                     </div>
                 </div>
             }
         }
-
         else
 
         {
@@ -41,3 +42,4 @@
     </div>
 </div>
 @await Html.PartialAsync("_PaginationPartial", Model)
+@await Html.PartialAsync("_LoginPartial")

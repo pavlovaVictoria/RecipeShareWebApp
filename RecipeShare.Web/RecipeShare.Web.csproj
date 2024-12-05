@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administrator\Views\" />
-    <Folder Include="Areas\Moderator\Views\Shared\" />
   </ItemGroup>
 
 </Project>

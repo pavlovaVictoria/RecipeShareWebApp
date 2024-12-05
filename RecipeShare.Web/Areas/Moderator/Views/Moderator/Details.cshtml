@@ -1,0 +1,148 @@
+﻿@model RecipeDetailsViewModel
+@{
+    ViewData["Title"] = "Recipe Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container mt-5">
+    <button class="btn btn-outline-primary" onclick="goBack()">
+        <i class="bi bi-arrow-left"></i> Go Back
+    </button>
+    <h1 class="text-center mb-4">@Model.RecipeTitle</h1>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Author: @Model.UserName</h5>
+            <p class="card-text text-muted">Published on: @Model.DateOfRelease</p>
+            <hr class="my-4">
+            <p class="card-text">
+                <strong>Allergens: </strong>
+                @foreach (var a in Model.Allergens)
+                {
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="@a.AllergenName">
+                        <img src="@Url.Content(a.AllergenImage)" alt="@a.AllergenName" class="rounded-circle border" style="width: 50px; height: 50px; object-fit: cover;" />
+                    </span>
+                }
+            </p>
+            <p class="card-text"><strong>Category:</strong> @Model.Category</p>
+            <p class="card-text"><strong>Meal Type:</strong> @Model.MealType</p>
+            <p class="card-text"><strong>Preparation Time:</strong> @Model.MinutesForPrep minutes</p>
+            <p class="card-text">@Model.Description</p>
+
+            <h4>Products</h4>
+            <ul>
+                @foreach (var prductDetail in Model.ProductDetails)
+                {
+                    <li><p><strong>@prductDetail.ProductName</strong>: @prductDetail.Quantity @prductDetail.UnitType</p></li>
+                }
+            </ul>
+
+            <h4>Preparation</h4>
+            <p>@Model.Preparation</p>
+        </div>
+    </div>
+
+    <h3 class="text-center mb-4">Comments</h3>
+
+    @if (Model.Comments.Any())
+    {
+        <div class="list-group">
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <span><strong>@comment.UserName</strong></span>
+                        @if (User?.Identity?.Name == Model.UserName || User?.Identity?.Name == comment.UserName || (User?.IsInRole("Moderator") ?? false))
+                        {
+                            <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"></i>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <form method="post" asp-action="Delete" asp-controller="Comment">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="recipeId" value="@Model.Id" />
+                                        <input type="hidden" name="commentId" value="@comment.Id" />
+                                        <button type="submit" class="dropdown-item text-danger">Delete</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        }
+                    </div>
+                    <!---->
+                    <p class="mt-2">@comment.Text</p>
+                    <div class="container text-end">
+                        <span class="text-muted">@comment.DateOfRelease</span>
+                    </div>
+                    <div class="container text-center">
+                        <!---->
+                        @if (comment.Responses.Any())
+                        {
+                            <a class="btn btn-primary mb-1" data-bs-toggle="collapse" href="#viewResponses" role="button" aria-expanded="false" aria-controls="viewResponses">
+                                View Responses
+                            </a>
+                            <div class="collapse" id="viewResponses">
+                                <div class="card card-body">
+                                    <div class="mt-4">
+                                        <h4>All Responses</h4>
+                                        <div class="list-group">
+                                            @foreach (var response in comment.Responses)
+                                            {
+                                                <div class="list-group-item">
+                                                    <div class="d-flex justify-content-between">
+                                                        <span><strong>@response.UserName</strong></span>
+                                                        @if (User?.Identity?.Name == Model.UserName || User?.Identity?.Name == response.UserName || (User?.IsInRole("Moderator") ?? false))
+                                                        {
+                                                            <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"></i>
+                                                            <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <form method="post" asp-action="Delete" asp-controller="Comment">
+                                                                        @Html.AntiForgeryToken()
+                                                                        <input type="hidden" name="recipeId" value="@Model.Id" />
+                                                                        <input type="hidden" name="commentId" value="@comment.Id" />
+                                                                        <button type="submit" class="dropdown-item text-danger">Delete</button>
+                                                                    </form>
+                                                                </li>
+                                                            </ul>
+                                                        }
+                                                    </div>
+                                                    <p class="mt-2">@comment.Text</p>
+                                                    <div class="container text-end">
+                                                        <span class="text-muted">@comment.DateOfRelease</span>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        @if (User?.Identity?.Name != Model.UserName)
+        {
+            <p class="text-muted text-center">No comments yet. Be the first to comment!</p>
+        }
+        else
+        {
+            <p class="text-muted text-center">No comments yet.</p>
+        }
+    }
+    <script>
+        function toggleButton() {
+            const textArea = document.getElementById("commentText");
+            const addButton = document.getElementById("addCommentButton");
+
+            if (textArea.value.trim().length > 0) {
+                addButton.disabled = false;
+            } else {
+                addButton.disabled = true;
+            }
+        }
+    </script>
+
+</div>
+@await Html.PartialAsync("_LoginPartial")
+
