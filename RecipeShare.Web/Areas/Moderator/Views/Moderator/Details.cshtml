@@ -1,7 +1,6 @@
 ﻿@model RecipeDetailsViewModel
 @{
     ViewData["Title"] = "Recipe Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container mt-5">
     <button class="btn btn-outline-primary" onclick="goBack()">
@@ -56,7 +55,7 @@
                             <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"></i>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <form method="post" asp-action="Delete" asp-controller="Comment">
+                                    <form method="post" asp-action="DeleteComment" asp-controller="Moderator" asp-area="Moderator">
                                         @Html.AntiForgeryToken()
                                         <input type="hidden" name="recipeId" value="@Model.Id" />
                                         <input type="hidden" name="commentId" value="@comment.Id" />
@@ -93,7 +92,7 @@
                                                             <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"></i>
                                                             <ul class="dropdown-menu">
                                                                 <li>
-                                                                    <form method="post" asp-action="Delete" asp-controller="Comment">
+                                                                    <form method="post" asp-action="DeleteComment" asp-controller="Moderator" asp-area="Moderator">
                                                                         @Html.AntiForgeryToken()
                                                                         <input type="hidden" name="recipeId" value="@Model.Id" />
                                                                         <input type="hidden" name="commentId" value="@comment.Id" />
@@ -144,5 +143,4 @@
     </script>
 
 </div>
-@await Html.PartialAsync("_LoginPartial")
 

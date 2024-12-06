@@ -43,24 +43,52 @@ namespace RecipeShare.Web.Areas.Moderator.Controllers
             }
             return View(recipe);
         }
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Unapprove(Guid recipeId)
         {
             Guid currentUserId = GetCurrentUserId();
-            if (currentUserId == Guid.Empty)
+            if (currentUserId == Guid.Empty || !User.IsInRole("Moderator"))
             {
                 return View($"Error/{403}");
             }
             try
             {
-                await moderatorService.UnapproveRecipeAsync(recipeId, currentUserId);
+                await moderatorService.UnapproveRecipeAsync(recipeId);
                 return RedirectToAction("Index", "Moderator");
             }
             catch (HttpStatusException statusCode)
             {
                 return View($"Error/{statusCode}");
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Approve(Guid recipeId)
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty || !User.IsInRole("Moderator"))
+            {
+                return View($"Error/{403}");
+            }
+            try
+            {
+                await moderatorService.ApproveRecipeAsync(recipeId);
+                return RedirectToAction("Index", "Moderator");
+            }
+            catch (HttpStatusException statusCode)
+            {
+                return View($"Error/{statusCode}");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> All(int page = 1, int pageSize = 4)
+        {
+            PaginatedList<InfoRecipeViewModel> recipes = await moderatorService.ViewAllRecipesAsync(page, pageSize);
+            return View(recipes);
         }
         private Guid GetCurrentUserId()
         {

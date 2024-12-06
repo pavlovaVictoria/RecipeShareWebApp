@@ -39,7 +39,7 @@
                                         Recipes
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="Index">All Recipes</a></li>
+                                        <li><a class="dropdown-item" asp-area="Moderator" asp-controller="Moderator" asp-action="All">All Recipes</a></li>
                                     </ul>
                                 </li>
                             }
@@ -60,14 +60,14 @@
                             }
                         }
                     </ul>
-                    @if(User?.Identity?.IsAuthenticated == true)
+                    @if(User?.Identity?.IsAuthenticated == true && !User.IsInRole("Moderator"))
                     {
                         <form class="d-flex me-5" method="get" asp-action="Search" asp-controller="Home">
                             <input class="form-control me-2" type="text" name="inputText" placeholder="Search recipes..." aria-label="Search" />
                             <button class="btn btn-outline-primary" type="submit">Search</button>
                         </form>
                     }
-                    <partial name="_LoginPartial" />
+                    @await Html.PartialAsync("_LoginPartial")
                 </div>
             </div>
         </nav>

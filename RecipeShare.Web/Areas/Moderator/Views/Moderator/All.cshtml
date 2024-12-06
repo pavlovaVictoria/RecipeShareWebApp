@@ -1,12 +1,13 @@
 ﻿@model PaginatedList<InfoRecipeViewModel>
 @{
-    ViewData["Title"] = "Approve Recipes";
+    ViewData["Title"] = "All Recipes";
 }
+
 <div class="container text-center">
     <button class="btn btn-outline-primary" onclick="goBack()">
         <i class="bi bi-arrow-left"></i> Go Back
     </button>
-    <h2 class="text-center m-4 text-muted">Recipes for approval</h2>
+    <h2 class="text-center m-4 text-muted">All Recipes</h2>
     <div class="row justify-content-center">
         @if (Model.Items.Any())
 
@@ -20,18 +21,6 @@
                         <h5 class="card-title">@recipe.RecipeTitle</h5>
                         <p class="card-text">@recipe.Description</p>
                         <a asp-area="Moderator" asp-controller="Moderator" asp-action="Details" asp-route-recipeId="@recipe.Id" class="btn btn-primary">View More</a>
-                        <div class="d-flex gap-2">
-                            <form asp-area="Moderator" asp-controller="Moderator" asp-action="Approve" method="post" style="display:inline;">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="recipeId" asp-for="@recipe.Id" />
-                                <button type="submit" class="btn btn-primary">Approve Recipe</button>
-                            </form>
-                            <form asp-area="Moderator" asp-controller="Moderator" asp-action="Unapprove" method="post" style="display:inline;">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="recipeId" asp-for="@recipe.Id" />
-                                <button type="submit" class="btn btn-primary">Unapprove Recipe</button>
-                            </form>
-                        </div>
                         <p class="card-footer">@recipe.DateOfRelease</p>
                     </div>
                 </div>
@@ -40,7 +29,7 @@
         else
 
         {
-            <p class="text-center">There are no Recipes for approval</p>
+            <p class="text-center">There are not any Recipes</p>
         }
     </div>
 </div>

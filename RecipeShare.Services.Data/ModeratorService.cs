@@ -46,7 +46,7 @@ namespace RecipeShare.Services.Data
         public async Task<RecipeDetailsViewModel?> RecipeDetailsAsync(Guid recipeId, Guid userId)
         {
             RecipeDetailsViewModel? model = await context.Recipes
-                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false && r.IsArchived == false)
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == true && r.IsArchived == false)
                 .AsNoTracking()
                 .Select(r => new RecipeDetailsViewModel
                 {
@@ -68,7 +68,7 @@ namespace RecipeShare.Services.Data
                         DateOfRelease = c.DateOfRelease.ToString(RecipeReleaseDatePattern),
                         Text = c.Text,
                         Responses = c.Responses
-                        .Where(cr => cr.IsDeleted == false && cr.IsResponse == true)
+                        .Where(cr => cr.IsDeleted == false && cr.IsResponse == true && cr.ParentCommentId == c.Id)
                         .Select(cr => new CommentViewModel
                         {
                             Id = cr.Id,
@@ -103,21 +103,53 @@ namespace RecipeShare.Services.Data
                 .FirstOrDefaultAsync();
             return model;
         }
-        public async Task UnapproveRecipeAsync(Guid recipeId, Guid userId)
+        public async Task UnapproveRecipeAsync(Guid recipeId)
         {
             Recipe? recipe = await context.Recipes
                 .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false)
                 .FirstOrDefaultAsync();
             if (recipe == null)
             {
-                if (await context.Recipes.AnyAsync(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false))
-                {
-                    throw new HttpStatusException(403);
-                }
                 throw new HttpStatusException(404);
             }
             recipe.IsDeleted = true;
             await context.SaveChangesAsync();
+        }
+        public async Task ApproveRecipeAsync(Guid recipeId)
+        {
+            Recipe? recipe = await context.Recipes
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false)
+                .FirstOrDefaultAsync();
+            if (recipe == null)
+            {
+                throw new HttpStatusException(404);
+            }
+            recipe.IsApproved = true;
+            await context.SaveChangesAsync();
+        }
+        public async Task<PaginatedList<InfoRecipeViewModel>> ViewAllRecipesAsync(int page, int pageSize)
+        {
+            List<InfoRecipeViewModel> model = await context.Recipes
+                .Where(r => r.IsApproved == true && r.IsDeleted == false && r.IsArchived == false)
+                .AsNoTracking()
+                .Select(r => new InfoRecipeViewModel
+                {
+                    Id = r.Id,
+                    RecipeTitle = r.RecipeTitle,
+                    DateOfRelease = r.DateOfRelease.ToString(RecipeReleaseDatePattern),
+                    ImageUrl = r.Img ?? "~/images/recipes/Recipe.png",
+                })
+            .ToListAsync();
+            IEnumerable<InfoRecipeViewModel> paginatedRecipes = model
+            .Skip((page - 1) * pageSize).Take(pageSize);
+
+            PaginatedList<InfoRecipeViewModel> recipes = new PaginatedList<InfoRecipeViewModel>(
+                paginatedRecipes,
+                model.Count(),
+                page,
+                pageSize
+            );
+            return recipes;
         }
     }
 }

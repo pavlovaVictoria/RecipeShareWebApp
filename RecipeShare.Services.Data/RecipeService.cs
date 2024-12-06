@@ -92,7 +92,7 @@ namespace RecipeShare.Services.Data
                         DateOfRelease = c.DateOfRelease.ToString(RecipeReleaseDatePattern),
                         Text = c.Text,
                         Responses = c.Responses
-                        .Where(cr => cr.IsDeleted == false && cr.IsResponse == true)
+                        .Where(cr => cr.IsDeleted == false && cr.IsResponse == true && cr.ParentCommentId == c.Id)
                         .Select(cr => new CommentViewModel 
                         {
                             Id = cr.Id,
