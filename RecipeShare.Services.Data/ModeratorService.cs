@@ -151,5 +151,18 @@ namespace RecipeShare.Services.Data
             );
             return recipes;
         }
-    }
+        public async Task DeleteCommentAsync(Guid commentId)
+        {
+			Comment? comment = await context.Comments
+				.Where(c => c.IsDeleted == false && c.Id == commentId)
+				.FirstOrDefaultAsync();
+			if (comment == null)
+			{
+				throw new HttpStatusException(404);
+			}
+			comment.IsDeleted = true;
+			await context.SaveChangesAsync();
+		}
+
+	}
 }

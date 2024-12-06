@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecipeShare.Common.Exceptions;
+using RecipeShare.Data.Models;
 using RecipeShare.Services.Data;
 using RecipeShare.Services.Data.Interfaces;
 using RecipeShare.Web.ViewModels.PaginationViewModels;
@@ -90,6 +91,25 @@ namespace RecipeShare.Web.Areas.Moderator.Controllers
             PaginatedList<InfoRecipeViewModel> recipes = await moderatorService.ViewAllRecipesAsync(page, pageSize);
             return View(recipes);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteComment(Guid commentId)
+        {
+			Guid currentUserId = GetCurrentUserId();
+			if (currentUserId == Guid.Empty || !User.IsInRole("Moderator"))
+			{
+				return View($"Error/{403}");
+			}
+			try
+			{
+				await moderatorService.DeleteCommentAsync(commentId);
+				return RedirectToAction("Index", "Moderator");
+			}
+			catch (HttpStatusException statusCode)
+			{
+				return View($"Error/{statusCode}");
+			}
+		}
         private Guid GetCurrentUserId()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

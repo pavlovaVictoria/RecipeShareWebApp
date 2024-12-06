@@ -14,5 +14,6 @@ namespace RecipeShare.Services.Data.Interfaces
         Task UnapproveRecipeAsync(Guid recipeId);
         Task ApproveRecipeAsync(Guid recipeId);
         Task<PaginatedList<InfoRecipeViewModel>> ViewAllRecipesAsync(int page, int pageSize);
+        Task DeleteCommentAsync(Guid commentId);
     }
 }
