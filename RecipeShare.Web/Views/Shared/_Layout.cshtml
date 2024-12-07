@@ -42,10 +42,15 @@
                                         <li><a class="dropdown-item" asp-area="Moderator" asp-controller="Moderator" asp-action="All">All Recipes</a></li>
                                     </ul>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-muted" asp-controller="AccountSettings" asp-action="Index">Account</a>
+                                </li>
                             }
                             else if (User.IsInRole("Administrator"))
                             {
-                                
+                                <li class="nav-item">
+                                    <a class="nav-link text-muted" asp-controller="AccountSettings" asp-action="Index">Account</a>
+                                </li>
                             }
                             else
                             {
@@ -60,6 +65,9 @@
                                         <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="LikedRecipes">Liked Recipes</a></li>
                                         <li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="ArchivedRecipes">Archived Recipes</a></li>
                                     </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-muted" asp-controller="AccountSettings" asp-action="Index">Account</a>
                                 </li>
                             }
                         }

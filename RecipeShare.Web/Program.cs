@@ -38,7 +38,9 @@ builder.Services.AddAuthorizationBuilder()
     .AddPolicy("CanApproveRecipes", policy =>
         policy.RequireRole("Moderator", "Administrator"))
     .AddPolicy("CanManageEverything", policy =>
-        policy.RequireRole("Administrator"));
+        policy.RequireRole("Administrator"))
+    .AddPolicy("AccountSettings", policy =>
+        policy.RequireRole("User", "Administrator", "Moderator"));
 
 builder.Services
     .AddScoped<IAccountService, AccountService>()
@@ -46,7 +48,8 @@ builder.Services
     .AddScoped<IHomeService, HomeService>()
     .AddScoped<ICommentService, CommentService>()
     .AddScoped<IAdministratorService, AdministratorService>()
-    .AddScoped<IModeratorService, ModeratorService>();
+    .AddScoped<IModeratorService, ModeratorService>()
+    .AddScoped<IAccountSettingsService, AccountSettingsService>();
 
 builder.Services.AddAntiforgery(options =>
 {

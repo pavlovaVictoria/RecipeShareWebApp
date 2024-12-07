@@ -1,0 +1,14 @@
+﻿@{
+	ViewData["Title"] = "Settings";
+}
+<div class="container text-center">
+	<button class="btn btn-outline-primary me-4" onclick="goBack()">
+		<i class="bi bi-arrow-left"></i> Go Back
+	</button>
+	<h4 class="m-5">Account Settings</h4>
+	<div>
+		<a class="btn btn-primary me-4" asp-controller="AccountSettings" asp-action="ManageInfo">Manage Info</a>
+		<a class="btn btn-primary me-4" asp-controller="AccountSettings" asp-action="ChangePassword">Change Password</a>
+		<a class="btn btn-primary" asp-controller="AccountSettings" asp-action="DeleteAccount">Delete Account</a>
+	</div>
+</div>
