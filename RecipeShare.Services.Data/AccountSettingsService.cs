@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RecipeShare.Web.ViewModels.AccountSettingsViewModels;
+using RecipeShare.Web.ViewModels.ApplicationUserViewModels;
 
 namespace RecipeShare.Services.Data
 {
@@ -20,6 +22,34 @@ namespace RecipeShare.Services.Data
             userManager = _userManager;
         }
 
+		public Task<AccountInfoViewModel> AccountInfoModelAsync(Guid accountId)
+		{
+			throw new NotImplementedException();
+		}
 
-    }
+		public Task ChangePasswordAsync(ChangePasswordViewModel model, Guid accountId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task DeleteUserAsync(DeleteUserViewModel model, Guid userId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<ChangePasswordViewModel> ModelForChangingPassAsync(Guid accountId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<DeleteUserViewModel> ModelForDeleteUserAsunc(Guid accountId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task SaveAccountInfoAsync(AccountInfoViewModel model, Guid accountId)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
