@@ -28,8 +28,4 @@
     <ProjectReference Include="..\RecipeShare.Web.ViewModels\RecipeShare.Web.ViewModels.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Administrator\Views\Administrator\" />
-  </ItemGroup>
-
 </Project>

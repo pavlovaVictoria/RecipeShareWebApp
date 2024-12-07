@@ -24,7 +24,7 @@ namespace RecipeShare.Data.Models
         [Required]
         [Comment("The user's short bio")]
         [StringLength(UserBioMax, ErrorMessage = ErrorMessageUserBio)]
-        public string AccountBio { get; set; }
+        public string AccountBio { get; set; } = null!;
 
 		[Required]
 		[Comment("Shows if the ApplicationUser is deleted or not -> Soft Deleting")]

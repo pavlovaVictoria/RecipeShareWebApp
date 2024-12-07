@@ -35,7 +35,7 @@ namespace RecipeShare.Services.Data
         public async Task<RecipesIndexViewModel> IndexPageOfRecipesAsync()
         {
             List<InfoRecipeViewModel> recipes = await context.Recipes
-                .Where(r => r.IsApproved && r.IsDeleted == false && r.IsArchived == false)
+                .Where(r => r.IsApproved && r.IsDeleted == false && r.IsArchived == false && !r.User.IsDeleted)
                 .OrderByDescending(r => r.LikedRecipes.Count)
                 .ThenBy(r => r.RecipeTitle)
                 .AsNoTracking()
@@ -70,7 +70,7 @@ namespace RecipeShare.Services.Data
         public async Task<RecipeDetailsViewModel?> RecipeDetailsAsync(Guid recipeId, Guid userId)
         {
             RecipeDetailsViewModel? model = await context.Recipes
-                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false)
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false && !r.User.IsDeleted)
                 .AsNoTracking()
                 .Select(r => new RecipeDetailsViewModel
                 {
@@ -84,7 +84,7 @@ namespace RecipeShare.Services.Data
                     Category = r.Category.CategoryName,
                     DateOfRelease = r.DateOfRelease.ToString(RecipeReleaseDatePattern),
                     Comments = r.Comments
-                    .Where(c => c.IsDeleted == false && c.IsResponse == false)
+                    .Where(c => c.IsDeleted == false && c.IsResponse == false && !c.User.IsDeleted)
                     .Select(c => new CommentViewModel
                     {
                         Id = c.Id,
@@ -92,7 +92,7 @@ namespace RecipeShare.Services.Data
                         DateOfRelease = c.DateOfRelease.ToString(RecipeReleaseDatePattern),
                         Text = c.Text,
                         Responses = c.Responses
-                        .Where(cr => cr.IsDeleted == false && cr.IsResponse == true && cr.ParentCommentId == c.Id)
+                        .Where(cr => cr.IsDeleted == false && cr.IsResponse == true && cr.ParentCommentId == c.Id && !c.User.IsDeleted)
                         .Select(cr => new CommentViewModel 
                         {
                             Id = cr.Id,
@@ -130,7 +130,7 @@ namespace RecipeShare.Services.Data
 
         public async Task<(bool isLiked, int likes)> LikeRecipeAsync(Guid recipeId, Guid userId)
         {
-            Recipe? recipe = await context.Recipes.Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false).Include(r => r.LikedRecipes).FirstOrDefaultAsync();
+            Recipe? recipe = await context.Recipes.Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false && !r.User.IsDeleted).Include(r => r.LikedRecipes).FirstOrDefaultAsync();
             if (recipe == null)
             {
                 throw new HttpStatusException(404);
@@ -175,7 +175,7 @@ namespace RecipeShare.Services.Data
                 {
                     CategoryId = c.Id,
                     CategoryName = c.CategoryName,
-                    Recipes = context.Recipes.Where(r => r.CategoryId == c.Id && r.IsDeleted == false && r.IsApproved && r.IsArchived == false)
+                    Recipes = context.Recipes.Where(r => r.CategoryId == c.Id && r.IsDeleted == false && r.IsApproved && r.IsArchived == false && !r.User.IsDeleted)
                     .Select(r => new InfoRecipeViewModel
                     {
                         Id = r.Id,
@@ -267,7 +267,7 @@ namespace RecipeShare.Services.Data
         public async Task<PaginatedList<InfoRecipeViewModel>> ViewCreatedRecipesAsync(Guid userId, int page, int pageSize)
         {
             List<InfoRecipeViewModel> model = await context.Recipes
-                .Where(r => r.UserId == userId && r.IsDeleted == false && r.IsArchived == false && r.IsApproved)
+                .Where(r => r.UserId == userId && r.IsDeleted == false && r.IsArchived == false && r.IsApproved && !r.User.IsDeleted)
                 .Select(r => new InfoRecipeViewModel
                 {
                     Id = r.Id,
@@ -294,7 +294,7 @@ namespace RecipeShare.Services.Data
             List<InfoRecipeViewModel> model = await context.LikedRecipes
                 .Where(lr => lr.UserId == userId)
                 .Select(lr => lr.Recipe)
-                .Where(r => r.IsDeleted == false && r.IsApproved && r.IsArchived == false)
+                .Where(r => r.IsDeleted == false && r.IsApproved && r.IsArchived == false && !r.User.IsDeleted)
                 .Select(r => new InfoRecipeViewModel 
                 { 
                     Id = r.Id,
@@ -498,7 +498,7 @@ namespace RecipeShare.Services.Data
         public async Task<PaginatedList<InfoRecipeViewModel>> ViewArchivedRecipesAsync(Guid currentUserId, int page, int pageSize)
         {
             List<InfoRecipeViewModel> model = await context.Recipes
-                .Where(r => r.IsDeleted == false && r.IsApproved && r.IsArchived == true && r.UserId == currentUserId)
+                .Where(r => r.IsDeleted == false && r.IsApproved && r.IsArchived == true && r.UserId == currentUserId && !r.User.IsDeleted)
                 .Select(r => new InfoRecipeViewModel
                 {
                     Id = r.Id,

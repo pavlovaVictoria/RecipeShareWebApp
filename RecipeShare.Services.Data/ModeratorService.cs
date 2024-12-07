@@ -106,7 +106,7 @@ namespace RecipeShare.Services.Data
         public async Task UnapproveRecipeAsync(Guid recipeId)
         {
             Recipe? recipe = await context.Recipes
-                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false)
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false && !r.User.IsDeleted)
                 .FirstOrDefaultAsync();
             if (recipe == null)
             {
@@ -118,7 +118,7 @@ namespace RecipeShare.Services.Data
         public async Task ApproveRecipeAsync(Guid recipeId)
         {
             Recipe? recipe = await context.Recipes
-                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false)
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false && !r.User.IsDeleted)
                 .FirstOrDefaultAsync();
             if (recipe == null)
             {
@@ -130,7 +130,7 @@ namespace RecipeShare.Services.Data
         public async Task<PaginatedList<InfoRecipeViewModel>> ViewAllRecipesAsync(int page, int pageSize)
         {
             List<InfoRecipeViewModel> model = await context.Recipes
-                .Where(r => r.IsApproved == true && r.IsDeleted == false && r.IsArchived == false)
+                .Where(r => r.IsApproved == true && r.IsDeleted == false && r.IsArchived == false && !r.User.IsDeleted)
                 .AsNoTracking()
                 .Select(r => new InfoRecipeViewModel
                 {

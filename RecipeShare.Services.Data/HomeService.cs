@@ -18,7 +18,7 @@ namespace RecipeShare.Services.Data
         public async Task<List<InfoRecipeViewModel>> Top3RecipesAsync()
         {
             List<InfoRecipeViewModel> recipes = await context.Recipes
-                .Where(r => r.IsApproved && r.IsDeleted == false && r.IsArchived == false)
+                .Where(r => r.IsApproved && r.IsDeleted == false && r.IsArchived == false && !r.User.IsDeleted)
                 .OrderByDescending(r => r.LikedRecipes.Count)
                 .ThenBy(r => r.RecipeTitle)
                 .AsNoTracking()
@@ -39,7 +39,7 @@ namespace RecipeShare.Services.Data
         {
             string text= inputText.ToUpper();
             List<InfoRecipeViewModel> recipes = await context.Recipes
-                .Where(r => r.IsDeleted == false && r.IsArchived == false && r.IsApproved && (r.NormalizedRecipeTitle.Contains(inputText)))
+                .Where(r => r.IsDeleted == false && r.IsArchived == false && !r.User.IsDeleted && r.IsApproved && (r.NormalizedRecipeTitle.Contains(inputText)))
                 .Select(r => new InfoRecipeViewModel 
                 { 
                     Id = r.Id,

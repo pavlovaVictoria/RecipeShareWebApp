@@ -32,7 +32,7 @@
                         </li>
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
-                            @if(User?.IsInRole("Moderator") ?? false)
+                            @if(User.IsInRole("Moderator") || User.IsInRole("Administrator"))
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle text-muted" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -60,7 +60,7 @@
                             }
                         }
                     </ul>
-                    @if(User?.Identity?.IsAuthenticated == true && !User.IsInRole("Moderator"))
+                    @if (User?.Identity?.IsAuthenticated == true && !User.IsInRole("Moderator") && !User.IsInRole("Administrator"))
                     {
                         <form class="d-flex me-5" method="get" asp-action="Search" asp-controller="Home">
                             <input class="form-control me-2" type="text" name="inputText" placeholder="Search recipes..." aria-label="Search" />
