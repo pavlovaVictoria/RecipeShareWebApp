@@ -32,7 +32,7 @@
                         </li>
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
-                            @if(User.IsInRole("Moderator") || User.IsInRole("Administrator"))
+                            @if(User.IsInRole("Moderator"))
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle text-muted" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -42,6 +42,10 @@
                                         <li><a class="dropdown-item" asp-area="Moderator" asp-controller="Moderator" asp-action="All">All Recipes</a></li>
                                     </ul>
                                 </li>
+                            }
+                            else if (User.IsInRole("Administrator"))
+                            {
+                                
                             }
                             else
                             {
