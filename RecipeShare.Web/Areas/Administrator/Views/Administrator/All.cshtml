@@ -13,6 +13,7 @@
             <tr>
                 <th>Username</th>
                 <th>Email</th>
+                <th>Role</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -22,8 +23,10 @@
                 <tr id="userRow-@user.Id">
                     <td>@user.Username</td>
                     <td>@user.Email</td>
+                    <td>@user.RoleName</td>
                     <td>
-                        <a class="text-danger" asp-area="Administrator" asp-action="DeleteUser" asp-controller="Administrator" asp-route-userId="@user.Id">Delete User</a>
+                        <a class="text-danger btn" asp-area="Administrator" asp-action="DeleteUser" asp-controller="Administrator" asp-route-userId="@user.Id">Delete User</a>
+                        <a class="text-danger btn" asp-area="Administrator" asp-action="ManageRole" asp-controller="Administrator" asp-route-userId="@user.Id">Manage Role</a>
                     </td>
                 </tr>
             }

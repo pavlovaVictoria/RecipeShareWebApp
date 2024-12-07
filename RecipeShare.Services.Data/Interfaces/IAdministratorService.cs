@@ -13,5 +13,7 @@ namespace RecipeShare.Services.Data.Interfaces
         Task<List<ViewUserViewModel>> GetUsersAsync(Guid adminId);
         Task DeleteUserAsync(Guid userId, Guid currentUserId);
         Task<DeleteUserViewModel> ModelForDeleteAsync(Guid userId, Guid currentUserId);
+        Task<ChangeRoleViewModel> ModelForChangingRoleAsync(Guid userId, Guid currentUserId);
+        Task ChangeRoleAsync(Guid userId, Guid roleId, Guid currentUserId, string roleName);
     }
 }

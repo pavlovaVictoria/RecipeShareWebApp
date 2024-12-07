@@ -1,0 +1,21 @@
+﻿@model ChangeRoleViewModel;
+@{
+    ViewData["Title"] = "Change Role";
+}
+<div class="container text-center">
+    <h4>Change Role</h4>
+    <p><strong>@Model.Username</strong>: @Model.RoleName</p>
+    <p>Choose one:</p>
+    <div>
+        @foreach(var role in Model.Roles)
+        {
+            <form asp-action="ChangeRole" method="post" style="display:inline;">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="roleId" value="@role.RoleId" />
+                <input type="hidden" name="userId" value="@Model.UserId" />
+                <input type="hidden" name="roleName" value="@Model.RoleName" />
+                <button type="submit" class="btn btn-danger">@role.RoleName</button>
+            </form>
+        }
+    </div>
+</div>

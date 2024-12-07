@@ -17,10 +17,7 @@ namespace RecipeShare.Web.Areas.Administrator.Controllers
         {
             administratorService = _administratorService;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+        [HttpGet]
         public async Task<IActionResult> All()
         {
             Guid currentUserId = GetCurrentUserId();
@@ -71,6 +68,45 @@ namespace RecipeShare.Web.Areas.Administrator.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ManageRole(Guid userId)
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return View($"Error/{403}");
+            }
+            try
+            {
+                ChangeRoleViewModel model = await administratorService.ModelForChangingRoleAsync(userId, currentUserId);
+                return View(model);
+            }
+            catch (HttpStatusException statusCode)
+            {
+                return View($"Error/{statusCode}");
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeRole(Guid roleId,  Guid userId, string roleName)
+        {
+            Guid currentUserId = GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
+            {
+                return View($"Error/{403}");
+            }
+            try
+            {
+                await administratorService.ChangeRoleAsync(userId, roleId, currentUserId, roleName);
+                return RedirectToAction("All");
+            }
+            catch (HttpStatusException statusCode)
+            {
+                return View($"Error/{statusCode}");
+            }
+        }
         private Guid GetCurrentUserId()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
