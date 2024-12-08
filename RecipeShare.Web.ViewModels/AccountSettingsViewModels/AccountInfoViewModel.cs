@@ -7,7 +7,9 @@ namespace RecipeShare.Web.ViewModels.AccountSettingsViewModels
 {
 	public class AccountInfoViewModel
 	{
-		[Required]
+        [Required]
+        public Guid Id { get; set; }
+        [Required]
 		[StringLength(UserNameMaxLen, MinimumLength = UserNameMinLen, ErrorMessage = ErrorMessageUserName)]
 		public string UserName { get; set; } = null!;
 

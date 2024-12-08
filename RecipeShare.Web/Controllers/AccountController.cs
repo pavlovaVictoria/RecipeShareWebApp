@@ -23,6 +23,7 @@ namespace RecipeShare.Web.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Login(LoginViewModel loginViewModel)
 		{
 			if (!ModelState.IsValid)
@@ -51,7 +52,8 @@ namespace RecipeShare.Web.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -84,7 +86,8 @@ namespace RecipeShare.Web.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> ForgotPassword(ChangePasswordViewModel changePasswordViewModel)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ChangePasswordViewModel changePasswordViewModel)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -93,6 +96,10 @@ namespace RecipeShare.Web.Controllers
 			bool result = await accountService.ForgotPasswordAsync(changePasswordViewModel);
 			if (result)
 			{
+				if (User?.Identity?.IsAuthenticated ?? false)
+				{
+					return RedirectToAction("Index", "AccountSettings");
+				}
 				return RedirectToAction("Login");
 			}
 			else

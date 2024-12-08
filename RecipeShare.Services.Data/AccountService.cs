@@ -21,7 +21,7 @@ namespace RecipeShare.Services.Data
         public async Task<bool> LoginAsync(LoginViewModel model)
 		{
 			ApplicationUser? user = await userManager.FindByEmailAsync(model.Email);
-            if (user == null)
+            if (user == null || user.IsDeleted == true)
             {
                 return false;
             }
@@ -69,7 +69,7 @@ namespace RecipeShare.Services.Data
 		public async Task<bool> ForgotPasswordAsync(ChangePasswordViewModel model)
 		{
 			ApplicationUser? user = await userManager.FindByEmailAsync(model.Email);
-			if (user == null)
+			if (user == null || user.IsDeleted == true)
 			{
 				return false;
 			}
