@@ -43,20 +43,20 @@ namespace RecipeShare.Web.Controllers
 
 		[HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SaveAccountInfo(AccountInfoViewModel model)
+        public async Task<IActionResult> SaveAccountInfo(AccountInfoViewModel model, Guid userId)
 		{
 			if (!ModelState.IsValid)
 			{
 				return View(model);
 			}
             Guid currentUserId = GetCurrentUserId();
-            if (currentUserId == Guid.Empty || model.Id != currentUserId)
+            if (currentUserId == Guid.Empty || userId != currentUserId)
             {
                 return View($"Error/{403}");
             }
 			try
 			{
-				await accountSettingsService.SaveAccountInfoAsync(model);
+				await accountSettingsService.SaveAccountInfoAsync(model, userId);
 				return RedirectToAction("Index");
 			}
 			catch (HttpStatusException statusCode)

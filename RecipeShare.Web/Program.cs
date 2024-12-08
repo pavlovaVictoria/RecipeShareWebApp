@@ -48,6 +48,7 @@ builder.Services
     //Register Repositories
     .AddScoped<IRecipeRepository, RecipeRepository>()
     .AddScoped<ICommentRepository, CommentRepository>()
+    .AddScoped<IAccountRepository, AccountRepository>()
     //Register Services
     .AddScoped<IAccountService, AccountService>()
     .AddScoped<IRecipeService, RecipeService>()

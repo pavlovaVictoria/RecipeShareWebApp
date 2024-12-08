@@ -35,7 +35,7 @@
                     <textarea asp-for="AccountBio" class="form-control" rows="3"></textarea>
                     <span asp-validation-for="AccountBio" class="text-danger"></span>
                 </div>
-
+                <input type="hidden" name="userId" value="@Model.Id" />
                 <button type="submit" class="btn btn-primary w-100">Save Changes</button>
             </form>
         </div>

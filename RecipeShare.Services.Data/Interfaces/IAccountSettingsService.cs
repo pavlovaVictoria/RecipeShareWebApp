@@ -11,7 +11,7 @@ namespace RecipeShare.Services.Data.Interfaces
     public interface IAccountSettingsService
     {
         Task<AccountInfoViewModel> AccountInfoModelAsync(Guid accountId);
-        Task SaveAccountInfoAsync(AccountInfoViewModel model);
+        Task SaveAccountInfoAsync(AccountInfoViewModel model, Guid userId);
         Task<DeleteUserViewModel> ModelForDeleteUserAsunc(Guid accountId);
         Task DeleteUserAsync(Guid userId);
     }

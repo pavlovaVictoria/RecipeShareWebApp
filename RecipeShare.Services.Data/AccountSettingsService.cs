@@ -12,34 +12,26 @@ using RecipeShare.Web.ViewModels.ApplicationUserViewModels;
 using Microsoft.EntityFrameworkCore;
 using RecipeShare.Common.Exceptions;
 using Microsoft.Identity.Client;
+using RecipeShare.Repositories.Interfaces;
 
 namespace RecipeShare.Services.Data
 {
     public class AccountSettingsService : IAccountSettingsService
     {
-        private readonly RecipeShareDbContext context;
         private readonly UserManager<ApplicationUser> userManager;
-        public AccountSettingsService(RecipeShareDbContext _context, UserManager<ApplicationUser> _userManager)
+		private readonly IAccountRepository accountRepository;
+        public AccountSettingsService(UserManager<ApplicationUser> _userManager, IAccountRepository _accountRepository)
         {
-            context = _context;
             userManager = _userManager;
+			accountRepository = _accountRepository;
         }
 
 		public async Task<AccountInfoViewModel> AccountInfoModelAsync(Guid accountId)
 		{
-			AccountInfoViewModel? model = await context.Users
-				.Where(u => u.IsDeleted == false && u.Id == accountId)
-				.Select(u => new AccountInfoViewModel
-				{
-					Id = accountId,
-					UserName = u.UserName ?? "",
-					AccountBio = u.AccountBio,
-					IsMale = u.IsMale
-				})
-				.FirstOrDefaultAsync();
+			AccountInfoViewModel? model = await accountRepository.AccountInfoModelAsync(accountId);
 			if (model == null)
 			{
-                if (await context.Users.AnyAsync(u => u.Id == accountId))
+                if (await accountRepository.IfAccountAnyAsync(accountId))
                 {
                     throw new HttpStatusException(404);
                 }
@@ -50,33 +42,24 @@ namespace RecipeShare.Services.Data
 
 		public async Task DeleteUserAsync(Guid userId)
 		{
-            ApplicationUser? user = await context.Users
-                .Where(u => u.Id == userId && u.IsDeleted == false)
-                .FirstOrDefaultAsync();
+            ApplicationUser? user = await accountRepository.FindUserAsync(userId);
             if (user == null)
             {
-                if (await context.Users.AnyAsync(u => u.Id == userId))
+                if (await accountRepository.IfAccountAnyAsync(userId))
                 {
                     throw new HttpStatusException(404);
                 }
                 throw new HttpStatusException(403);
             }
             user.IsDeleted = true;
-            await context.SaveChangesAsync();
+            await accountRepository.SaveChangesAsync();
         }
 		public async Task<DeleteUserViewModel> ModelForDeleteUserAsunc(Guid accountId)
 		{
-			DeleteUserViewModel? model = await context.Users
-				.Where(u => u.Id == accountId && u.IsDeleted == false)
-				.Select(u => new DeleteUserViewModel 
-				{ 
-					Id = accountId,
-					UserName = u.UserName ?? ""
-				})
-				.FirstOrDefaultAsync();
+			DeleteUserViewModel? model = await accountRepository.ModelForDeleteUserAsunc(accountId);
 			if (model == null)
 			{
-                if (await context.Users.AnyAsync(u => u.Id == accountId))
+                if (await accountRepository.IfAccountAnyAsync(accountId))
                 {
                     throw new HttpStatusException(404);
                 }
@@ -85,14 +68,12 @@ namespace RecipeShare.Services.Data
 			return model;
 		}
 
-		public async Task SaveAccountInfoAsync(AccountInfoViewModel model)
+		public async Task SaveAccountInfoAsync(AccountInfoViewModel model, Guid userId)
 		{
-			ApplicationUser? user = await context.Users
-				.Where(u => u.Id == model.Id && u.IsDeleted == false)
-				.FirstOrDefaultAsync();
+			ApplicationUser? user = await accountRepository.FindUserAsync(userId);
 			if (user == null)
 			{
-                if (await context.Users.AnyAsync(u => u.Id == model.Id))
+                if (await accountRepository.IfAccountAnyAsync(userId))
                 {
                     throw new HttpStatusException(404);
                 }
@@ -101,7 +82,7 @@ namespace RecipeShare.Services.Data
 			user.UserName = model.UserName;
 			user.AccountBio = model.AccountBio;
 			user.IsMale = model.IsMale;
-			await context.SaveChangesAsync();
+			await accountRepository.SaveChangesAsync();
 		}
 	}
 }
