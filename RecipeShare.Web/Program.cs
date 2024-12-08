@@ -50,6 +50,7 @@ builder.Services
     .AddScoped<ICommentRepository, CommentRepository>()
     .AddScoped<IAccountRepository, AccountRepository>()
     .AddScoped<IAdministratorRepository, AdministratorRepository>()
+    .AddScoped<IModeratorRepository, ModeratorRepository>()
     //Register Services
     .AddScoped<IAccountService, AccountService>()
     .AddScoped<IRecipeService, RecipeService>()
