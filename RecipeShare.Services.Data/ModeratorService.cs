@@ -46,7 +46,7 @@ namespace RecipeShare.Services.Data
         public async Task<RecipeDetailsViewModel?> RecipeDetailsAsync(Guid recipeId, Guid userId)
         {
             RecipeDetailsViewModel? model = await context.Recipes
-                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == true && r.IsArchived == false)
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false && r.IsArchived == false)
                 .AsNoTracking()
                 .Select(r => new RecipeDetailsViewModel
                 {

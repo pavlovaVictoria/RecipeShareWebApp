@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeShare.Web", "RecipeShare.Web\RecipeShare.Web.csproj", "{90020484-623D-48E4-BC39-8BCAD8A7033B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeShare.Web", "RecipeShare.Web\RecipeShare.Web.csproj", "{90020484-623D-48E4-BC39-8BCAD8A7033B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{AC84B784-30B7-44B0-831F-A4807B935B07}"
 EndProject
@@ -11,15 +11,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{637570EA-D39
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{6E086EE6-ADE8-4A42-91FB-E09290A58422}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeShare.Common", "RecipeShare.Common\RecipeShare.Common.csproj", "{8D488DE2-9EBB-415A-82F1-C0D1FF259829}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeShare.Common", "RecipeShare.Common\RecipeShare.Common.csproj", "{8D488DE2-9EBB-415A-82F1-C0D1FF259829}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeShare.Web.ViewModels", "RecipeShare.Web.ViewModels\RecipeShare.Web.ViewModels.csproj", "{CEADE2EB-D631-42EF-B5DA-18F69F3C47A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeShare.Web.ViewModels", "RecipeShare.Web.ViewModels\RecipeShare.Web.ViewModels.csproj", "{CEADE2EB-D631-42EF-B5DA-18F69F3C47A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeShare.Data", "RecipeShare.Data\RecipeShare.Data.csproj", "{28796744-6AFF-4F1C-8652-781F46869E30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeShare.Data", "RecipeShare.Data\RecipeShare.Data.csproj", "{28796744-6AFF-4F1C-8652-781F46869E30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeShare.Data.Models", "RecipeShare.Data.Model\RecipeShare.Data.Models.csproj", "{12128039-5404-4A05-BBE0-6D35E3D0F413}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeShare.Data.Models", "RecipeShare.Data.Model\RecipeShare.Data.Models.csproj", "{12128039-5404-4A05-BBE0-6D35E3D0F413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeShare.Services.Data", "RecipeShare.Services.Data\RecipeShare.Services.Data.csproj", "{082A05A4-A329-4E07-96CA-C02AB352830B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeShare.Services.Data", "RecipeShare.Services.Data\RecipeShare.Services.Data.csproj", "{082A05A4-A329-4E07-96CA-C02AB352830B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{C3A055BC-02D3-4F92-9579-7FF3D8A22C82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeShare.Repositories", "RecipeShare.Repositories\RecipeShare.Repositories.csproj", "{E04CE44C-1F8E-4067-895E-9BB9C5B4D4AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,10 @@ Global
 		{082A05A4-A329-4E07-96CA-C02AB352830B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{082A05A4-A329-4E07-96CA-C02AB352830B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{082A05A4-A329-4E07-96CA-C02AB352830B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E04CE44C-1F8E-4067-895E-9BB9C5B4D4AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E04CE44C-1F8E-4067-895E-9BB9C5B4D4AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E04CE44C-1F8E-4067-895E-9BB9C5B4D4AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E04CE44C-1F8E-4067-895E-9BB9C5B4D4AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +69,7 @@ Global
 		{28796744-6AFF-4F1C-8652-781F46869E30} = {AC84B784-30B7-44B0-831F-A4807B935B07}
 		{12128039-5404-4A05-BBE0-6D35E3D0F413} = {AC84B784-30B7-44B0-831F-A4807B935B07}
 		{082A05A4-A329-4E07-96CA-C02AB352830B} = {6E086EE6-ADE8-4A42-91FB-E09290A58422}
+		{E04CE44C-1F8E-4067-895E-9BB9C5B4D4AD} = {C3A055BC-02D3-4F92-9579-7FF3D8A22C82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B69FD38-9992-4629-8C84-B1C61C5BB790}

@@ -27,6 +27,7 @@
     <ProjectReference Include="..\RecipeShare.Common\RecipeShare.Common.csproj" />
     <ProjectReference Include="..\RecipeShare.Data.Model\RecipeShare.Data.Models.csproj" />
     <ProjectReference Include="..\RecipeShare.Data\RecipeShare.Data.csproj" />
+    <ProjectReference Include="..\RecipeShare.Repositories\RecipeShare.Repositories.csproj" />
     <ProjectReference Include="..\RecipeShare.Web.ViewModels\RecipeShare.Web.ViewModels.csproj" />
   </ItemGroup>
 

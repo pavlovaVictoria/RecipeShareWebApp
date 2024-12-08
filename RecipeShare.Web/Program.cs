@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RecipeShare.Data;
 using RecipeShare.Data.Models;
+using RecipeShare.Repositories.Interfaces;
+using RecipeShare.Repositories;
 using RecipeShare.Services.Data;
 using RecipeShare.Services.Data.Interfaces;
 
@@ -43,6 +45,9 @@ builder.Services.AddAuthorizationBuilder()
         policy.RequireRole("User", "Administrator", "Moderator"));
 
 builder.Services
+    //Register Repositories
+    .AddScoped<IRecipeRepository, RecipeRepository>()
+    //Register Services
     .AddScoped<IAccountService, AccountService>()
     .AddScoped<IRecipeService, RecipeService>()
     .AddScoped<IHomeService, HomeService>()
