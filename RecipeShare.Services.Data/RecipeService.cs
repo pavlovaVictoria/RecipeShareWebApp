@@ -24,13 +24,11 @@ namespace RecipeShare.Services.Data
 {
     public class RecipeService : IRecipeService
     {
-        private readonly RecipeShareDbContext context;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IRecipeRepository recipeRepository;
 
-        public RecipeService(RecipeShareDbContext _context, UserManager<ApplicationUser> _userManager, IRecipeRepository _recipeRepository)
+        public RecipeService(UserManager<ApplicationUser> _userManager, IRecipeRepository _recipeRepository)
         {
-            context = _context;
             userManager = _userManager;
             recipeRepository = _recipeRepository;
         }

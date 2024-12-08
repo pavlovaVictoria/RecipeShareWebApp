@@ -47,6 +47,7 @@ builder.Services.AddAuthorizationBuilder()
 builder.Services
     //Register Repositories
     .AddScoped<IRecipeRepository, RecipeRepository>()
+    .AddScoped<ICommentRepository, CommentRepository>()
     //Register Services
     .AddScoped<IAccountService, AccountService>()
     .AddScoped<IRecipeService, RecipeService>()
