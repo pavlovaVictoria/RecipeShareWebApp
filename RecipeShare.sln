@@ -23,7 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeShare.Services.Data",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{C3A055BC-02D3-4F92-9579-7FF3D8A22C82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeShare.Repositories", "RecipeShare.Repositories\RecipeShare.Repositories.csproj", "{E04CE44C-1F8E-4067-895E-9BB9C5B4D4AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeShare.Repositories", "RecipeShare.Repositories\RecipeShare.Repositories.csproj", "{E04CE44C-1F8E-4067-895E-9BB9C5B4D4AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2892548A-4C8C-4F28-A31B-E416A9CEBB61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeShare.Services.Tests", "RecipeShare.Services.Tests\RecipeShare.Services.Tests.csproj", "{1BEDBBEA-E091-4C4C-897F-A3071C221907}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +63,10 @@ Global
 		{E04CE44C-1F8E-4067-895E-9BB9C5B4D4AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E04CE44C-1F8E-4067-895E-9BB9C5B4D4AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E04CE44C-1F8E-4067-895E-9BB9C5B4D4AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BEDBBEA-E091-4C4C-897F-A3071C221907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BEDBBEA-E091-4C4C-897F-A3071C221907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BEDBBEA-E091-4C4C-897F-A3071C221907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BEDBBEA-E091-4C4C-897F-A3071C221907}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +78,8 @@ Global
 		{12128039-5404-4A05-BBE0-6D35E3D0F413} = {AC84B784-30B7-44B0-831F-A4807B935B07}
 		{082A05A4-A329-4E07-96CA-C02AB352830B} = {6E086EE6-ADE8-4A42-91FB-E09290A58422}
 		{E04CE44C-1F8E-4067-895E-9BB9C5B4D4AD} = {C3A055BC-02D3-4F92-9579-7FF3D8A22C82}
+		{2892548A-4C8C-4F28-A31B-E416A9CEBB61} = {6E086EE6-ADE8-4A42-91FB-E09290A58422}
+		{1BEDBBEA-E091-4C4C-897F-A3071C221907} = {2892548A-4C8C-4F28-A31B-E416A9CEBB61}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B69FD38-9992-4629-8C84-B1C61C5BB790}

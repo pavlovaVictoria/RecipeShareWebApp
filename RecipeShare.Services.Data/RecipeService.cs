@@ -24,12 +24,10 @@ namespace RecipeShare.Services.Data
 {
     public class RecipeService : IRecipeService
     {
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IRecipeRepository recipeRepository;
 
-        public RecipeService(UserManager<ApplicationUser> _userManager, IRecipeRepository _recipeRepository)
+        public RecipeService(IRecipeRepository _recipeRepository)
         {
-            userManager = _userManager;
             recipeRepository = _recipeRepository;
         }
 
