@@ -89,8 +89,8 @@ namespace RecipeShare.Repositories
                         UserName = c.User.UserName ?? "Unknown User",
                         DateOfRelease = c.DateOfRelease.ToString(RecipeReleaseDatePattern),
                         Text = c.Text,
-                        Responses = c.Responses
-                        .Where(cr => cr.IsDeleted == false && cr.IsResponse == true && cr.ParentCommentId == c.Id && !c.User.IsDeleted)
+                        Responses = r.Comments
+                        .Where(cr => cr.IsDeleted == false && cr.IsResponse == true && cr.ParentCommentId == c.Id && !c.User.IsDeleted && cr.Id != c.Id)
                         .Select(cr => new CommentViewModel
                         {
                             Id = cr.Id,
@@ -240,6 +240,7 @@ namespace RecipeShare.Repositories
         {
             Recipe? recipe = await context.Recipes
                 .Where(r => r.Id == recipeId && r.UserId == currentUserId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false)
+                .Include(r => r.Comments)
                 .FirstOrDefaultAsync();
             return recipe;
         }

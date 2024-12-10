@@ -138,16 +138,16 @@
                                                                     <form method="post" asp-action="Delete" asp-controller="Comment">
                                                                         @Html.AntiForgeryToken()
                                                                         <input type="hidden" name="recipeId" value="@Model.Id" />
-                                                                        <input type="hidden" name="commentId" value="@comment.Id" />
+                                                                        <input type="hidden" name="commentId" value="@response.Id" />
                                                                         <button type="submit" class="dropdown-item text-danger">Delete</button>
                                                                     </form>
                                                                 </li>
                                                             </ul>
                                                         }
                                                     </div>
-                                                    <p class="mt-2">@comment.Text</p>
+                                                    <p class="mt-2">@response.Text</p>
                                                     <div class="container text-end">
-                                                        <span class="text-muted">@comment.DateOfRelease</span>
+                                                        <span class="text-muted">@response.DateOfRelease</span>
                                                     </div>
                                                 </div>
                                             }

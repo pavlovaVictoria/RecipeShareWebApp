@@ -73,7 +73,7 @@ namespace RecipeShare.Services.Data
                 ParentCommentId = commentId,
                 IsResponse = true
             };
-            await commentRepository.AddCommentAsync(comment);
+            await commentRepository.AddCommentAsync(response);
             await commentRepository.SaveChangesAsync();
         }
     }
