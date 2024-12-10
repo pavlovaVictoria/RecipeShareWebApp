@@ -125,38 +125,6 @@ namespace RecipeShare.Repositories
                 .FirstOrDefaultAsync();
             return model;
         }
-        public async Task<(bool isLiked, int likes)> LikeRecipeAsync(Guid recipeId, Guid userId)
-        {
-            Recipe? recipe = await context.Recipes.Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false && !r.User.IsDeleted).Include(r => r.LikedRecipes).FirstOrDefaultAsync();
-            if (recipe == null)
-            {
-                throw new HttpStatusException(404);
-            }
-            bool isLikedNow = await context.LikedRecipes.AnyAsync(lr => lr.UserId == userId && lr.RecipeId == recipeId);
-            if (isLikedNow)
-            {
-                LikedRecipe? likedRecipe = await context.LikedRecipes.Where(lr => lr.UserId == userId && lr.RecipeId == recipeId).FirstOrDefaultAsync();
-                if (likedRecipe == null)
-                {
-                    throw new HttpStatusException(404);
-                }
-                recipe.LikedRecipes.Remove(likedRecipe);
-                context.LikedRecipes.Remove(likedRecipe);
-            }
-            else
-            {
-                LikedRecipe likedRecipe = new LikedRecipe()
-                {
-                    UserId = userId,
-                    RecipeId = recipeId
-                };
-                recipe.LikedRecipes.Add(likedRecipe);
-                await context.LikedRecipes.AddAsync(likedRecipe);
-            }
-            await context.SaveChangesAsync();
-            int count = await context.LikedRecipes.Where(lr => lr.RecipeId == recipeId).CountAsync();
-            return (!isLikedNow, count);
-        }
         public async Task<bool> IsCategoryValidAsync(Guid categoryId)
         {
             bool validCategory = await context.Categories.AnyAsync(c => c.Id == categoryId && c.IsDeleted == false);
@@ -378,6 +346,43 @@ namespace RecipeShare.Repositories
                     ImageUrl = r.Img ?? "~/images/recipes/Recipe.png"
                 }).ToListAsync();
             return model;
+        }
+
+        public async Task<Recipe?> FindRecipeForLikeRecipeAsync(Guid recipeId)
+        {
+            return await context.Recipes
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved && r.IsArchived == false && !r.User.IsDeleted)
+                .Include(r => r.LikedRecipes)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> IfLikedRecipesAnyAsync(Guid userId, Guid recipeId)
+        {
+            return await context.LikedRecipes
+                .AnyAsync(lr => lr.UserId == userId && lr.RecipeId == recipeId);
+        }
+
+        public async Task<LikedRecipe?> FindLikedRecipeAsync(Guid userId, Guid recipeId)
+        {
+            return await context.LikedRecipes
+                .Where(lr => lr.UserId == userId && lr.RecipeId == recipeId)
+                .FirstOrDefaultAsync();
+        }
+
+        public void RemoveFromLikedRecipe(LikedRecipe likedRecipe)
+        {
+            context.LikedRecipes.Remove(likedRecipe);
+        }
+        public async Task AddLikedRecipeAsync(LikedRecipe likedRecipe)
+        {
+            await context.LikedRecipes.AddAsync(likedRecipe);
+        }
+
+        public async Task<int> GetCountOfLikes(Guid recipeId)
+        {
+            return await context.LikedRecipes
+                .Where(lr => lr.RecipeId == recipeId)
+                .CountAsync();
         }
         public async Task SaveChangesAsync()
         {

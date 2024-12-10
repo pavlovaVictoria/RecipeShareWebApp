@@ -52,7 +52,35 @@ namespace RecipeShare.Services.Data
 
         public async Task<(bool isLiked, int likes)> LikeRecipeAsync(Guid recipeId, Guid userId)
         {
-            return await recipeRepository.LikeRecipeAsync(recipeId, userId);
+            Recipe? recipe = await recipeRepository.FindRecipeForLikeRecipeAsync(recipeId);
+            if (recipe == null)
+            {
+                throw new HttpStatusException(404);
+            }
+            bool isLikedNow = await recipeRepository.IfLikedRecipesAnyAsync(userId, recipeId);
+            if (isLikedNow)
+            {
+                LikedRecipe? likedRecipe = await recipeRepository.FindLikedRecipeAsync(userId, recipeId);
+                if (likedRecipe == null)
+                {
+                    throw new HttpStatusException(404);
+                }
+                recipe.LikedRecipes.Remove(likedRecipe);
+                recipeRepository.RemoveFromLikedRecipe(likedRecipe);
+            }
+            else
+            {
+                LikedRecipe likedRecipe = new LikedRecipe()
+                {
+                    UserId = userId,
+                    RecipeId = recipeId
+                };
+                recipe.LikedRecipes.Add(likedRecipe);
+                await recipeRepository.AddLikedRecipeAsync(likedRecipe);
+            }
+            await recipeRepository.SaveChangesAsync();
+            int count = await recipeRepository.GetCountOfLikes(recipeId);
+            return (!isLikedNow, count);
         }
 
         public async Task<RecipeByCategoryViewModel> RcipesByCategoryAsync(Guid categoryId)

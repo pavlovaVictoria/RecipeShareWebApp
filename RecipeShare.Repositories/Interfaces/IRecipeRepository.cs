@@ -15,7 +15,6 @@ namespace RecipeShare.Repositories.Interfaces
         Task<List<InfoRecipeViewModel>> SearchRecipesAsync(string inputText);
         Task<List<CategoryViewModel>> GetAllCategoriesAsync();
         Task<RecipeDetailsViewModel?> RecipeDetailsAsync(Guid recipeId, Guid userId);
-        Task<(bool isLiked, int likes)> LikeRecipeAsync(Guid recipeId, Guid userId);
         Task<bool> IsCategoryValidAsync(Guid categoryId);
         Task<RecipeByCategoryViewModel> RcipesByCategoryAsync(Guid categoryId);
         Task<AddRecipeViewModel> ModelForAddAsync();
@@ -37,5 +36,12 @@ namespace RecipeShare.Repositories.Interfaces
         Task<bool> IfRecipeForDeleteAnyAsync(Guid recipeId);
         Task<Recipe?> FindArchivedRecipeAsync(Guid recipeId, Guid currentUserId);
         Task<List<InfoRecipeViewModel>> ViewArchivedRecipesAsync(Guid currentUserId);
+        //
+        Task<Recipe?> FindRecipeForLikeRecipeAsync(Guid recipeId);
+        Task<bool> IfLikedRecipesAnyAsync(Guid userId, Guid recipeId);
+        Task<LikedRecipe?> FindLikedRecipeAsync(Guid userId, Guid recipeId);
+        void RemoveFromLikedRecipe(LikedRecipe likedRecipe);
+        Task AddLikedRecipeAsync(LikedRecipe likedRecipe);
+        Task<int> GetCountOfLikes(Guid recipeId);
     }
 }
