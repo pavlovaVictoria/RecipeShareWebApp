@@ -36,9 +36,6 @@ namespace RecipeShare.Data.Models
         [Comment("A collection of the Liked Recipes of the given User")]
         public virtual ICollection<LikedRecipe> LikedRecipes { get; set; } = new List<LikedRecipe>();
 
-        [Comment("A collection of the Friend of the given User")]
-        public virtual ICollection<IdentityUser> Friends { get; set; } = new List<IdentityUser>();
-
         [Comment("A collection of the Coments created by the given User")]
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
