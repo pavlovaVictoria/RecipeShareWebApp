@@ -35,7 +35,7 @@ namespace RecipeShare.Repositories
         public async Task<RecipeDetailsViewModel?> ModelForDetailsAsync(Guid recipeId, Guid userId)
         {
             RecipeDetailsViewModel? model = await context.Recipes
-                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsApproved == false && r.IsArchived == false)
+                .Where(r => r.Id == recipeId && r.IsDeleted == false && r.IsArchived == false)
                 .AsNoTracking()
                 .Select(r => new RecipeDetailsViewModel
                 {

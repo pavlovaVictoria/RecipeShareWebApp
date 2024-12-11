@@ -15,11 +15,9 @@ namespace RecipeShare.Services.Data
 {
     public class ModeratorService : IModeratorService
     {
-        private readonly RecipeShareDbContext context;
         private readonly IModeratorRepository moderatorRepository;
-        public ModeratorService(RecipeShareDbContext _context, IModeratorRepository _moderatorRepository)
+        public ModeratorService(IModeratorRepository _moderatorRepository)
         {
-            context = _context;
             moderatorRepository = _moderatorRepository;
         }
         public async Task<PaginatedList<InfoRecipeViewModel>> ViewAllUnapprovedRecipesAsync(int page, int pageSize)
