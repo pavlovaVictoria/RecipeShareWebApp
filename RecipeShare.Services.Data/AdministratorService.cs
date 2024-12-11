@@ -17,12 +17,10 @@ namespace RecipeShare.Services.Data
 {
     public class AdministratorService : IAdministratorService
     {
-        private readonly RecipeShareDbContext context;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IAdministratorRepository adminRepository;
-        public AdministratorService(RecipeShareDbContext _context, UserManager<ApplicationUser> _userManager, IAdministratorRepository _adminRepository)
+        public AdministratorService(UserManager<ApplicationUser> _userManager, IAdministratorRepository _adminRepository)
         {
-            context = _context;
             userManager = _userManager;
             adminRepository = _adminRepository;
         }
