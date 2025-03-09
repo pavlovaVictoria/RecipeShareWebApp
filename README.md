@@ -1,14 +1,40 @@
 # :fried_egg: RecipeShare
-Web приложение, в което потребителите могат да добавят рецепти, обработват
-рецептите, които са добавяли, запазват любимите си рецепти.
-В приложението ила три роли:
-User: Може да добавя рецепти, обработва, архивира, трие рецепти, които е добавил и
-харесва рецепти, които са добавени от други потребители.
-Administrator: може да премахва потребители и да променя техните роли.
-Moderator: може да одобрява и премахва/отхвърля рецепти. Има право да премахва
-коментари.
-В папка Services се намира DataSeeder.
-С него се Seed-ва базата от данни.
-Добавила съм defaulUser, administrator и moderator, които също се seedv-ват. За да видите
-как работят части от приложението може да ползвате данните за потребителите в DataSeeder-a.
-Благодаря Ви за вниманието!
+Welcome to my **RecipeShare** Web App! :smiley:
+
+## Features :rocket:
+- 	:mag: Search for recipes by name and category
+- 	:hearts: Save your favourite recipes
+- :open_book: Add your own recipes
+
+## Technologies Used :hammer_and_wrench:
+- #️⃣ C#
+- 🌐 HTML & 🎨 CSS
+- ⚡ JavaScript
+
+## More information :bulb:
+### 🏷️ User Roles
+The application includes three roles with different permissions:
+
+- **👤 User**  
+  - Can add, edit, archive, and delete their own recipes  
+  - Can like recipes added by other users  
+
+- **🛠️ Administrator**  
+  - Can remove users  
+  - Can change user roles  
+
+- **📝 Moderator**  
+  - Can approve or reject recipes  
+  - Can delete comments  
+
+### 📂 Data Seeding
+In the **Services** folder, you will find `DataSeeder`, which is responsible for seeding the database.  
+
+The following default users are pre-seeded:  
+- **Default User** 🧑  
+- **Administrator** 🛠️  
+- **Moderator** 📝  
+
+You can use these accounts to test different parts of the application.
+---
+## Thank you for your time! 🚀
