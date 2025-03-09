@@ -36,5 +36,6 @@ The following default users are pre-seeded:
 - **Moderator** 📝  
 
 You can use these accounts to test different parts of the application.
+
 ---
 Thank you for your time! 🚀
